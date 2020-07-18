@@ -72,14 +72,14 @@ public final class RequestHandler implements IRequestHandler {
             return response;
         }
 
-        if (!response.isSuccessful()) {
-            // 返回响应异常
-            throw new ResponseException(mApplication.getString(R.string.http_response_error) + "，responseCode：" + response.code() + "，message：" + response.message(), response);
-        }
+//        if (!response.isSuccessful()) {
+//            // 返回响应异常
+//            throw new ResponseException(mApplication.getString(R.string.http_response_error) + "，responseCode：" + response.code() + "，message：" + response.message(), response);
+//        }
 
         ResponseBody body = response.body();
-        if (body == null) {
-            return null;
+        if (body == null&&!response.isSuccessful()) {
+            throw new ResponseException(mApplication.getString(R.string.http_response_error) + "，responseCode：" + response.code() + "，message：" + response.message(), response);
         }
 
         if (Bitmap.class.equals(type)) {

@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">安卓架构</string>
+    <string name="app_name">Movies</string>
 
     <!-- 通用的 -->
+    <string name="user_token">user_token</string>
+
+    <string name="event_login_success">event_login_success</string>
+    <string name="event_login_fail">event_login_fail</string>
+
+    <string name="common_username_input_hint">输入用户名</string>
     <string name="common_phone_input_hint">输入手机号码</string>
     <string name="common_phone_input_error">手机号输入不正确</string>
 
@@ -167,7 +173,7 @@
     <string name="personal_data_title">个人资料</string>
     <string name="personal_data_head">头像</string>
 
-    <string name="personal_data_id">用户ID</string>
+    <string name="personal_data_id">用户名</string>
     <string name="personal_data_name">昵称</string>
     <string name="personal_data_name_hint">设置昵称</string>
 

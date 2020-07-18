@@ -10,6 +10,11 @@ public class TestServer extends ReleaseServer {
 
     @Override
     public String getHost() {
-        return "https://www.baidu.com/";
+        return "http://192.168.31.115:7001/";
+    }
+
+    @Override
+    public String getPath() {
+        return "";
     }
 }

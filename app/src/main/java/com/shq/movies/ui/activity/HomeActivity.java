@@ -1,5 +1,8 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,16 +12,27 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hjq.base.BaseFragmentAdapter;
+import com.hjq.http.EasyConfig;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.HttpCallback;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.helper.ActivityStackManager;
 import com.shq.movies.helper.DoubleClickHelper;
+import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.UserApi;
+import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.other.KeyboardWatcher;
 import com.shq.movies.ui.fragment.FindFragment;
 import com.shq.movies.ui.fragment.HomeFragment;
+import com.shq.movies.ui.fragment.LoginFragment;
 import com.shq.movies.ui.fragment.MeFragment;
 import com.shq.movies.ui.fragment.MessageFragment;
+import com.shq.movies.ui.fragment.UserInfoFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  *    author : Android 轮子哥
@@ -41,6 +55,14 @@ public final class HomeActivity extends MyActivity
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+
+
+    @Override
     protected void initView() {
         mViewPager = findViewById(R.id.vp_home_pager);
         mBottomNavigationView = findViewById(R.id.bv_home_navigation);
@@ -59,10 +81,21 @@ public final class HomeActivity extends MyActivity
         mPagerAdapter.addFragment(HomeFragment.newInstance());
         mPagerAdapter.addFragment(FindFragment.newInstance());
         mPagerAdapter.addFragment(MessageFragment.newInstance());
-        mPagerAdapter.addFragment(MeFragment.newInstance());
+        mPagerAdapter.addFragment(UserInfoFragment.newInstance());
+        mPagerAdapter.addFragment(LoginFragment.newInstance());
         // 设置成懒加载模式
         mPagerAdapter.setLazyMode(true);
         mViewPager.setAdapter(mPagerAdapter);
+    }
+
+    @Subscribe
+    public void onLoginSuccess(String eventName){
+
+        if(eventName.equals(getString(R.string.event_login_success))){
+            mViewPager.setCurrentItem(3);
+        }else if(eventName.equals(getString(R.string.event_login_fail))){
+            mViewPager.setCurrentItem(4);
+        }
     }
 
     /**
@@ -82,7 +115,15 @@ public final class HomeActivity extends MyActivity
                 mViewPager.setCurrentItem(2);
                 return true;
             case R.id.home_me:
-                mViewPager.setCurrentItem(3);
+                SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+                String token=sharedPreferences.getString(getString(R.string.user_token),null);
+                EasyConfig.getInstance()
+                        .addHeader("Authorization", "Bearer "+token);
+                if(token==null||token.isEmpty()){
+                    mViewPager.setCurrentItem(4);
+                }else {
+                    mViewPager.setCurrentItem(3);
+                }
                 return true;
             default:
                 break;
@@ -135,6 +176,7 @@ public final class HomeActivity extends MyActivity
         mViewPager.setAdapter(null);
         mBottomNavigationView.setOnNavigationItemSelectedListener(null);
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

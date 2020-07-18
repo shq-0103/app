@@ -127,6 +127,7 @@ dependencies {
     // 图片加载框架：https://github.com/bumptech/glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
@@ -152,12 +153,15 @@ dependencies {
     // 侧滑框架：https://github.com/luckybilly/SmartSwipe
     implementation 'com.billy.android:smart-swipe:1.1.2'
     implementation 'com.billy.android:smart-swipe-x:1.1.0'
+    // EventBus
+    implementation 'org.greenrobot:eventbus:3.2.0'
 
     // 日志调试：https://github.com/getActivity/Logcat
     debugImplementation 'com.hjq:logcat:8.2'
 
     // 内存泄漏：https://github.com/square/leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
 
     // 国际化：https://github.com/getActivity/MultiLanguages
     // 悬浮窗：https://github.com/getActivity/XToast

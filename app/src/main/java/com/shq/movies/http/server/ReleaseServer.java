@@ -10,13 +10,14 @@ import com.hjq.http.config.IRequestServer;
  */
 public class ReleaseServer implements IRequestServer {
 
+    // 47.101.132.207:
     @Override
     public String getHost() {
-        return "https://www.baidu.com/";
+        return "http://192.168.31.115:7001/";
     }
 
     @Override
     public String getPath() {
-        return "api/";
+        return "";
     }
 }

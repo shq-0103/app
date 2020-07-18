@@ -165,7 +165,7 @@ public final class LoginActivity extends MyActivity
 
             EasyHttp.post(this)
                     .api(new LoginApi()
-                            .setPhone(mPhoneView.getText().toString())
+                            .setUsername(mPhoneView.getText().toString())
                             .setPassword(mPasswordView.getText().toString()))
                     .request(new HttpCallback<HttpData<LoginBean>>(this) {
 
