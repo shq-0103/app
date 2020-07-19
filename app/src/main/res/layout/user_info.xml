@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shq.movies.ui.activity.CopyActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:title="" >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:clickable="true"
+
+            app:srcCompat="@drawable/videobrightness_low_ic" />
+    </com.hjq.bar.TitleBar>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/fl_person_data_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+
+        app:bar_rightIcon="@drawable/arrows_right_ic"
+       >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_person_data_avatar"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="20dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/avatar_placeholder_ic" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24dp"
+            android:text="nickname" />
+
+
+    </com.hjq.widget.layout.SettingBar>
+
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/fl_person_message_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        >
+
+
+    </com.hjq.widget.layout.SettingBar>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/fl_person_movie_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+
+        <com.hjq.widget.view.ScaleImageView
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:src="@drawable/logo_big_ic"
+            app:scaleRatio="1.2" />
+
+    </com.hjq.widget.layout.SettingBar>
+</LinearLayout>

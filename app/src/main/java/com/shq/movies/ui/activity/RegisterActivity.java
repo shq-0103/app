@@ -29,10 +29,7 @@ import com.hjq.widget.view.CountdownView;
  */
 public final class RegisterActivity extends MyActivity {
 
-    private EditText mPhoneView;
-    private CountdownView mCountdownView;
-
-    private EditText mCodeView;
+    private EditText mUsernameView;
 
     private EditText mPasswordView1;
     private EditText mPasswordView2;
@@ -41,25 +38,23 @@ public final class RegisterActivity extends MyActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.register_activity;
+        return R.layout.activity_register;
     }
 
     @Override
     protected void initView() {
-        mPhoneView = findViewById(R.id.et_register_phone);
-        mCountdownView = findViewById(R.id.cv_register_countdown);
-        mCodeView = findViewById(R.id.et_register_code);
+
+        mUsernameView = findViewById(R.id.et_username);
         mPasswordView1 = findViewById(R.id.et_register_password1);
         mPasswordView2 = findViewById(R.id.et_register_password2);
         mCommitView = findViewById(R.id.btn_register_commit);
-        setOnClickListener(mCountdownView, mCommitView);
+        setOnClickListener(mCommitView);
 
         // 给这个 View 设置沉浸式，避免状态栏遮挡
         ImmersionBar.setTitleBar(this, findViewById(R.id.tv_register_title));
 
         InputTextHelper.with(this)
-                .addView(mPhoneView)
-                .addView(mCodeView)
+                .addView(mUsernameView)
                 .addView(mPasswordView1)
                 .addView(mPasswordView2)
                 .setMain(mCommitView)
@@ -74,70 +69,30 @@ public final class RegisterActivity extends MyActivity {
     @SingleClick
     @Override
     public void onClick(View v) {
-        if (v == mCountdownView) {
-            if (mPhoneView.getText().toString().length() != 11) {
-                toast(R.string.common_phone_input_error);
-                return;
-            }
 
-            if (true) {
-                toast(R.string.common_code_send_hint);
-                mCountdownView.start();
-                return;
-            }
 
-            // 获取验证码
-            EasyHttp.post(this)
-                    .api(new GetCodeApi()
-                            .setPhone(mPhoneView.getText().toString()))
-                    .request(new HttpCallback<HttpData<Void>>(this) {
+        if (v == mCommitView) {
 
-                        @Override
-                        public void onSucceed(HttpData<Void> data) {
-                            toast(R.string.common_code_send_hint);
-                            mCountdownView.start();
-                        }
-
-                        @Override
-                        public void onFail(Exception e) {
-                            super.onFail(e);
-                            mCountdownView.start();
-                        }
-                    });
-        } else if (v == mCommitView) {
-            if (mPhoneView.getText().toString().length() != 11) {
-                toast(R.string.common_phone_input_error);
-                return;
-            }
 
             if (!mPasswordView1.getText().toString().equals(mPasswordView2.getText().toString())) {
                 toast(R.string.common_password_input_unlike);
                 return;
             }
 
-            if (true) {
-                toast(R.string.register_succeed);
-                setResult(RESULT_OK, new Intent()
-                        .putExtra(IntentKey.PHONE, mPhoneView.getText().toString())
-                        .putExtra(IntentKey.PASSWORD, mPasswordView1.getText().toString()));
-                finish();
-                return;
-            }
 
             // 提交注册
             EasyHttp.post(this)
                     .api(new RegisterApi()
-                            .setPhone(mPhoneView.getText().toString())
-                            .setCode(mCodeView.getText().toString())
+                            .setPhone(mUsernameView.getText().toString())
                             .setPassword(mPasswordView1.getText().toString()))
-                    .request(new HttpCallback<HttpData<RegisterBean>>(this) {
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
 
                         @Override
-                        public void onSucceed(HttpData<RegisterBean> data) {
+                        public void onSucceed(HttpData<Boolean> data) {
                             toast(R.string.register_succeed);
-                            setResult(RESULT_OK, new Intent()
-                                    .putExtra(IntentKey.PHONE, mPhoneView.getText().toString())
-                                    .putExtra(IntentKey.PASSWORD, mPasswordView1.getText().toString()));
+//                            setResult(RESULT_OK, new Intent()
+//                                    .putExtra(IntentKey.PHONE, mUsernameView.getText().toString())
+//                                    .putExtra(IntentKey.PASSWORD, mPasswordView1.getText().toString()));
                             finish();
                         }
                     });

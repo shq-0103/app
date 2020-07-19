@@ -12,23 +12,16 @@ public final class RegisterApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "user/register";
+        return "user/signin";
     }
 
-    /** 手机号 */
-    private String phone;
-    /** 验证码 */
-    private String code;
+    /** 用户名 */
+    private String username;
     /** 密码 */
     private String password;
 
-    public RegisterApi setPhone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public RegisterApi setCode(String code) {
-        this.code = code;
+    public RegisterApi setPhone(String username) {
+        this.username = username;
         return this;
     }
 
