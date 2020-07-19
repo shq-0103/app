@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shq.movies.ui.fragment.CopyFragment">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backButton="false"
+        app:title="Edit information" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/fl_person_data_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:bar_leftText="@string/personal_data_head">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_person_data_avatar"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_margin="20dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/avatar_placeholder_ic" />
+
+    </com.hjq.widget.layout.SettingBar>
+
+
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Nickname"
+        app:bar_rightIcon="@drawable/arrows_right_ic"
+        app:bar_rightText="nickname" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Gender"
+        app:bar_rightIcon="@drawable/arrows_right_ic"
+        app:bar_rightText="men" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Email"
+        app:bar_rightIcon="@drawable/arrows_right_ic"
+        tools:bar_rightText="181****1413" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Password"
+        app:bar_rightIcon="@drawable/arrows_right_ic"
+        tools:bar_rightText="密码强度较低" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Introduction"
+        app:bar_rightIcon="@drawable/arrows_right_ic" />
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Type"
+        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_password_forget_commit"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="30dp"
+        android:text="Finish" />
+
+</LinearLayout>
