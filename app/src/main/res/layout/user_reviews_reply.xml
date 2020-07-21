@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shq.movies.ui.activity.CopyActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Reply" >
+        <Button
+            android:id="@+id/button"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:background="#ffc824"
+            android:layout_gravity="end|center_vertical"/>
+    </com.hjq.bar.TitleBar>
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="please enter ...(no more than 300 words)"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+
+</LinearLayout>
