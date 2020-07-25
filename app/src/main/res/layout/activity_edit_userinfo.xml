@@ -38,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bar_leftText="Nickname"
-        app:bar_rightIcon="@drawable/arrows_right_ic"
         app:bar_rightText="nickname" />
 
     <com.hjq.widget.layout.SettingBar

@@ -10,15 +10,8 @@
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Review Detail">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_horizontal"
-            android:clickable="true"
-            app:srcCompat="@drawable/share_ic" />
+        app:title="Review Detail"
+        app:rightIcon="@drawable/share_ic">
     </com.hjq.bar.TitleBar>
 
     <LinearLayout

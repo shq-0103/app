@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.fragment.CopyFragment">
+    tools:context="com.shq.movies.ui.fragment.MainFragment">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:text="广州"
-                android:textColor="@color/white"
+                android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/home_search_bar_transparent_bg"
+                android:background="@drawable/home_search_bar_bg"
                 android:gravity="center"
                 android:text="完善细节，追求完美"
                 android:textColor="@color/white60"
@@ -49,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/search_ic"
-                app:tint="@color/white" />
+                app:tint="@color/gray" />
 
         </LinearLayout>
 
@@ -77,9 +77,7 @@
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
             </LinearLayout>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,7 +91,10 @@
                         android:padding="10dp"
                         android:text="Recommendation movies"
                         android:textStyle="bold" />
-
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -136,10 +137,10 @@
                             app:srcCompat="@mipmap/launcher_ic" />
 
                     </LinearLayout>
-
+                    </HorizontalScrollView>
 
                 </LinearLayout>
-            </HorizontalScrollView>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,7 +175,8 @@
                     </LinearLayout>
                     <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -307,7 +309,6 @@
                                 android:id="@+id/main_hot_moviereview_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:text="Date:" />
                         </LinearLayout>
 
@@ -320,13 +321,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bv_home_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemBackground="@null"
-        app:itemTextColor="@drawable/home_navigation_color_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_home_bottom_nav" />
+
 </LinearLayout>

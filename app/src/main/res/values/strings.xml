@@ -176,7 +176,7 @@
 
     <string name="personal_data_id">用户名</string>
     <string name="personal_data_name">昵称</string>
-    <string name="personal_data_name_hint">设置昵称</string>
+    <string name="personal_data_name_hint">Edit nickname</string>
 
     <string name="personal_data_address">地区</string>
     <string name="personal_data_address_hint">请选择</string>

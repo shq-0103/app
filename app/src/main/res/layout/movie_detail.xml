@@ -119,15 +119,29 @@
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <com.hjq.widget.layout.SettingBar
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_weight="1"
                 android:background="@color/black10"
-                android:clickable="true"
-                android:focusable="true"
-                app:bar_leftText="左文本"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                >
+                <ImageView
+                    android:id="@+id/movieDetail_rate_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_rate" />
+                <TextView
+                    android:id="@+id/movieDetail_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="4"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <com.hjq.widget.layout.SettingBar
                 android:layout_width="match_parent"
@@ -149,6 +163,7 @@
                 android:layout_height="50dp"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabMode="fixed"
+                android:background="@color/white"
                 app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabTextColor="@android:color/black">
 
@@ -192,20 +207,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp">
-                <ImageView
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp">
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/movieDetail_comment_img"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-
+                    android:scaleType="centerCrop"
                     app:srcCompat="@mipmap/launcher_ic" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -301,9 +318,67 @@
                 android:background="@color/white"
                 android:text="Related film reviews" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/main_hot_moviereview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="title" />
+
+                    <ImageView
+                        android:id="@+id/hot_type_moviereview_img"
+                        android:layout_width="100dp"
+                        android:layout_height="60dp"
+
+                        app:srcCompat="@mipmap/launcher_ic" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/main_hot_moviereview_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Author:" />
+
+                    <ImageView
+                        android:id="@+id/hot_type_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/home_message_selector" />
+
+                    <TextView
+                        android:id="@+id/main_hot_moviereview_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="3" />
+
+                    <TextView
+                        android:id="@+id/main_hot_moviereview_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date:" />
+                </LinearLayout>
+
+            </LinearLayout>
 
 
 

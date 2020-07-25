@@ -347,4 +347,7 @@ public final class SettingBar extends FrameLayout {
     public View getLineView() {
         return mLineView;
     }
+
+    public void setText(String nickname) {
+    }
 }
