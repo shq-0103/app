@@ -13,8 +13,11 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.RegisterApi;
 import com.shq.movies.http.request.UpdateImageApi;
+import com.shq.movies.http.request.UpdateUserApi;
 import com.shq.movies.http.request.UserApi;
+import com.shq.movies.http.request.UserInfoApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.dialog.DateDialog;
 import com.shq.movies.ui.dialog.InputDialog;
@@ -32,13 +35,16 @@ public final class EditActivity extends MyActivity {
     private ViewGroup mAvatarLayout;
     private ImageView mAvatarView;
     private String mAvatarUrl;
-    private SettingBar mNameView;
+    private SettingBar sb_username;
+    private SettingBar sb_nickname;
     private SettingBar sb_email;
 
     private SettingBar sb_birthday;
     private SettingBar sb_password;
     private SettingBar sb_intro;
     private SettingBar sb_gender;
+
+    private UserInfoBean userInfo;
 
 
     @Override
@@ -50,13 +56,17 @@ public final class EditActivity extends MyActivity {
     protected void initView() {
         mAvatarLayout = findViewById(R.id.fl_person_data_avatar);
         mAvatarView = findViewById(R.id.iv_person_data_avatar);
-        mNameView = findViewById(R.id.sb_nickname);
+        sb_nickname = findViewById(R.id.sb_nickname);
         sb_email = findViewById(R.id.sb_email);
         sb_birthday = findViewById(R.id.sb_birthday);
         sb_password = findViewById(R.id.sb_password);
         sb_intro = findViewById(R.id.sb_intro);
         sb_gender = findViewById(R.id.sb_sex);
-        setOnClickListener(mAvatarLayout, mAvatarView, mNameView, sb_email, sb_birthday, sb_intro, sb_password, sb_gender);
+        sb_username = findViewById(R.id.sb_username);
+
+        userInfo=new UserInfoBean();
+
+        setOnClickListener(mAvatarLayout, mAvatarView, sb_nickname, sb_email, sb_birthday, sb_intro, sb_password, sb_gender);
     }
 
     @Override
@@ -71,7 +81,9 @@ public final class EditActivity extends MyActivity {
             @Override
             public void onSucceed(HttpData<UserInfoBean> result) {
                 super.onSucceed(result);
-                mNameView.setText(result.getData().getNickname());
+                userInfo = result.getData();
+                sb_nickname.setRightText(result.getData().getNickname());
+                sb_username.setRightText(userInfo.getUsername());
             }
 
             @Override
@@ -82,6 +94,47 @@ public final class EditActivity extends MyActivity {
             }
         });
 
+    }
+
+    private void updateUser(BaseDialog dialog,String content,SettingBar sb){
+
+        UpdateUserApi updateUserApi = new UpdateUserApi()
+                .setNickname(userInfo.getNickname())
+                .setGender(userInfo.getGender())
+                .setBirthday(userInfo.getBirthday())
+                .setEmail(userInfo.getEmail())
+                .setIntroduction(userInfo.getIntroduction())
+                .setAvatar(userInfo.getAvatar())
+                .setTags(userInfo.getTags());
+
+
+        switch (sb.getId()){
+            case R.id.sb_nickname:
+                updateUserApi.setNickname(content);
+                break;
+            case R.id.sb_sex:
+                updateUserApi.setGender(content);
+                break;
+            case R.id.sb_email:
+                updateUserApi.setEmail(content);
+                break;
+            case R.id.sb_intro:
+                updateUserApi.setEmail(content);
+                break;
+            default:
+                break;
+        }
+
+        EasyHttp.post(this)
+                .api(updateUserApi)
+                .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<Boolean> data) {
+                        sb.setRightText(content);
+                        dialog.dismiss();
+                    }
+                });
     }
 
     public void onClick(View v) {
@@ -127,16 +180,24 @@ public final class EditActivity extends MyActivity {
                 new InputDialog.Builder(this)
                         // 标题可以不用填写
                         .setTitle(getString(R.string.personal_data_name_hint))
-                        .setContent(mNameView.getRightText())
+                        .setContent(sb_nickname.getRightText())
                         //.setHint(getString(R.string.personal_data_name_hint))
                         //.setConfirm("确定")
                         // 设置 null 表示不显示取消按钮
                         //.setCancel("取消")
                         // 设置点击按钮后不关闭对话框
-                        //.setAutoDismiss(false)
-                        .setListener((dialog, content) -> {
-                            if (!mNameView.getRightText().equals(content)) {
-                                mNameView.setRightText(content);
+                        .setAutoDismiss(false)
+                        .setListener(new InputDialog.OnListener() {
+                            @Override
+                            public void onConfirm(BaseDialog dialog, String content) {
+                                    if (!sb_nickname.getRightText().equals(content)) {
+                                        updateUser(dialog,content,sb_nickname);
+                                    }
+                            }
+
+                            @Override
+                            public void onCancel(BaseDialog dialog) {
+                                dialog.dismiss();
                             }
                         })
                         .show();
