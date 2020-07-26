@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context="com.shq.movies.ui.fragment.MineFragment">
 
     <com.hjq.bar.TitleBar
@@ -65,7 +64,7 @@
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bv_userinfo_navigation"
+                android:id="@+id/bv_user_info_navigation"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@color/white"
