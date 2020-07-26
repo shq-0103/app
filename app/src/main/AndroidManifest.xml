@@ -148,12 +148,36 @@
             android:label="@string/personal_data_title"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--        修改个人资料-->
+        <!-- 修改个人资料-->
         <activity
             android:name=".ui.activity.EditActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" />
-
+        <!-- 我的影片列表-->
+        <activity
+            android:name=".ui.activity.MyMovieListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
+        <!--影片列表-->
+        <activity
+            android:name=".ui.activity.MovieListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
+        <!--        我喜爱的影评列表-->
+        <activity
+            android:name=".ui.activity.ReviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
+        <!--        我的消息列表-->
+        <activity
+            android:name=".ui.activity.MessageActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
+        <!--        我的评分列表-->
+        <activity
+            android:name=".ui.activity.RatingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
         <!-- 浏览器 -->
         <activity
             android:name="com.shq.movies.ui.activity.BrowserActivity"

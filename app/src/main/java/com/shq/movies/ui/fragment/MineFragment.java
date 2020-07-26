@@ -3,6 +3,7 @@ package com.shq.movies.ui.fragment;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,20 +23,29 @@ import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
 import com.shq.movies.ui.activity.HomeActivity;
+import com.shq.movies.ui.activity.MessageActivity;
+import com.shq.movies.ui.activity.MovieListActivity;
+import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.activity.PasswordResetActivity;
+import com.shq.movies.ui.activity.RatingActivity;
+import com.shq.movies.ui.activity.ReviewActivity;
 import com.shq.movies.ui.dialog.MessageDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 public final class MineFragment extends MyFragment<HomeActivity> implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private TextView tv_nickname;
+    private TextView tv_intro;
 
     private SettingBar sb_sign_out;
     private SettingBar sb_modify_userinfo;
-
+    private SettingBar sb_my_movielist;
     private ImageView iv_avatar;
     private BottomNavigationView bv_user_info;
+    private ImageButton bt_addmovie;
+
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -49,15 +59,18 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     @Override
     protected void initView() {
         tv_nickname = findViewById(R.id.tv_nickname);
+        tv_intro = findViewById(R.id.tv_intro);
         sb_sign_out = findViewById(R.id.sb_setting_exit);
         sb_modify_userinfo = findViewById(R.id.sb_modify);
         iv_avatar = findViewById(R.id.iv_avatar);
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
+        sb_my_movielist= findViewById(R.id.sb_my_movielist);
+        bt_addmovie = findViewById(R.id.bt_addmovie);
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_my_movielist,bt_addmovie);
     }
 
     @Override
@@ -73,6 +86,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             public void onSucceed(HttpData<UserInfoBean> result) {
                 super.onSucceed(result);
                 tv_nickname.setText(result.getData().getNickname());
+                tv_intro.setText(result.getData().getIntroduction());
             }
 
             @Override
@@ -86,7 +100,22 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        toast(item.getTitle());
+        switch (item.getItemId()) {
+            case R.id.account_reviews:
+                startActivity(ReviewActivity.class);
+                return true;
+            case R.id.account_rating:
+                startActivity(RatingActivity.class);
+                return true;
+            case R.id.account_message:
+                startActivity(MessageActivity.class);
+                return true;
+            case R.id.account_favorities:
+                startActivity(MyMovieListActivity.class);
+                return true;
+            default:
+                break;
+        }
         return false;
     }
 
@@ -136,7 +165,11 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             case R.id.sb_modify:
                 startActivity(EditActivity.class);
                 break;
-
+            case R.id.sb_my_movielist:
+                startActivity(MyMovieListActivity.class);
+                break;
+            case R.id.bt_addmovie:
+                startActivity(MovieListActivity.class);
             default:
                 break;
         }

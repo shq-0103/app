@@ -34,6 +34,7 @@ public final class UserInfoFragment extends MyFragment<CopyActivity> {
     protected void initView() {
         sb_nickname=findViewById(R.id.sb_nickname);
         sb_username=findViewById(R.id.sb_username);
+
         mAvatarView=findViewById(R.id.iv_person_data_avatar);
     }
 

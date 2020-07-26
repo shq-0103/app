@@ -174,12 +174,14 @@
 
     <!-- 个人资料 -->
     <string name="personal_data_title">个人资料</string>
-    <string name="personal_data_head">头像</string>
+    <string name="personal_data_head">Avatar</string>
 
     <string name="personal_data_id">用户名</string>
     <string name="personal_data_name">昵称</string>
     <string name="personal_data_name_hint">Edit nickname</string>
 
+    <string name="personal_data_email_hint">Edit email</string>
+    <string name="personal_data_intro_hint">Edit introduction</string>
     <string name="personal_data_address">地区</string>
     <string name="personal_data_address_hint">请选择</string>
 

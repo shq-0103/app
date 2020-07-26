@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.activity.CopyActivity">
+    tools:context="com.shq.movies.ui.activity.RatingActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"

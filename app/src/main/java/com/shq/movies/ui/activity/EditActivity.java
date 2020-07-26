@@ -38,13 +38,14 @@ public final class EditActivity extends MyActivity {
     private SettingBar sb_username;
     private SettingBar sb_nickname;
     private SettingBar sb_email;
-
+    private SettingBar sb_tags;
     private SettingBar sb_birthday;
     private SettingBar sb_password;
     private SettingBar sb_intro;
     private SettingBar sb_gender;
 
     private UserInfoBean userInfo;
+
 
 
     @Override
@@ -63,7 +64,7 @@ public final class EditActivity extends MyActivity {
         sb_intro = findViewById(R.id.sb_intro);
         sb_gender = findViewById(R.id.sb_sex);
         sb_username = findViewById(R.id.sb_username);
-
+        sb_tags = findViewById(R.id.sb_tags);
         userInfo=new UserInfoBean();
 
         setOnClickListener(mAvatarLayout, mAvatarView, sb_nickname, sb_email, sb_birthday, sb_intro, sb_password, sb_gender);
@@ -84,6 +85,9 @@ public final class EditActivity extends MyActivity {
                 userInfo = result.getData();
                 sb_nickname.setRightText(result.getData().getNickname());
                 sb_username.setRightText(userInfo.getUsername());
+                sb_email.setRightText(userInfo.getEmail());
+                sb_intro.setRightText(userInfo.getIntroduction());
+
             }
 
             @Override
@@ -104,8 +108,8 @@ public final class EditActivity extends MyActivity {
                 .setBirthday(userInfo.getBirthday())
                 .setEmail(userInfo.getEmail())
                 .setIntroduction(userInfo.getIntroduction())
-                .setAvatar(userInfo.getAvatar())
-                .setTags(userInfo.getTags());
+                .setAvatar(userInfo.getAvatar());
+
 
 
         switch (sb.getId()){
@@ -262,8 +266,79 @@ public final class EditActivity extends MyActivity {
                         .show();
                 break;
             case R.id.sb_email:
+                new InputDialog.Builder(this)
+                        // 标题可以不用填写
+                        .setTitle(getString(R.string.personal_data_email_hint))
+                        .setContent(sb_email.getRightText())
+                        //.setHint(getString(R.string.personal_data_name_hint))
+                        //.setConfirm("确定")
+                        // 设置 null 表示不显示取消按钮
+                        //.setCancel("取消")
+                        // 设置点击按钮后不关闭对话框
+                        .setAutoDismiss(false)
+                        .setListener(new InputDialog.OnListener() {
+                            @Override
+                            public void onConfirm(BaseDialog dialog, String content) {
+                                if (!sb_email.getRightText().equals(content)) {
+                                    updateUser(dialog,content,sb_email);
+                                }
+                            }
+
+                            @Override
+                            public void onCancel(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
                 break;
             case R.id.sb_intro:
+                new InputDialog.Builder(this)
+                        // 标题可以不用填写
+                        .setTitle(getString(R.string.personal_data_intro_hint))
+                        .setContent(sb_intro.getRightText())
+                        //.setHint(getString(R.string.personal_data_name_hint))
+                        //.setConfirm("确定")
+                        // 设置 null 表示不显示取消按钮
+                        //.setCancel("取消")
+                        // 设置点击按钮后不关闭对话框
+                        .setAutoDismiss(false)
+                        .setListener(new InputDialog.OnListener() {
+                            @Override
+                            public void onConfirm(BaseDialog dialog, String content) {
+                                if (!sb_intro.getRightText().equals(content)) {
+                                    updateUser(dialog,content,sb_intro);
+                                }
+                            }
+
+                            @Override
+                            public void onCancel(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+                break;
+            case R.id.sb_tags:
+                // 多选对话框
+                new SelectDialog.Builder(this)
+                        .setTitle("请选择工作日")
+                        .setList("星期一", "星期二", "星期三", "星期四", "星期五")
+                        // 设置最大选择数
+                        .setMaxSelect(3)
+                        // 设置默认选中
+                        .setSelect(2, 3, 4)
+                        .setListener(new SelectDialog.OnListener<String>() {
+
+                            @Override
+                            public void onSelected(BaseDialog dialog, HashMap<Integer, String> data) {
+                                toast("确定了：" + data.toString());
+                            }
+
+                            @Override
+                            public void onCancel(BaseDialog dialog) {
+                                toast("取消了");
+                            }
+                        })
+                        .show();
                 break;
             default:
                 break;

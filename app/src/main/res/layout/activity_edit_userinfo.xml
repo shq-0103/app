@@ -81,5 +81,11 @@
         android:layout_height="wrap_content"
         app:bar_leftText="Introduction"
         app:bar_rightText="Introduction" />
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="Tags"
+        app:bar_rightText="Introduction" />
 
 </LinearLayout>
