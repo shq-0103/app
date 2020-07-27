@@ -49,6 +49,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private ImageView iv_avatar;
     private BottomNavigationView bv_user_info;
     private ImageButton bt_addmovie;
+    private ImageButton ib_click;
 
 
     public static MineFragment newInstance() {
@@ -71,11 +72,12 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
         sb_my_movielist= findViewById(R.id.sb_my_movielist);
         bt_addmovie = findViewById(R.id.bt_addmovie);
+        ib_click = findViewById(R.id.ib_click);
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,ib_click);
     }
 
     @Override

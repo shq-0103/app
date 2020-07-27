@@ -10,12 +10,7 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.ui.pager.GuidePagerAdapter;
 import com.rd.PageIndicatorView;
 
-/**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2019/09/21
- *    desc   : APP 引导页
- */
+
 public final class GuideActivity extends MyActivity
         implements ViewPager.OnPageChangeListener {
 

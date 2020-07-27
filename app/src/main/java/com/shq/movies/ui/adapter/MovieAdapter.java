@@ -29,11 +29,15 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
 
         private ImageView iv_movie;
         private TextView tv_movie_name;
+        private TextView tv_movie_date;
+        private TextView tv_movie_type;
 
         private ViewHolder() {
             super(R.layout.item_movie);
             iv_movie=(ImageView)findViewById(R.id.iv_movie_item);
             tv_movie_name = (TextView)findViewById(R.id.tv_movie_name);
+            tv_movie_date = (TextView)findViewById(R.id.tv_movie_date);
+            tv_movie_type = (TextView)findViewById(R.id.tv_movie_type);
         }
 
         @Override
@@ -49,6 +53,8 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
                     .error(R.drawable.ic_movie_placeholder)
                     .into(iv_movie);
             tv_movie_name.setText(getItem(position).getName());
+            tv_movie_date.setText(getItem(position).getReleaseDate());
+            tv_movie_type.setText(getItem(position).getGenres());
         }
     }
 }
