@@ -2,6 +2,7 @@ package com.shq.movies.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -29,8 +30,7 @@ public final class HomeFragment extends MyFragment<HomeActivity>
     private XCollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
 
-    private TextView mAddressView;
-    private TextView mHintView;
+    private EditText et_search;
     private AppCompatImageView mSearchView;
 
     private TabLayout mTabLayout;
@@ -52,8 +52,8 @@ public final class HomeFragment extends MyFragment<HomeActivity>
         mCollapsingToolbarLayout = findViewById(R.id.ctl_home_bar);
         mToolbar = findViewById(R.id.tb_home_title);
 
-        mAddressView = findViewById(R.id.tv_home_address);
-        mHintView = findViewById(R.id.tv_home_hint);
+        et_search = findViewById(R.id.et_search);
+
         mSearchView = findViewById(R.id.iv_home_search);
 
         mTabLayout = findViewById(R.id.tl_home_tab);
@@ -98,15 +98,13 @@ public final class HomeFragment extends MyFragment<HomeActivity>
     @Override
     public void onScrimsStateChange(XCollapsingToolbarLayout layout, boolean shown) {
         if (shown) {
-            mAddressView.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.black));
-            mHintView.setBackgroundResource(R.drawable.home_search_bar_gray_bg);
-            mHintView.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.black60));
+            et_search.setBackgroundResource(R.drawable.home_search_bar_gray_bg);
+            et_search.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.black60));
             mSearchView.setSupportImageTintList(ColorStateList.valueOf(getColor(R.color.colorIcon)));
             getStatusBarConfig().statusBarDarkFont(true).init();
         } else {
-            mAddressView.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.white));
-            mHintView.setBackgroundResource(R.drawable.home_search_bar_transparent_bg);
-            mHintView.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.white60));
+            et_search.setBackgroundResource(R.drawable.home_search_bar_transparent_bg);
+            et_search.setTextColor(ContextCompat.getColor(getAttachActivity(), R.color.white60));
             mSearchView.setSupportImageTintList(ColorStateList.valueOf(getColor(R.color.white)));
             getStatusBarConfig().statusBarDarkFont(false).init();
         }

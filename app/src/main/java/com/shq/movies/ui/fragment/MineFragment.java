@@ -22,6 +22,7 @@ import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
+import com.shq.movies.ui.activity.FavoriteActivity;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MessageActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
@@ -42,6 +43,9 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private SettingBar sb_sign_out;
     private SettingBar sb_modify_userinfo;
     private SettingBar sb_my_movielist;
+
+    private SettingBar sb_about;
+
     private ImageView iv_avatar;
     private BottomNavigationView bv_user_info;
     private ImageButton bt_addmovie;
@@ -62,6 +66,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         tv_intro = findViewById(R.id.tv_intro);
         sb_sign_out = findViewById(R.id.sb_setting_exit);
         sb_modify_userinfo = findViewById(R.id.sb_modify);
+        sb_about=findViewById(R.id.sb_setting_about);
         iv_avatar = findViewById(R.id.iv_avatar);
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
         sb_my_movielist= findViewById(R.id.sb_my_movielist);
@@ -70,7 +75,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_my_movielist,bt_addmovie);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie);
     }
 
     @Override
@@ -170,6 +175,10 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                 break;
             case R.id.bt_addmovie:
                 startActivity(MovieListActivity.class);
+                break;
+            case R.id.sb_setting_about:
+                startActivity(FavoriteActivity.class);
+                break;
             default:
                 break;
         }

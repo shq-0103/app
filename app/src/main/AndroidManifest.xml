@@ -149,6 +149,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 修改个人资料-->
+        <!--修改个人资料-->
         <activity
             android:name=".ui.activity.EditActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -178,6 +179,13 @@
             android:name=".ui.activity.RatingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"></activity>
+
+        <!--收藏的电影-->
+        <activity
+            android:name=".ui.activity.FavoriteActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" />
+
         <!-- 浏览器 -->
         <activity
             android:name="com.shq.movies.ui.activity.BrowserActivity"
