@@ -24,6 +24,7 @@ import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.other.KeyboardWatcher;
+import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.fragment.FindFragment;
 import com.shq.movies.ui.fragment.HomeFragment;
 import com.shq.movies.ui.fragment.LoginFragment;
@@ -31,6 +32,7 @@ import com.shq.movies.ui.fragment.MainFragment;
 import com.shq.movies.ui.fragment.MeFragment;
 import com.shq.movies.ui.fragment.MessageFragment;
 import com.shq.movies.ui.fragment.MineFragment;
+import com.shq.movies.ui.fragment.MovieReviewFragment;
 import com.shq.movies.ui.fragment.SearchFragment;
 import com.shq.movies.ui.fragment.UserInfoFragment;
 
@@ -77,7 +79,7 @@ public final class HomeActivity extends MyActivity
         mPagerAdapter = new BaseFragmentAdapter<>(this);
         mPagerAdapter.addFragment(MainFragment.newInstance());
         mPagerAdapter.addFragment(SearchFragment.newInstance());
-        mPagerAdapter.addFragment(MessageFragment.newInstance());
+        mPagerAdapter.addFragment(MovieReviewFragment.newInstance());
         mPagerAdapter.addFragment(MineFragment.newInstance());
         mPagerAdapter.addFragment(LoginFragment.newInstance());
         // 设置成懒加载模式

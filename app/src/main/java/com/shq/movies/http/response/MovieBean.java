@@ -97,8 +97,8 @@ public final class MovieBean {
   }
 
 
-  public double getScore() {
-    return score;
+  public int getScore() {
+    return (int) score;
   }
 
   public void setScore(double score) {

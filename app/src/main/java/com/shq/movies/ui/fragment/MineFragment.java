@@ -25,6 +25,7 @@ import com.shq.movies.ui.activity.EditActivity;
 import com.shq.movies.ui.activity.FavoriteActivity;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MessageActivity;
+import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.activity.PasswordResetActivity;
@@ -50,6 +51,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private BottomNavigationView bv_user_info;
     private ImageButton bt_addmovie;
     private ImageButton ib_click;
+    private ImageView iv_movie_cover;
 
 
     public static MineFragment newInstance() {
@@ -73,11 +75,12 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         sb_my_movielist= findViewById(R.id.sb_my_movielist);
         bt_addmovie = findViewById(R.id.bt_addmovie);
         ib_click = findViewById(R.id.ib_click);
+        iv_movie_cover = findViewById(R.id.iv_movie_cover);
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,ib_click);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,ib_click,iv_movie_cover);
     }
 
     @Override
@@ -181,6 +184,8 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             case R.id.sb_setting_about:
                 startActivity(FavoriteActivity.class);
                 break;
+            case R.id.iv_movie_cover:
+                startActivity(MovieDetailActivity.class);
             default:
                 break;
         }
