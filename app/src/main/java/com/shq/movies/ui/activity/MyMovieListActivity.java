@@ -9,6 +9,7 @@ import com.hjq.base.BaseFragmentAdapter;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
+import com.shq.movies.ui.fragment.FavoriteFragment;
 import com.shq.movies.ui.fragment.StatusFragment;
 
 public final class MyMovieListActivity extends MyActivity {
@@ -28,7 +29,7 @@ public final class MyMovieListActivity extends MyActivity {
         pg_movielist = findViewById(R.id.pg_movielist);
 
         mPagerAdapter = new BaseFragmentAdapter<>(this);
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Favorites");
+        mPagerAdapter.addFragment(FavoriteFragment.newInstance(), "Favorites");
         mPagerAdapter.addFragment(StatusFragment.newInstance(), "Seen");
         pg_movielist.setAdapter(mPagerAdapter);
         tb_movielist.setupWithViewPager(pg_movielist);
