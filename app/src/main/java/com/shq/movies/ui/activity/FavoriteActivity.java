@@ -44,6 +44,11 @@ public final class FavoriteActivity extends MyActivity implements OnRefreshLoadM
 
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.setOnItemClickListener(this);
+        movieAdapter.setOnChildClickListener(R.id.tv_movie_name,this);
+        movieAdapter.setOnChildClickListener(R.id.tv_movie_date,this);
+        movieAdapter.setOnChildClickListener(R.id.bt_favorite,this);
+
+
         mRecyclerView.setAdapter(movieAdapter);
 
         TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
@@ -92,12 +97,19 @@ public final class FavoriteActivity extends MyActivity implements OnRefreshLoadM
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-
+        toast("onClickItem"+position);
     }
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-
+        switch (childView.getId()){
+            case R.id.bt_favorite:
+                toast("点击了喜欢"+movieAdapter.getItem(position).getName());
+                break;
+            default:
+                toast(((TextView)childView).getText() );
+                break;
+        }
     }
 
     @Override

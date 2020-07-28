@@ -34,7 +34,7 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
 
         private ViewHolder() {
             super(R.layout.item_movie);
-            iv_movie=(ImageView)findViewById(R.id.iv_movie_item);
+            iv_movie=(ImageView)findViewById(R.id.iv_movie_cover);
             tv_movie_name = (TextView)findViewById(R.id.tv_movie_name);
             tv_movie_date = (TextView)findViewById(R.id.tv_movie_date);
             tv_movie_type = (TextView)findViewById(R.id.tv_movie_type);
