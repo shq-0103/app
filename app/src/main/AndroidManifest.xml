@@ -118,6 +118,12 @@
             android:name=".ui.activity.EditActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 我的影片列表 -->
+<!--        影片详情-->
+        <activity
+            android:name=".ui.activity.MovieDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"></activity>
+        <!-- 我的影片列表-->
         <activity
             android:name=".ui.activity.MyMovieListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

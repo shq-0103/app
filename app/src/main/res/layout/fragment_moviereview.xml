@@ -5,38 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.fragment.CopyFragment">
-
+    tools:context="com.shq.movies.ui.fragment.MovieReviewFragment">
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:backButton="false"
         app:title="Movie Review" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_home_tab"
+            android:id="@+id/tb_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:tabRippleColor="@color/transparent"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorColor="#ffc824"
             app:tabIndicatorFullWidth="false"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabSelectedTextColor="#ffc824"
             app:tabTextColor="@color/black25" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vg_movielist"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </LinearLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bv_home_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemBackground="@null"
-        app:itemTextColor="@drawable/home_navigation_color_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_home_bottom_nav" />
 
 </LinearLayout>
