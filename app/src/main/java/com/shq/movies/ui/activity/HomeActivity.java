@@ -2,12 +2,14 @@ package com.shq.movies.ui.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +23,7 @@ import com.shq.movies.common.MyFragment;
 import com.shq.movies.helper.ActivityStackManager;
 import com.shq.movies.helper.DoubleClickHelper;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.CollectMovieIdListApi;
 import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.other.KeyboardWatcher;
@@ -36,6 +39,9 @@ import com.shq.movies.ui.fragment.UserInfoFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class HomeActivity extends MyActivity
         implements KeyboardWatcher.SoftKeyboardStateListener,
@@ -74,6 +80,12 @@ public final class HomeActivity extends MyActivity
 
     @Override
     protected void initData() {
+
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        String token=sharedPreferences.getString(getString(R.string.user_token),null);
+        EasyConfig.getInstance()
+                .addHeader("Authorization", "Bearer "+token);
+
         mPagerAdapter = new BaseFragmentAdapter<>(this);
         mPagerAdapter.addFragment(MainFragment.newInstance());
         mPagerAdapter.addFragment(SearchFragment.newInstance());
@@ -83,6 +95,31 @@ public final class HomeActivity extends MyActivity
         // 设置成懒加载模式
         mPagerAdapter.setLazyMode(true);
         mViewPager.setAdapter(mPagerAdapter);
+
+        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<List<Integer>>>(this) {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onSucceed(HttpData<List<Integer>> result) {
+                super.onSucceed(result);
+
+                //步骤1：创建一个SharedPreferences对象
+                SharedPreferences sharedPreferences =getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+                //步骤2： 实例化SharedPreferences.Editor对象
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String idS=result.getData().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                //步骤3：将获取过来的值放入文件
+                editor.putString(getString(R.string.favorite_movie_id), idS);
+                //步骤4：提交
+                editor.commit();
+            }
+
+            @Override
+            public void onFail(Exception e) {
+//                super.onFail(e);
+            }
+        });
     }
 
     @Subscribe

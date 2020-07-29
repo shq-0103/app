@@ -1,6 +1,8 @@
 package com.shq.movies.ui.fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
@@ -19,6 +21,7 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.CollectMovieIdListApi;
 import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
@@ -27,13 +30,14 @@ import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MessageActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.MyMovieListActivity;
-import com.shq.movies.ui.activity.PasswordResetActivity;
 import com.shq.movies.ui.activity.RatingActivity;
 import com.shq.movies.ui.activity.ReviewActivity;
 import com.shq.movies.ui.dialog.MessageDialog;
 
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class MineFragment extends MyFragment<HomeActivity> implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -67,17 +71,17 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         tv_intro = findViewById(R.id.tv_intro);
         sb_sign_out = findViewById(R.id.sb_setting_exit);
         sb_modify_userinfo = findViewById(R.id.sb_modify);
-        sb_about=findViewById(R.id.sb_setting_about);
+        sb_about = findViewById(R.id.sb_setting_about);
         iv_avatar = findViewById(R.id.iv_avatar);
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
-        sb_my_movielist= findViewById(R.id.sb_my_movielist);
+        sb_my_movielist = findViewById(R.id.sb_my_movielist);
         bt_addmovie = findViewById(R.id.bt_addmovie);
         ib_click = findViewById(R.id.ib_click);
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,ib_click);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo, sb_about, sb_my_movielist, bt_addmovie, ib_click);
     }
 
     @Override
@@ -101,6 +105,26 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                 super.onFail(e);
                 // 跳转到登录页
                 EventBus.getDefault().post(getString(R.string.event_login_fail));
+            }
+        });
+
+        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<List<Integer>>>(this) {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onSucceed(HttpData<List<Integer>> result) {
+                super.onSucceed(result);
+
+                //步骤1：创建一个SharedPreferences对象
+                SharedPreferences sharedPreferences =getAttachActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+                //步骤2： 实例化SharedPreferences.Editor对象
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String idS=result.getData().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                //步骤3：将获取过来的值放入文件
+                editor.putString(getString(R.string.favorite_movie_id), idS);
+                //步骤4：提交
+                editor.commit();
             }
         });
     }
@@ -155,7 +179,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                                 SharedPreferences sharedPreferences = getAttachActivity().getSharedPreferences("data", getContext().MODE_PRIVATE);
                                 //步骤2： 实例化SharedPreferences.Editor对象
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.remove(getString(R.string.user_token));
+                                editor.clear();
                                 editor.commit();
                                 // 跳转到登录页
                                 EventBus.getDefault().post(getString(R.string.event_login_fail));

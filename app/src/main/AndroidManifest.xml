@@ -2,26 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shq.movies">
-
     <!-- 联网权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 访问网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <!-- 外部存储读写权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 外部存储读写权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!-- 拍照权限 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <!-- 安装包的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 拍照权限 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 安装包的权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:name="com.shq.movies.common.MyApplication"
+        android:name=".common.MyApplication"
         android:allowBackup="false"
         android:icon="@mipmap/launcher_ic"
         android:label="@string/app_name"
@@ -34,22 +25,19 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="android:allowBackup,android:supportsRtl"
         tools:targetApi="n">
-
+        <activity android:name=".ui.activity.QueryMovieActivity"></activity>
         <!-- 适配 Android 7.0 文件意图 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- 闪屏界面 -->
+        </provider> <!-- 闪屏界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
@@ -62,189 +50,141 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <!-- 崩溃界面 -->
+        </activity> <!-- 崩溃界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.CrashActivity"
+            android:name=".ui.activity.CrashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:process=":crash"
-            android:screenOrientation="landscape" />
-
-        <!-- 引导界面 -->
+            android:screenOrientation="landscape" /> <!-- 引导界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.GuideActivity"
+            android:name=".ui.activity.GuideActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- App 首页 -->
+            android:screenOrientation="portrait" /> <!-- App 首页 -->
         <activity
-            android:name="com.shq.movies.ui.activity.HomeActivity"
+            android:name=".ui.activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <!-- 登录界面 -->
+            android:screenOrientation="portrait" /> <!-- 登录界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 注册界面 -->
+            android:screenOrientation="portrait" /> <!-- 注册界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.RegisterActivity"
+            android:name=".ui.activity.RegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 设置界面 -->
+            android:screenOrientation="portrait" /> <!-- 设置界面 -->
         <activity
-            android:name="com.shq.movies.ui.activity.SettingActivity"
+            android:name=".ui.activity.SettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/setting_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 忘记密码 -->
+            android:screenOrientation="portrait" /> <!-- 忘记密码 -->
         <activity
-            android:name="com.shq.movies.ui.activity.PasswordForgetActivity"
+            android:name=".ui.activity.PasswordForgetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/password_forget_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 重置密码 -->
+            android:screenOrientation="portrait" /> <!-- 重置密码 -->
         <activity
-            android:name="com.shq.movies.ui.activity.PasswordResetActivity"
+            android:name=".ui.activity.PasswordResetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/password_reset_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 手机号更换 -->
+            android:screenOrientation="portrait" /> <!-- 手机号更换 -->
         <activity
-            android:name="com.shq.movies.ui.activity.PhoneResetActivity"
+            android:name=".ui.activity.PhoneResetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/phone_reset_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 关于我们 -->
+            android:screenOrientation="portrait" /> <!-- 关于我们 -->
         <activity
-            android:name="com.shq.movies.ui.activity.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/about_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 个人资料 -->
+            android:screenOrientation="portrait" /> <!-- 个人资料 -->
         <activity
-            android:name="com.shq.movies.ui.activity.PersonalDataActivity"
+            android:name=".ui.activity.PersonalDataActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/personal_data_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <!-- 修改个人资料-->
-        <!--修改个人资料-->
+            android:screenOrientation="portrait" /> <!-- 修改个人资料 -->
+        <!-- 修改个人资料 -->
         <activity
             android:name=".ui.activity.EditActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop" />
-        <!-- 我的影片列表-->
+            android:launchMode="singleTop" /> <!-- 我的影片列表 -->
         <activity
             android:name=".ui.activity.MyMovieListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"></activity>
-        <!--影片列表-->
+            android:launchMode="singleTop" /> <!-- 影片列表 -->
         <activity
             android:name=".ui.activity.MovieListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"></activity>
-        <!--        我喜爱的影评列表-->
+            android:launchMode="singleTop" /> <!-- 我喜爱的影评列表 -->
         <activity
             android:name=".ui.activity.ReviewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"></activity>
-        <!--        我的消息列表-->
+            android:launchMode="singleTop" /> <!-- 我的消息列表 -->
         <activity
             android:name=".ui.activity.MessageActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"></activity>
-        <!--        我的评分列表-->
+            android:launchMode="singleTop" /> <!-- 我的评分列表 -->
         <activity
             android:name=".ui.activity.RatingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"></activity>
-
-        <!--收藏的电影-->
+            android:launchMode="singleTop" /> <!-- 收藏的电影 -->
         <activity
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop" />
-
-        <!-- 浏览器 -->
+            android:launchMode="singleTop" /> <!-- 浏览器 -->
         <activity
-            android:name="com.shq.movies.ui.activity.BrowserActivity"
+            android:name=".ui.activity.BrowserActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/web_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 拍照选择 -->
+            android:screenOrientation="portrait" /> <!-- 拍照选择 -->
         <activity
-            android:name="com.shq.movies.ui.activity.CameraActivity"
+            android:name=".ui.activity.CameraActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 图片选择 -->
+            android:screenOrientation="portrait" /> <!-- 图片选择 -->
         <activity
-            android:name="com.shq.movies.ui.activity.ImageSelectActivity"
+            android:name=".ui.activity.ImageSelectActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/image_select_title"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 查看大图 -->
+            android:screenOrientation="portrait" /> <!-- 查看大图 -->
         <activity
-            android:name="com.shq.movies.ui.activity.ImagePreviewActivity"
+            android:name=".ui.activity.ImagePreviewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 播放视频 -->
+            android:screenOrientation="portrait" /> <!-- 播放视频 -->
         <activity
-            android:name="com.shq.movies.ui.activity.VideoPlayActivity"
+            android:name=".ui.activity.VideoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@style/FullScreenTheme" />
-
-        <!-- 选择视频 -->
+            android:theme="@style/FullScreenTheme" /> <!-- 选择视频 -->
         <activity
-            android:name="com.shq.movies.ui.activity.VideoSelectActivity"
+            android:name=".ui.activity.VideoSelectActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" /> <!-- 对话框案例 -->
+        <activity
+            android:name=".ui.activity.DialogActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" /> <!-- 状态案例 -->
+        <activity
+            android:name=".ui.activity.StatusActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
-        <!-- 对话框案例 -->
-        <activity
-            android:name="com.shq.movies.ui.activity.DialogActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- 状态案例 -->
-        <activity
-            android:name="com.shq.movies.ui.activity.StatusActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

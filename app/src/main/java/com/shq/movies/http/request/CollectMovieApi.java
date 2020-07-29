@@ -1,14 +1,13 @@
 package com.shq.movies.http.request;
 
 import com.hjq.http.config.IRequestApi;
-import com.shq.movies.http.model.PageQuery;
 
 
-public final class FavoriteMovieApi implements IRequestApi {
+public final class CollectMovieApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "favorite/movies";
+        return "collect/movies";
     }
 
     private int page;
@@ -22,12 +21,12 @@ public final class FavoriteMovieApi implements IRequestApi {
         return pageSize;
     }
 
-    public FavoriteMovieApi setPage(int page) {
+    public CollectMovieApi setPage(int page) {
         this.page = page;
         return this;
     }
 
-    public FavoriteMovieApi setPageSize(int pageSize) {
+    public CollectMovieApi setPageSize(int pageSize) {
         this.pageSize = pageSize;
         return this;
     }

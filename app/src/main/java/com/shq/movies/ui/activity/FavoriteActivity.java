@@ -17,12 +17,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.FavoriteMovieApi;
+import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieAdapter;
-import com.shq.movies.ui.adapter.StatusAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public final class FavoriteActivity extends MyActivity implements OnRefreshLoadMoreListener,
@@ -49,6 +47,7 @@ public final class FavoriteActivity extends MyActivity implements OnRefreshLoadM
         movieAdapter.setOnChildClickListener(R.id.bt_favorite,this);
 
 
+
         mRecyclerView.setAdapter(movieAdapter);
 
         TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
@@ -69,7 +68,7 @@ public final class FavoriteActivity extends MyActivity implements OnRefreshLoadM
 
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new FavoriteMovieApi().setPage(movieAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new CollectMovieApi().setPage(movieAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);

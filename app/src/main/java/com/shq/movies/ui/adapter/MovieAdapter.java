@@ -1,8 +1,10 @@
 package com.shq.movies.ui.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,9 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.response.MovieBean;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class MovieAdapter extends MyAdapter<MovieBean> {
 
@@ -31,6 +36,7 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
         private TextView tv_movie_name;
         private TextView tv_movie_date;
         private TextView tv_movie_type;
+        private ImageButton bt_favorite;
 
         private ViewHolder() {
             super(R.layout.item_movie);
@@ -38,10 +44,20 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
             tv_movie_name = (TextView)findViewById(R.id.tv_movie_name);
             tv_movie_date = (TextView)findViewById(R.id.tv_movie_date);
             tv_movie_type = (TextView)findViewById(R.id.tv_movie_type);
+            bt_favorite = (ImageButton)findViewById(R.id.bt_favorite);
         }
 
         @Override
         public void onBindView(int position) {
+            SharedPreferences sharedPreferences=getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            String token=sharedPreferences.getString(getString(R.string.favorite_movie_id),null);
+            if(token!=null&&!token.isEmpty()){
+                List<String> ids= Arrays.asList(token.split("\\|"));
+                if(ids.contains(String.valueOf(getItem(position).getId()) )){
+                    bt_favorite.setImageResource(R.drawable.ic_movie_placeholder);
+
+                }
+            }
             int c=getItemCount();
             MovieBean movieBean= getItem(position);
             if(c<=0){
