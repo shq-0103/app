@@ -51,7 +51,7 @@ public final class MovieDetailActivity extends MyActivity {
                 tv_movie_title.setText(result.getData().getName());
                 tv_movie_type.setText(result.getData().getGenres());
                 tv_movie_time.setText(result.getData().getReleaseDate());
-                tv_score.setText(result.getData().getScore());
+                tv_score.setText(String.valueOf(result.getData().getScore()));
                 GlideApp.with(getActivity())
                         .load(result.getData().getCover())
                         .placeholder(R.drawable.ic_movie_placeholder)

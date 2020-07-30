@@ -18,7 +18,6 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.FavoriteMovieApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
