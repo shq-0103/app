@@ -60,6 +60,8 @@
     <string name="hint_layout_error_request">请求出错，点击重试</string>
     <string name="hint_layout_error_network">网络错误，点击重试</string>
 
+    <string name="hint_no_more_data">No more data</string>
+
     <!-- 地区对话框 -->
     <string name="address_title">请选择地区</string>
     <string name="address_hint">请选择</string>

@@ -16,6 +16,7 @@
     <color name="colorLine">#ECECEC</color>
     <!-- 图标颜色 -->
     <color name="colorIcon">#7C7C7C</color>
+    <color name="colorSelect">#FFC824</color>
 
     <!-- 对话框确认按钮文本颜色 -->
     <color name="colorConfirm">#007AFF</color>

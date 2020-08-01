@@ -36,10 +36,10 @@ import com.tencent.bugly.crashreport.CrashReport;
 import okhttp3.OkHttpClient;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/10/18
- *    desc   : 项目中的 Application 基类
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2018/10/18
+ * desc   : 项目中的 Application 基类
  */
 public final class MyApplication extends Application implements LifecycleOwner {
 
@@ -101,6 +101,23 @@ public final class MyApplication extends Application implements LifecycleOwner {
 
         // Bugly 异常捕捉
         CrashReport.initCrashReport(application, AppConfig.getBuglyId(), AppConfig.isDebug());
+        // 国际化
+
+        ClassicsHeader.REFRESH_HEADER_PULLING = "Pull down to refresh";
+        ClassicsHeader.REFRESH_HEADER_REFRESHING = "Refreshing...";
+        ClassicsHeader.REFRESH_HEADER_LOADING = "Loading...";
+        ClassicsHeader.REFRESH_HEADER_RELEASE = "Refresh immediately after release";
+        ClassicsHeader.REFRESH_HEADER_FINISH = "Refresh complete";
+        ClassicsHeader.REFRESH_HEADER_FAILED = "Refresh failed";
+
+
+        ClassicsFooter.REFRESH_FOOTER_PULLING = "Pull up to load more";//"上拉加载更多";
+        ClassicsFooter.REFRESH_FOOTER_RELEASE = "Release and load immediately";//"释放立即加载";
+        ClassicsFooter.REFRESH_FOOTER_LOADING = "Loading...";//"正在加载...";
+        ClassicsFooter.REFRESH_FOOTER_REFRESHING = "Refreshing...";//"正在刷新...";
+        ClassicsFooter.REFRESH_FOOTER_FINISH = "Load complete";//"加载完成";
+        ClassicsFooter.REFRESH_FOOTER_FAILED = "Load failed";//"加载失败";
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = "No more data";//"没有更多数据了";
 
         // 设置全局的 Header 构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> new ClassicsHeader(context).setEnableLastTime(false));

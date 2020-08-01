@@ -1,9 +1,11 @@
 package com.shq.movies.ui.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
@@ -22,6 +24,7 @@ import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.adapter.MovieAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class FavoriteFragment extends MyFragment<MyMovieListActivity> implements OnRefreshLoadMoreListener,
@@ -34,6 +37,7 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
     private SmartRefreshLayout mRefreshLayout;
     private WrapRecyclerView mRecyclerView;
     private MovieAdapter movieAdapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -55,15 +59,17 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
 
         mRecyclerView.setAdapter(movieAdapter);
 
-        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
-        headerView.setText("我是头部");
-        headerView.setOnClickListener(v -> toast("点击了头部"));
-
-        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
-        footerView.setText("我是尾部");
-        footerView.setOnClickListener(v -> toast("点击了尾部"));
+//        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
+//        headerView.setText("我是头部");
+//        headerView.setOnClickListener(v -> toast("点击了头部"));
+//
+//        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
+//        footerView.setText("我是尾部");
+//        footerView.setOnClickListener(v -> toast("点击了尾部"));
 
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
+
+
     }
 
     @Override
@@ -77,6 +83,13 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
+                if(result.getData()==null||result.getData().isEmpty()){
+                    toast(R.string.hint_no_more_data);
+                    movieAdapter.setPageNumber(movieAdapter.getPageNumber()-1);
+                    movieAdapter.setLastPage(true);
+                    mRefreshLayout.setNoMoreData(true);
+                    return;
+                }
                 if(isLoadMore){
                     movieAdapter.addData(result.getData());
                     mRefreshLayout.finishLoadMore();
@@ -99,6 +112,7 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
         });
     }
 
+
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
         toast("onClickItem"+position);
@@ -115,6 +129,7 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
                 break;
         }
     }
+
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {

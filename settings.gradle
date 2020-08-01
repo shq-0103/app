@@ -1,3 +1,4 @@
+include ':popupwindowlibrary'
 include ':app'
 include ':base'
 include ':widget'

@@ -1,5 +1,6 @@
 package com.shq.movies.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class FavoriteActivity extends MyActivity implements OnRefreshLoadMoreListener,
@@ -29,6 +31,7 @@ public final class FavoriteActivity extends MyActivity implements OnRefreshLoadM
     private SmartRefreshLayout mRefreshLayout;
     private WrapRecyclerView mRecyclerView;
     private MovieAdapter movieAdapter;
+
 
     @Override
     protected int getLayoutId() {
