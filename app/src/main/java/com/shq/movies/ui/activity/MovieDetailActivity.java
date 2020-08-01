@@ -1,5 +1,6 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public final class MovieDetailActivity extends MyActivity {
     private TextView tv_movie_time;
     private Button bt_favorite;
     private TextView tv_score;
+    private Long movieId;
 
     @Override
     protected int getLayoutId() {
@@ -32,6 +34,9 @@ public final class MovieDetailActivity extends MyActivity {
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        movieId =Long.parseLong( intent.getStringExtra("movieId"));
+
         iv_movie_cover =findViewById(R.id.iv_movie_cover);
         tv_movie_title = findViewById(R.id.tv_movie_title);
         tv_movie_type = findViewById(R.id.tv_movie_type);
@@ -43,7 +48,7 @@ public final class MovieDetailActivity extends MyActivity {
 
     @Override
     protected void initData() {
-        EasyHttp.get(this).api(new MovieDetailApi().setId(1)).request(new HttpCallback<HttpData<MovieBean>>(this) {
+        EasyHttp.get(this).api(new MovieDetailApi().setId(movieId)).request(new HttpCallback<HttpData<MovieBean>>(this) {
             @Override
             public void onSucceed(HttpData<MovieBean> result) {
 

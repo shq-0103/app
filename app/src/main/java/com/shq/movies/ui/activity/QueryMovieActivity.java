@@ -77,11 +77,11 @@ public class QueryMovieActivity extends MyActivity implements OnRefreshLoadMoreL
         mRecyclerView.setAdapter(movieAdapter);
 
         TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
-        headerView.setText("我是头部");
+        headerView.setText("This is top");
         headerView.setOnClickListener(v -> toast("点击了头部"));
 
         TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
-        footerView.setText("我是尾部");
+        footerView.setText("This is bottom");
         footerView.setOnClickListener(v -> toast("点击了尾部"));
 
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
@@ -153,7 +153,7 @@ public class QueryMovieActivity extends MyActivity implements OnRefreshLoadMoreL
         String token = sharedPreferences.getString(getString(R.string.user_token), null);
 
         if (token == null || token.isEmpty()) {
-            toast("palse login");
+            toast("please login");
             return;
         }
 

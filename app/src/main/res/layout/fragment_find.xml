@@ -29,15 +29,15 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_home_hint"
+            <com.hjq.widget.view.RegexEditText
+                android:id="@+id/et_search"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/find_search_bar_bg"
                 android:gravity="center"
-                android:text="Search the movies..."
+                android:hint="Search the movies..."
                 android:textColor="@color/gray"
                 android:textSize="14sp" />
 

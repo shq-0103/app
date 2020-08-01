@@ -133,7 +133,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 我喜爱的影评列表 -->
         <activity
-            android:name=".ui.activity.ReviewActivity"
+            android:name=".ui.activity.FavoriteReviewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 我的消息列表 -->
         <activity

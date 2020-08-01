@@ -2,6 +2,8 @@ package com.shq.movies.ui.fragment;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.shq.movies.R;
 import com.shq.movies.aop.SingleClick;
@@ -10,6 +12,7 @@ import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.hjq.widget.view.CountdownView;
 import com.hjq.widget.view.SwitchButton;
+import com.shq.movies.ui.activity.MovieListActivity;
 
 /**
  *    author : Android 轮子哥
@@ -23,6 +26,7 @@ public final class FindFragment extends MyFragment<HomeActivity>
     private ImageView mCircleView;
     private SwitchButton mSwitchButton;
     private CountdownView mCountdownView;
+    private TextView find_new_text;
 
     public static FindFragment newInstance() {
         return new FindFragment();
@@ -38,7 +42,8 @@ public final class FindFragment extends MyFragment<HomeActivity>
         mCircleView = findViewById(R.id.iv_find_circle);
         mSwitchButton = findViewById(R.id.sb_find_switch);
         mCountdownView = findViewById(R.id.cv_find_countdown);
-        setOnClickListener(mCountdownView);
+        find_new_text = findViewById(R.id.find_new_text);
+        setOnClickListener(mCountdownView,find_new_text);
 
         mSwitchButton.setOnCheckedChangeListener(this);
     }
@@ -57,6 +62,11 @@ public final class FindFragment extends MyFragment<HomeActivity>
         if (v == mCountdownView) {
             toast(R.string.common_code_send_hint);
             mCountdownView.start();
+        }
+        switch (v.getId()) {
+            case R.id.find_new_text:
+                startActivity(MovieListActivity.class);
+                break;
         }
     }
 

@@ -11,12 +11,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
+import com.hjq.widget.layout.WrapRecyclerView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.glide.GlideApp;
@@ -26,13 +31,14 @@ import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
 import com.shq.movies.ui.activity.FavoriteActivity;
+import com.shq.movies.ui.activity.FavoriteReviewActivity;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MessageActivity;
 import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.activity.RatingActivity;
-import com.shq.movies.ui.activity.ReviewActivity;
+import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.dialog.MessageDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +46,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class MineFragment extends MyFragment<HomeActivity> implements BottomNavigationView.OnNavigationItemSelectedListener {
+public final class MineFragment extends MyFragment<HomeActivity> implements BottomNavigationView.OnNavigationItemSelectedListener,
+        ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener{
 
     private TextView tv_nickname;
     private TextView tv_intro;
@@ -54,8 +61,9 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private ImageView iv_avatar;
     private BottomNavigationView bv_user_info;
     private ImageButton bt_addmovie;
-    private ImageButton ib_click;
-    private ImageView iv_movie_cover;
+    private WrapRecyclerView rv_watch_list;
+    private WrapRecyclerView rv_history_list;
+    private ListAdapter listAdapter;
 
 
     public static MineFragment newInstance() {
@@ -78,13 +86,25 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
         sb_my_movielist = findViewById(R.id.sb_my_movielist);
         bt_addmovie = findViewById(R.id.bt_addmovie);
-        ib_click = findViewById(R.id.ib_click);
-        iv_movie_cover = findViewById(R.id.iv_movie_cover);
+
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,ib_click,iv_movie_cover);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie);
+
+        rv_watch_list = findViewById(R.id.rv_watch_list);
+        listAdapter = new ListAdapter(getAttachActivity());
+        rv_watch_list.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
+        listAdapter.setOnItemClickListener(this);
+        rv_watch_list.setAdapter(listAdapter);
+
+
+        rv_history_list  = findViewById(R.id.rv_history_list );
+        listAdapter = new ListAdapter(getAttachActivity());
+        rv_history_list .setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
+        listAdapter.setOnItemClickListener(this);
+        rv_history_list .setAdapter(listAdapter);
     }
 
     @Override
@@ -136,7 +156,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.account_reviews:
-                startActivity(ReviewActivity.class);
+                startActivity(FavoriteReviewActivity.class);
                 return true;
             case R.id.account_rating:
                 startActivity(RatingActivity.class);
@@ -208,8 +228,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             case R.id.sb_setting_about:
                 startActivity(FavoriteActivity.class);
                 break;
-            case R.id.iv_movie_cover:
-                startActivity(MovieDetailActivity.class);
+
             default:
                 break;
         }
@@ -218,5 +237,30 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     public boolean isStatusBarEnabled() {
         // 使用沉浸式状态栏
         return !super.isStatusBarEnabled();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
+
+    }
+
+    @Override
+    public void onChildClick(RecyclerView recyclerView, View childView, int position) {
+
     }
 }

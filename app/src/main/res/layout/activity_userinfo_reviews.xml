@@ -5,77 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.activity.ReviewActivity">
+    tools:context="com.shq.movies.ui.activity.FavoriteReviewActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="My Favorite Reviews" >
+        app:title="My Favorite Reviews"
+        app:rightIcon="@drawable/ic_edit">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="Edit" />
+
 
     </com.hjq.bar.TitleBar>
-    <LinearLayout
+    <com.shq.movies.widget.HintLayout
+        android:id="@+id/hl_status_hint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                app:srcCompat="@mipmap/launcher_ic"
-                android:layout_weight="1"/>
-        </LinearLayout>
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:orientation="vertical"
-            android:layout_margin="10dp"
-            android:layout_weight="2"
-            >
+        <fragment
+            android:name="com.shq.movies.ui.fragment.FavoriteReviewFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingId" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="TextView"
-                    android:layout_weight="1"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="author:" />
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="date:" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
+    </com.shq.movies.widget.HintLayout>
 
 
 

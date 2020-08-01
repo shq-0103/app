@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.shq.movies.ui.activity.RatingActivity">
+    android:layout_height="match_parent" >
 
-    <com.hjq.bar.TitleBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Rating Record" />
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/rl_rating_refresh"
+        android:id="@+id/rl_favorite_movie_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnablePreviewInEditMode="false"
-        tools:context="com.shq.movies.ui.activity.RatingActivity">
+        tools:context="com.shq.movies.ui.fragment.FavoriteReviewFragment">
 
         <com.hjq.widget.layout.WrapRecyclerView
-            android:id="@+id/rv_rating_list"
+            android:id="@+id/rv_favorite_movie_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listCount="10"
-            tools:listitem="@layout/item_rating" />
+            tools:listitem="@layout/picker_item" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-
-
-</LinearLayout>
+</FrameLayout>

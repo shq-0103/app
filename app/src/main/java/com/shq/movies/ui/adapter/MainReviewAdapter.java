@@ -43,12 +43,8 @@ public final class MainReviewAdapter extends MyAdapter<ReviewBean> {
 
         @Override
         public void onBindView(int position) {
-            int c=getItemCount();
-            ReviewBean reviewBean= getItem(position);
-            if(c<=0){
-                return;
-            }
             tv_title.setText(getItem(position).getTitle());
+            tv_comment.setText(getItem(position).getContents());
         }
         }
     }

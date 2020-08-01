@@ -42,8 +42,8 @@
                 android:background="@drawable/home_search_bar_transparent_bg"
                 android:gravity="center"
                 android:hint="Life was like a box of chocolates"
-                android:textColor="@color/white60"
-                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textSize="15dp"
                 app:regexType="nonnull" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/search_ic"
-                app:tint="@color/gray" />
+                app:tint="@color/white" />
 
         </LinearLayout>
 
@@ -113,193 +113,14 @@
                     app:bar_leftText="Recommendation movies"
                     app:bar_rightText="more" />
 
-                <HorizontalScrollView
+
+
+                <com.hjq.widget.layout.WrapRecyclerView
+                    android:id="@+id/rv_recom_movie_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="15dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="100dp"
-                                android:layout_height="140dp">
-
-                                <com.hjq.widget.view.ScaleImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:src="@drawable/logo_big_ic"
-                                    app:scaleRatio="1.2" />
-
-                                <ImageButton
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/click_collect"></ImageButton>
-                            </FrameLayout>
-
-                            <TextView
-                                android:id="@+id/movieList1"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="TextView" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="100dp"
-                                android:layout_height="140dp">
-
-                                <com.hjq.widget.view.ScaleImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:src="@drawable/logo_big_ic"
-                                    app:scaleRatio="1.2" />
-
-                                <ImageButton
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/click_collect"></ImageButton>
-                            </FrameLayout>
-
-                            <TextView
-                                android:id="@+id/movieList2"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="TextView" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="100dp"
-                                android:layout_height="140dp">
-
-                                <com.hjq.widget.view.ScaleImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:src="@drawable/logo_big_ic"
-                                    app:scaleRatio="1.2" />
-
-                                <ImageButton
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/click_collect"></ImageButton>
-                            </FrameLayout>
-
-                            <TextView
-                                android:id="@+id/movieList3"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="TextView" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="100dp"
-                                android:layout_height="140dp">
-
-                                <com.hjq.widget.view.ScaleImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:src="@drawable/logo_big_ic"
-                                    app:scaleRatio="1.2" />
-
-                                <ImageButton
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/click_collect"></ImageButton>
-                            </FrameLayout>
-
-                            <TextView
-                                android:id="@+id/movieList4"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="TextView" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="100dp"
-                                android:layout_height="140dp">
-
-                                <com.hjq.widget.view.ScaleImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:src="@drawable/logo_big_ic"
-                                    app:scaleRatio="1.2" />
-
-                                <ImageButton
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:background="@drawable/click_collect"></ImageButton>
-                            </FrameLayout>
-
-                            <TextView
-                                android:id="@+id/movieList5"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="TextView" />
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    tools:listCount="10"
+                    tools:listitem="@layout/item_list" />
 
             </LinearLayout>
 
@@ -393,11 +214,13 @@
                     app:bar_rightText="more" />
 
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/vp_home_pager"
+                <com.hjq.widget.layout.WrapRecyclerView
+                    android:id="@+id/rv_recom_review_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="wrap_content"
+                    tools:listCount="10"
+                    tools:listitem="@layout/item_reviewslist" />
+
 
             </LinearLayout>
 

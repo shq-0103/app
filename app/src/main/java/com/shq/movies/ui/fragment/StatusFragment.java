@@ -47,7 +47,6 @@ public final class StatusFragment extends MyFragment<MyActivity>
     protected void initView() {
         mRefreshLayout = findViewById(R.id.rl_status_refresh);
         mRecyclerView = findViewById(R.id.rv_status_list);
-
         mAdapter = new StatusAdapter(getAttachActivity());
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);

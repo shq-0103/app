@@ -23,25 +23,27 @@ import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.ui.activity.MyMovieListActivity;
+import com.shq.movies.ui.adapter.FavoriteReviewAdapter;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieReviewAdapter;
+import com.shq.movies.ui.adapter.StatusAdapter;
 
 import java.util.List;
 
-public final class ReviewListFragment extends MyFragment<MyActivity> implements OnRefreshLoadMoreListener,
+public final class FavoriteReviewFragment extends MyFragment<MyActivity> implements OnRefreshLoadMoreListener,
         BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
 
-    public static ReviewListFragment newInstance() {
-        return new ReviewListFragment();
+    public static FavoriteReviewFragment newInstance() {
+        return new FavoriteReviewFragment();
     }
 
     private SmartRefreshLayout mRefreshLayout;
     private WrapRecyclerView mRecyclerView;
-    private MovieReviewAdapter reviewAdapter;
+    private FavoriteReviewAdapter mAdapter;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_favorite;
+        return R.layout.fragment_favoritereview;
     }
 
     @Override
@@ -49,9 +51,10 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
         mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
         mRecyclerView = findViewById(R.id.rv_favorite_movie_list);
 
-        reviewAdapter = new MovieReviewAdapter(getActivity());
-        reviewAdapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(reviewAdapter);
+
+        mAdapter = new FavoriteReviewAdapter(getAttachActivity());
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
 
         TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
         headerView.setText("我是头部");
@@ -71,18 +74,18 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
 
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(mAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<ReviewBean>> result) {
                 super.onSucceed(result);
                 if(isLoadMore){
-                    reviewAdapter.addData(result.getData());
+                    mAdapter.addData(result.getData());
                     mRefreshLayout.finishLoadMore();
                 }else {
-                    reviewAdapter.setData(result.getData());
+                    mAdapter.setData(result.getData());
                     mRefreshLayout.finishRefresh();
                 }
-                reviewAdapter.setPageNumber(reviewAdapter.getPageNumber()+1);
+                mAdapter.setPageNumber(mAdapter.getPageNumber()+1);
             }
 
             @Override
@@ -116,8 +119,8 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
 
 
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        reviewAdapter.clearData();
-        reviewAdapter.setPageNumber(1);
+        mAdapter.clearData();
+        mAdapter.setPageNumber(1);
         this.getData(false);
     }
 

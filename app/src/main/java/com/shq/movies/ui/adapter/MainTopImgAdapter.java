@@ -12,7 +12,7 @@ import com.shq.movies.R;
 
 public final class MainTopImgAdapter extends PagerAdapter {
 
-    private static final int[] DRAWABLES = {R.drawable.guide_1_bg, R.drawable.guide_2_bg, R.drawable.guide_3_bg};
+    private static final int[] DRAWABLES = {R.drawable.top2, R.drawable.top1, R.drawable.top3};
 
     @Override
     public int getCount() {
