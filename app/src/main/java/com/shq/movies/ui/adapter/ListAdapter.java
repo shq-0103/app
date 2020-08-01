@@ -32,12 +32,18 @@ public final class ListAdapter extends MyAdapter<MovieBean> {
         private ImageView iv_cover;
         private ImageButton ib_collect;
         private TextView tv_title;
+        private TextView tv_rate;
+        private ImageView iv_good;
+        private TextView tv_detail;
 
         private ViewHolder() {
             super(R.layout.item_list);
             iv_cover = (ImageView)findViewById(R.id.iv_cover);
             ib_collect =(ImageButton) findViewById(R.id.ib_collect);
             tv_title =(TextView)findViewById(R.id.tv_title);
+            tv_rate = (TextView)findViewById(R.id.tv_rate);
+            iv_good = (ImageView)findViewById(R.id.iv_good);
+            tv_detail = (TextView)findViewById(R.id.tv_detail);
         }
 
         @Override

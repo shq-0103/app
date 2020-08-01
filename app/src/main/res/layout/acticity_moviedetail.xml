@@ -48,9 +48,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
                 android:layout_marginTop="70dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/iv_movie_cover"
@@ -72,8 +72,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Title"
-                        android:textSize="20dp"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/tv_movie_type"
@@ -101,15 +101,15 @@
                             android:id="@+id/bt_favorite"
                             style="@style/movieDetailButton"
                             android:layout_weight="1"
-                            android:textSize="15dp"
-                            android:text="Favorite" />
+                            android:text="Favorite"
+                            android:textSize="15dp" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/bt_seen"
                             style="@style/movieDetailButton"
                             android:layout_weight="1"
-                            android:textSize="15dp"
-                            android:text="Seen" />
+                            android:text="Seen"
+                            android:textSize="15dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -126,25 +126,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_weight="1"
                 android:background="@color/black10"
-                >
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/movieDetail_rate_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/ic_rate" />
+
                 <TextView
                     android:id="@+id/tv_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="4"
-                    android:layout_weight="1"/>
+                    android:text="4" />
             </LinearLayout>
 
             <com.hjq.widget.layout.SettingBar
@@ -152,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/black10"
-                android:clickable="true"
+                android:clickable="false"
                 android:focusable="true"
                 app:bar_leftText="1 people want to watch" />
         </LinearLayout>
@@ -165,24 +166,22 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@color/white"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabMode="fixed"
-                android:background="@color/white"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabTextColor="@android:color/black">
+                app:tabSelectedTextColor="#ffc824"
+                app:tabTextColor="@color/black">
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Comment" />
-
+                    android:text="Movie Detail" />
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Movie Detail" />
-
+                    android:text="Comment" />
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab3"
                     android:layout_width="wrap_content"
@@ -192,210 +191,99 @@
 
         </LinearLayout>
 
-
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Director  information" />
+            <TextView
+                android:id="@+id/tv_derector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/black65"
+                android:layout_marginLeft="10dp"
+                android:text="Director" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Actor information" />
+            <TextView
+                android:id="@+id/tv_actor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/black65"
+                android:layout_marginLeft="10dp"
+                android:text="actor" />
+            <TextView
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Movie introdution"
+                tools:ignore="DuplicateIds" />
+            <TextView
+                android:id="@+id/tv_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/black65"
+                android:layout_marginLeft="10dp"
+                android:text="intro" />
             <com.hjq.widget.layout.SettingBar
-                android:id="@+id/tv1"
+                android:id="@+id/tv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 app:bar_leftText="Comment"
-                app:bar_rightText="more" />
+                android:layout_marginTop="2dp"
+                app:bar_rightText="All" />
 
-            <LinearLayout
+            <com.hjq.widget.layout.WrapRecyclerView
+                android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/movieDetail_comment_img"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@mipmap/launcher_ic" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="5dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            >
-                            <TextView
-                                android:id="@+id/movieDetail_comment_user"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="User123" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:id="@+id/movieDetail_comment_date"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="07-23"
-                                    android:layout_weight="1"/>
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_weight="1">
-                                    <ImageView
-                                        android:id="@+id/movieDetail_commentrate_img"
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginRight="5dp"
-                                        app:srcCompat="@drawable/ic_rate" />
-                                    <TextView
-                                        android:id="@+id/movieDetail_comment_rate"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="4"
-                                        android:layout_weight="1"/>
-                                </LinearLayout>
+                tools:listitem="@layout/item_comment" />
 
-                            </LinearLayout>
-
-                        </LinearLayout>
-                        <ImageView
-                            android:id="@+id/movieDetail_comment_good"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_vertical"
-                            android:paddingRight="10dp"
-                            app:srcCompat="@drawable/ic_good" />
-                    </LinearLayout>
-                    <TextView
-                        android:id="@+id/movieDetail_comment_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Movie Detail" />
-                </LinearLayout>
-
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:text="Movie Detail" />
-            <TextView
-                android:id="@+id/tv2_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:text="Detail content" />
-
-
-
-            <TextView
+            <com.hjq.widget.layout.SettingBar
                 android:id="@+id/tv3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:text="Related film reviews" />
-
-            <LinearLayout
+                android:layout_marginTop="2dp"
+                android:clickable="false"
+                android:focusable="true"
+                app:bar_leftText="Movie Like This" />
+            <com.hjq.widget.layout.WrapRecyclerView
+                android:id="@+id/rv_sametype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/main_hot_moviereview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="title" />
-
-                    <ImageView
-                        android:id="@+id/hot_type_moviereview_img"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-
-                        app:srcCompat="@mipmap/launcher_ic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/main_hot_moviereview_author"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Author:" />
-
-                    <ImageView
-                        android:id="@+id/hot_type_img"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="5dp"
-                        app:srcCompat="@drawable/home_message_selector" />
-
-                    <TextView
-                        android:id="@+id/main_hot_moviereview_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/main_hot_moviereview_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Date:" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
+                tools:listCount="10"
+                tools:listitem="@layout/item_list" />
 
         </LinearLayout>
 
-
+        </androidx.core.widget.NestedScrollView>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_home_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

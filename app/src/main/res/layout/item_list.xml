@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
@@ -22,9 +22,9 @@
                 android:id="@+id/iv_cover"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:src="@drawable/logo_big_ic"
                 app:scaleRatio="1.2" />
 

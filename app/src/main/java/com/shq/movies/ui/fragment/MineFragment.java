@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
+import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
@@ -27,7 +28,11 @@ import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieIdListApi;
+import com.shq.movies.http.request.QueryMovieApi;
+import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.request.UserApi;
+import com.shq.movies.http.response.MovieBean;
+import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
 import com.shq.movies.ui.activity.FavoriteActivity;
@@ -63,7 +68,8 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private ImageButton bt_addmovie;
     private WrapRecyclerView rv_watch_list;
     private WrapRecyclerView rv_history_list;
-    private ListAdapter listAdapter;
+    private ListAdapter watch_listAdapter;
+    private ListAdapter history_listAdapter;
 
 
     public static MineFragment newInstance() {
@@ -94,17 +100,17 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie);
 
         rv_watch_list = findViewById(R.id.rv_watch_list);
-        listAdapter = new ListAdapter(getAttachActivity());
+        watch_listAdapter = new ListAdapter(getAttachActivity());
         rv_watch_list.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
-        listAdapter.setOnItemClickListener(this);
-        rv_watch_list.setAdapter(listAdapter);
+        watch_listAdapter.setOnItemClickListener(this);
+        rv_watch_list.setAdapter(watch_listAdapter);
 
 
         rv_history_list  = findViewById(R.id.rv_history_list );
-        listAdapter = new ListAdapter(getAttachActivity());
+        history_listAdapter = new ListAdapter(getAttachActivity());
         rv_history_list .setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
-        listAdapter.setOnItemClickListener(this);
-        rv_history_list .setAdapter(listAdapter);
+        history_listAdapter.setOnItemClickListener(this);
+        rv_history_list .setAdapter(history_listAdapter);
     }
 
     @Override
@@ -148,6 +154,25 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                 editor.putString(getString(R.string.favorite_movie_id), idS);
                 //步骤4：提交
                 editor.commit();
+            }
+        });
+        this.getData();
+    }
+    private void getData() {
+
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(history_listAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MovieBean>> result) {
+                super.onSucceed(result);
+                history_listAdapter.setData(result.getData());
+            }
+        });
+
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(watch_listAdapter.getPageNumber()).setPageSize(2)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MovieBean>> result) {
+                super.onSucceed(result);
+                watch_listAdapter.setData(result.getData());
             }
         });
     }
