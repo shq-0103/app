@@ -40,7 +40,7 @@ public final class CommentAdapter extends MyAdapter<CommentBean> {
 
         @Override
         public void onBindView(int position) {
-
+            System.out.println(position);
         }
     }
 }

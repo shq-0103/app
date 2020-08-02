@@ -200,11 +200,16 @@ public class ScreenPopWindow extends PopupWindow {
                 List<String> list = new ArrayList<>();
                 for (FiltrateBean fb : dictList) {
                     List<FiltrateBean.Children> cdList = fb.getChildren();
+                    boolean isSelected=false;
                     for (int x = 0; x < cdList.size(); x++) {
                         FiltrateBean.Children children = cdList.get(x);
                         if (children.isSelected()){
                             list.add(children.getValue());
+                            isSelected=true;
                         }
+                    }
+                    if(!isSelected){
+                        list.add(null);
                     }
                 }
                 onConfirmClickListener.onConfirmClick(list);

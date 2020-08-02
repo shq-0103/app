@@ -159,9 +159,9 @@ dependencies {
     // EventBus
     implementation 'org.greenrobot:eventbus:3.2.0'
 
-    // 筛选
-//    implementation 'com.github.YangsBryant:TeaScreenPopupWindow:1.0.2'
-//    implementation 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    // 轮播
+    implementation 'androidx.legacy:legacy-support-v4:latestVersion'
+    implementation 'cn.bingoogolapple:bga-banner:2.2.7'
 
     // 日志调试：https://github.com/getActivity/Logcat
     debugImplementation 'com.hjq:logcat:8.2'

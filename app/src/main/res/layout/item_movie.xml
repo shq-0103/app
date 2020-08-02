@@ -8,6 +8,7 @@
     android:padding="15dp">
 
     <TextView
+        android:id="@+id/tv_postion"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:text="1"
@@ -55,8 +56,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/white"
-        android:src="@drawable/ic_favorite"
+        android:src="@drawable/ic_collect_1"
         >
     </ImageButton>
 </LinearLayout>

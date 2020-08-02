@@ -1,11 +1,17 @@
 package com.shq.movies.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,6 +21,7 @@ import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
+import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
@@ -31,13 +38,14 @@ import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
+import com.shq.movies.widget.XCollapsingToolbarLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 public final class MovieDetailActivity extends MyActivity
-        implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener{
+        implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener,XCollapsingToolbarLayout.OnScrimsListener{
     private ImageView iv_movie_cover;
     private TextView tv_movie_title;
     private TextView tv_movie_type;
@@ -56,6 +64,7 @@ public final class MovieDetailActivity extends MyActivity
     private boolean scrollviewFlag = false;//标记是否是scrollview在滑动
     private WrapRecyclerView rv_comment;
     private CommentAdapter commentAdapter;
+    private Toolbar tb_home_title;
 
     @Override
     protected int getLayoutId() {
@@ -66,7 +75,7 @@ public final class MovieDetailActivity extends MyActivity
     protected void initView() {
         Intent intent = getIntent();
         movieId =Long.parseLong( intent.getStringExtra("movieId"));
-
+        tb_home_title=findViewById(R.id.tb_home_title);
         iv_movie_cover =findViewById(R.id.iv_movie_cover);
         tv_movie_title = findViewById(R.id.tv_movie_title);
         tv_movie_type = findViewById(R.id.tv_movie_type);
@@ -144,5 +153,23 @@ public final class MovieDetailActivity extends MyActivity
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
 
+    }
+
+    /**
+     * CollapsingToolbarLayout 渐变回调
+     *
+     * {@link XCollapsingToolbarLayout.OnScrimsListener}
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onScrimsStateChange(XCollapsingToolbarLayout layout, boolean shown) {
+        if (shown) {
+            tb_home_title.setBackgroundResource(R.drawable.home_search_bar_gray_bg);
+            getStatusBarConfig().statusBarDarkFont(true).init();
+        } else {
+            tb_home_title.setBackgroundResource(R.drawable.home_search_bar_transparent_bg);
+            getStatusBarConfig().statusBarDarkFont(false).init();
+        }
     }
 }

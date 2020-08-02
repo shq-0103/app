@@ -1,13 +1,10 @@
 package com.shq.movies.ui.fragment;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -31,18 +28,17 @@ import com.shq.movies.ui.activity.QueryMovieActivity;
 import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.adapter.MainTopImgAdapter;
-import com.shq.movies.ui.adapter.MovieAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 
 
 public final class MainFragment extends MyFragment<HomeActivity>
         implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
-    private ViewPager vp_main_pager;
-    private PageIndicatorView pv_main_indicator;
-    private MainTopImgAdapter mPagerAdapter;
+    private BGABanner banner_content;
     private EditText et_search;
     private ImageView iv_search;
 
@@ -56,24 +52,7 @@ public final class MainFragment extends MyFragment<HomeActivity>
         return new MainFragment();
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1) {
-                //获得当前的位置
-                int currentItem = vp_main_pager.getCurrentItem();
 
-                //跳转到指定位置
-                if (currentItem + 1 == vp_main_pager.getAdapter().getCount()) {
-                    vp_main_pager.setCurrentItem(0);
-                } else {
-                    vp_main_pager.setCurrentItem(currentItem + 1);
-
-                }
-            }
-        }
-    };
 
     @Override
     protected int getLayoutId() {
@@ -82,20 +61,10 @@ public final class MainFragment extends MyFragment<HomeActivity>
 
     @Override
     protected void initView() {
-        vp_main_pager = findViewById(R.id.vp_main_pager);
-        pv_main_indicator = findViewById(R.id.pv_main_indicator);
+
         et_search = findViewById(R.id.et_search);
         iv_search = findViewById(R.id.iv_home_search);
-        setOnClickListener(pv_main_indicator, iv_search);
-        pv_main_indicator.setViewPager(vp_main_pager);
-        //定时器 每两秒执行一次
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(1);
-            }
-        }, 0, 2500);
-
+        setOnClickListener(iv_search);
         rv_recom_movie_list = findViewById(R.id.rv_recom_movie_list);
         listAdapter = new ListAdapter(getAttachActivity());
         rv_recom_movie_list.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
@@ -107,15 +76,22 @@ public final class MainFragment extends MyFragment<HomeActivity>
         reviewAdapter = new MainReviewAdapter(getAttachActivity());
         reviewAdapter.setOnItemClickListener(this);
         rv_recom_review_list.setAdapter(reviewAdapter);
+
+        // 设置轮播
+        banner_content=findViewById(R.id.banner_main);
     }
 
     @Override
     protected void initData() {
-        mPagerAdapter = new MainTopImgAdapter();
-        vp_main_pager.setAdapter(mPagerAdapter);
-        vp_main_pager.addOnPageChangeListener(this);
-
         this.getData();
+       // Bitmap 的宽高在 maxWidth maxHeight 和 minWidth minHeight 之间
+        BGALocalImageSize localImageSize = new BGALocalImageSize(720, 200, 320, 200);
+       // 设置数据源
+        banner_content.setData(localImageSize, ImageView.ScaleType.CENTER_CROP,
+                R.drawable.top1,
+                R.drawable.top2,
+                R.drawable.top3);
+
 
     }
 

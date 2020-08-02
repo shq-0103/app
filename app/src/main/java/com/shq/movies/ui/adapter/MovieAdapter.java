@@ -36,6 +36,7 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
         private TextView tv_movie_name;
         private TextView tv_movie_date;
         private TextView tv_movie_type;
+        private TextView tv_postion;
         private ImageButton bt_favorite;
 
         private ViewHolder() {
@@ -45,6 +46,7 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
             tv_movie_date = (TextView)findViewById(R.id.tv_movie_date);
             tv_movie_type = (TextView)findViewById(R.id.tv_movie_type);
             bt_favorite = (ImageButton)findViewById(R.id.bt_favorite);
+            tv_postion=(TextView)findViewById(R.id.tv_postion);
         }
 
         @Override
@@ -54,9 +56,15 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
             if(token!=null&&!token.isEmpty()){
                 List<String> ids= Arrays.asList(token.split("\\|"));
                 if(ids.contains(String.valueOf(getItem(position).getId()) )){
-                    bt_favorite.setImageResource(R.drawable.ic_movie_placeholder);
+                    MovieBean c=getItem(position);
+                    bt_favorite.setImageResource(R.drawable.ic_collect_2);
+                }else {
+                    bt_favorite.setImageResource(R.drawable.ic_collect_1);
 
                 }
+            }else {
+                bt_favorite.setImageResource(R.drawable.ic_collect_1);
+
             }
             int c=getItemCount();
             MovieBean movieBean= getItem(position);
@@ -71,6 +79,7 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
             tv_movie_name.setText(getItem(position).getName());
             tv_movie_date.setText(getItem(position).getReleaseDate());
             tv_movie_type.setText(getItem(position).getGenres());
+            tv_postion.setText(String.valueOf(position+1));
         }
     }
 }

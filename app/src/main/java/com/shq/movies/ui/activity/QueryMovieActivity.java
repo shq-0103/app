@@ -164,7 +164,7 @@ public class QueryMovieActivity extends MyActivity implements OnRefreshLoadMoreL
 
                         @Override
                         public void onSucceed(HttpData<Boolean> data) {
-                            bt_favor.setImageResource(R.drawable.ic_movie_placeholder);
+                            bt_favor.setImageResource(R.drawable.ic_collect_2);
                             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
                             ids.add(String.valueOf(movieAdapter.getItem(position).getId()));
@@ -180,7 +180,7 @@ public class QueryMovieActivity extends MyActivity implements OnRefreshLoadMoreL
 
                         @Override
                         public void onSucceed(HttpData<Boolean> data) {
-                            bt_favor.setImageResource(R.drawable.ic_favorite);
+                            bt_favor.setImageResource(R.drawable.ic_collect_1);
                             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
                             ids.remove(String.valueOf(movieAdapter.getItem(position).getId()));
