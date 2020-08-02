@@ -1,9 +1,7 @@
 package com.shq.movies.ui.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,11 +11,11 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.response.MovieBean;
-import com.shq.movies.http.response.ReviewBean;
 
-public final class ListAdapter extends MyAdapter<MovieBean> {
 
-    public ListAdapter(Context context) {
+public final class FindAdapter extends MyAdapter<MovieBean> {
+
+    public FindAdapter(Context context) {
         super(context);
     }
 
@@ -28,32 +26,30 @@ public final class ListAdapter extends MyAdapter<MovieBean> {
     }
 
     private final class ViewHolder extends MyAdapter.ViewHolder {
-
-        private ImageView iv_cover;
-        private ImageButton ib_collect;
-        private TextView tv_title;
-        private TextView tv_rate;
-        private ImageView iv_good;
-        private TextView tv_detail;
+        private TextView tv_postion;
+        private ImageView iv_movie_cover;
+        private TextView tv_movie_name;
+        private TextView tv_vision;
 
         private ViewHolder() {
-            super(R.layout.item_list);
-            iv_cover = (ImageView)findViewById(R.id.iv_cover);
-            tv_title =(TextView)findViewById(R.id.tv_title);
-            tv_rate = (TextView)findViewById(R.id.tv_rate);
-            iv_good = (ImageView)findViewById(R.id.iv_good);
-            tv_detail = (TextView)findViewById(R.id.tv_detail);
+            super(R.layout.item_find);
+            tv_postion =(TextView)findViewById(R.id.tv_postion);
+            iv_movie_cover = (ImageView)findViewById(R.id.iv_movie_cover);
+            tv_movie_name = (TextView)findViewById(R.id.tv_movie_name);
+            tv_vision = (TextView)findViewById(R.id.tv_vision);
         }
 
         @Override
         public void onBindView(int position) {
-
             GlideApp.with(getContext())
                     .load(getItem(position).getCover())
                     .placeholder(R.drawable.ic_movie_placeholder)
                     .error(R.drawable.ic_movie_placeholder)
-                    .into(iv_cover);
-            tv_title.setText(getItem(position).getName());
+                    .into(iv_movie_cover);
+
+            tv_vision.setText(String.valueOf(getItem(position).getScore()));
+            tv_postion.setText(String.valueOf(position+1));
+            tv_movie_name.setText(getItem(position).getName());
         }
     }
 }

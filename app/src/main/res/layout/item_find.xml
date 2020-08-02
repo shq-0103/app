@@ -9,23 +9,26 @@
 
     <TextView
         android:id="@+id/tv_postion"
-        android:layout_width="20dp"
+        android:layout_width="50dp"
+        android:paddingLeft="15dp"
+        android:textStyle="bold"
         android:layout_height="match_parent"
         android:text="1"
         android:gravity="center_vertical">
     </TextView>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_movie_cover"
-        android:layout_width="70dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:layout_gravity="left"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_movie_placeholder" />
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
         <TextView
@@ -37,21 +40,7 @@
             android:layout_marginBottom="5dp"
             android:text="电影名称"/>
         <TextView
-            android:id="@+id/tv_movie_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:layout_marginBottom="5dp"
-            android:text="date"/>
-        <TextView
-            android:id="@+id/tv_movie_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:textSize="12dp"
-            android:text="type"/>
-        <TextView
-            android:id="@+id/tv_movie_score"
+            android:id="@+id/tv_vision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12dp"
@@ -59,12 +48,5 @@
             android:text="score"/>
 
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/bt_favorite"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_collect_1"
-        >
-    </ImageButton>
+
 </LinearLayout>

@@ -13,18 +13,22 @@ import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
+import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.rd.PageIndicatorView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.OldMovieApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.ui.activity.HomeActivity;
+import com.shq.movies.ui.activity.LastTimeActivity;
 import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.QueryMovieActivity;
+import com.shq.movies.ui.activity.RecomListActivity;
 import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.adapter.MainTopImgAdapter;
@@ -41,12 +45,16 @@ public final class MainFragment extends MyFragment<HomeActivity>
     private BGABanner banner_content;
     private EditText et_search;
     private ImageView iv_search;
+    private SettingBar sb_recom;
+    private SettingBar sb_last;
 
     private WrapRecyclerView rv_recom_movie_list;
     private WrapRecyclerView rv_recom_review_list;
+    private WrapRecyclerView rv_lasttime;
 
     private ListAdapter listAdapter;
     private MainReviewAdapter reviewAdapter;
+    private ListAdapter lastAdapter;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -64,7 +72,10 @@ public final class MainFragment extends MyFragment<HomeActivity>
 
         et_search = findViewById(R.id.et_search);
         iv_search = findViewById(R.id.iv_home_search);
-        setOnClickListener(iv_search);
+        sb_recom = findViewById(R.id.sb_recom);
+        sb_last = findViewById(R.id.sb_last);
+
+        setOnClickListener(iv_search,sb_recom,sb_last);
         rv_recom_movie_list = findViewById(R.id.rv_recom_movie_list);
         listAdapter = new ListAdapter(getAttachActivity());
         rv_recom_movie_list.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
@@ -76,6 +87,13 @@ public final class MainFragment extends MyFragment<HomeActivity>
         reviewAdapter = new MainReviewAdapter(getAttachActivity());
         reviewAdapter.setOnItemClickListener(this);
         rv_recom_review_list.setAdapter(reviewAdapter);
+
+        rv_lasttime = findViewById(R.id.rv_lasttime);
+        lastAdapter = new ListAdapter(getAttachActivity());
+        rv_lasttime.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
+        lastAdapter.setOnItemClickListener(this);
+        lastAdapter.setOnChildClickListener(R.id.iv_cover,this);
+        rv_lasttime.setAdapter(lastAdapter);
 
         // 设置轮播
         banner_content=findViewById(R.id.banner_main);
@@ -112,6 +130,14 @@ public final class MainFragment extends MyFragment<HomeActivity>
                 reviewAdapter.setData(result.getData());
             }
         });
+
+        EasyHttp.get(this).api((IRequestApi) new OldMovieApi().setPage(lastAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MovieBean>> result) {
+                super.onSucceed(result);
+                lastAdapter.setData(result.getData());
+            }
+        });
     }
 
     public boolean isStatusBarEnabled() {
@@ -141,8 +167,12 @@ public final class MainFragment extends MyFragment<HomeActivity>
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
+        if(recyclerView.getId()==R.id.rv_recom_movie_list){
+            this.routerToDetail(String.valueOf(listAdapter.getItem(position).getId()));
+        }else if(recyclerView.getId()==R.id.rv_lasttime){
+            this.routerToDetail(String.valueOf(lastAdapter.getItem(position).getId()));
+        }
 
-        this.routerToDetail(String.valueOf(listAdapter.getItem(position).getId()));
     }
 
     public void  routerToDetail(String movieId){
@@ -156,6 +186,7 @@ public final class MainFragment extends MyFragment<HomeActivity>
         toast("child");
         if(childView.getId()==R.id.iv_cover){
             this.routerToDetail(String.valueOf(listAdapter.getItem(position).getId()));
+            this.routerToDetail(String.valueOf(lastAdapter.getItem(position).getId()));
         }
     }
 
@@ -168,6 +199,10 @@ public final class MainFragment extends MyFragment<HomeActivity>
                 intent.putExtra("keyword", et_search.getText().toString().trim());
                 startActivity(intent);
             }
+        }else if (v.getId() == R.id.sb_recom){
+            startActivity(RecomListActivity.class);
+        }else if (v.getId() == R.id.sb_last){
+            startActivity(LastTimeActivity.class);
         }
     }
 

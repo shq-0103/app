@@ -141,9 +141,21 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 我的评分列表 -->
         <activity
+            android:name=".ui.activity.RateActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!-- 评分电影 -->
+        <activity
             android:name=".ui.activity.RatingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 收藏的电影 -->
+        <activity
+            android:name=".ui.activity.RecomListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!-- 推荐的电影列表 -->
+        <activity
+            android:name=".ui.activity.LastTimeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!-- 那年今日的电影列表 -->
         <activity
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

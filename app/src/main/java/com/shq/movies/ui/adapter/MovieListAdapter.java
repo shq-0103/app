@@ -3,7 +3,6 @@ package com.shq.movies.ui.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +17,9 @@ import com.shq.movies.http.response.MovieBean;
 import java.util.Arrays;
 import java.util.List;
 
-public final class MovieAdapter extends MyAdapter<MovieBean> {
+public final class MovieListAdapter extends MyAdapter<MovieBean> {
 
-    public MovieAdapter(Context context) {
+    public MovieListAdapter(Context context) {
         super(context);
     }
 
@@ -36,18 +35,16 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
         private TextView tv_movie_name;
         private TextView tv_movie_date;
         private TextView tv_movie_type;
-        private TextView tv_postion;
         private TextView tv_movie_score;
         private ImageButton bt_favorite;
 
         private ViewHolder() {
-            super(R.layout.item_movie);
+            super(R.layout.item_movielist);
             iv_movie=(ImageView)findViewById(R.id.iv_movie_cover);
             tv_movie_name = (TextView)findViewById(R.id.tv_movie_name);
             tv_movie_date = (TextView)findViewById(R.id.tv_movie_date);
             tv_movie_type = (TextView)findViewById(R.id.tv_movie_type);
             bt_favorite = (ImageButton)findViewById(R.id.bt_favorite);
-            tv_postion=(TextView)findViewById(R.id.tv_postion);
             tv_movie_score =(TextView)findViewById(R.id.tv_movie_score);
         }
 
@@ -82,7 +79,6 @@ public final class MovieAdapter extends MyAdapter<MovieBean> {
             tv_movie_date.setText(getItem(position).getReleaseDate());
             tv_movie_type.setText(getItem(position).getGenres());
             tv_movie_score.setText(String.valueOf(getItem(position).getScore()));
-            tv_postion.setText(String.valueOf(position+1));
         }
     }
 }

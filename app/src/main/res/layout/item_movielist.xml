@@ -7,13 +7,6 @@
     android:background="@color/white"
     android:padding="15dp">
 
-    <TextView
-        android:id="@+id/tv_postion"
-        android:layout_width="20dp"
-        android:layout_height="match_parent"
-        android:text="1"
-        android:gravity="center_vertical">
-    </TextView>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_movie_cover"
         android:layout_width="70dp"

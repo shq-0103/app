@@ -28,12 +28,12 @@
                 android:src="@drawable/logo_big_ic"
                 app:scaleRatio="1.2" />
 
-            <ImageButton
-                android:id="@+id/ib_collect"
-                android:layout_margin="5dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/click_collect"></ImageButton>
+<!--            <ImageButton-->
+<!--                android:id="@+id/ib_collect"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:layout_width="25dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:background="@drawable/click_collect"></ImageButton>-->
         </FrameLayout>
 
         <TextView

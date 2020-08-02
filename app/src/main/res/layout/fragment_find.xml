@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:text="Find"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -55,227 +55,166 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/find_new_img"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    app:srcCompat="@drawable/ic_new" />
-
-                <TextView
-                    android:id="@+id/find_new_text"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/upcoming"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Upcoming movie" />
-            </LinearLayout>
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/gray" />
+                    <ImageView
+                        android:id="@+id/find_new_img"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/ic_new" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/find_new_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Upcoming movie" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/find_month_img"
-                    android:layout_width="35dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    app:srcCompat="@drawable/ic_month" />
-
-                <TextView
-                    android:id="@+id/find_month_text"
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="0.5dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="This Month Movie" />
-            </LinearLayout>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/gray" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/find_month_img"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/ic_month" />
 
-            <TextView
-                android:id="@+id/main_hot_movie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_weight="1"
-                android:text="Popularity list"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/main_hot_movie_more"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="end"
-                android:padding="10dp"
-                android:text="more"
-                android:textColor="@color/black40" />
-        </LinearLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/hottype_img"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/hottypeimg2"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/hottypeimg3"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/hottypeimg4"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/hottypeimg5"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
+                    <TextView
+                        android:id="@+id/find_month_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_vertical"
+                        android:text="This Month Movie" />
+                </LinearLayout>
 
             </LinearLayout>
-        </HorizontalScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:layout_marginTop="10dp">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/main_good_movie"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.hjq.widget.layout.SettingBar
+                            android:id="@+id/sb_popular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:bar_leftText="Most Popular Movies"
+                            app:bar_rightText="View all 20" />
+
+                        <com.hjq.widget.layout.WrapRecyclerView
+                            android:id="@+id/rv_popular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            tools:listitem="@layout/item_find" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
+                        <com.hjq.widget.layout.SettingBar
+                            android:id="@+id/sb_score"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:bar_leftText="High Rated Movies"
+                            app:bar_rightText="View all 20" />
+
+                        <com.hjq.widget.layout.WrapRecyclerView
+                            android:id="@+id/rv_score"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listCount="2"
+                            tools:listitem="@layout/item_list" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
+                        <com.hjq.widget.layout.SettingBar
+                            android:id="@+id/sb_week"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:bar_leftText="Weekly praise Movies"
+                            app:bar_rightText="View all 20" />
+
+                        <com.hjq.widget.layout.WrapRecyclerView
+                            android:id="@+id/rv_week"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listCount="2"
+                            tools:listitem="@layout/item_list" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <com.hjq.widget.layout.SettingBar
+                android:layout_marginTop="5dp"
+                android:id="@+id/sb_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="High score list"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/main_good_movie_more"
+                app:bar_leftText="Select" />
+            <com.hjq.widget.layout.WrapRecyclerView
+                android:id="@+id/rv_select_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="end"
-                android:padding="10dp"
-                android:text="more"
-                android:textColor="@color/black40" />
-        </LinearLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="90dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@mipmap/launcher_ic" />
-
-            </LinearLayout>
-        </HorizontalScrollView>
+                tools:listCount="10"
+                tools:listitem="@layout/item_reviewslist" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 
 </LinearLayout>
