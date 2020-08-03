@@ -43,7 +43,7 @@ public final class FavoriteReviewFragment extends MyFragment<MyActivity> impleme
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_favoritereview;
+        return R.layout.fragment_favorite;
     }
 
     @Override

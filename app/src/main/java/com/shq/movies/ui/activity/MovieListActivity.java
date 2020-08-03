@@ -29,10 +29,10 @@ public final class MovieListActivity extends MyActivity {
         pg_movielist = findViewById(R.id.pg_movielist);
 
         mPagerAdapter = new BaseFragmentAdapter<>(this);
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Coming soon");
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "This month");
+
         mPagerAdapter.addFragment(StatusFragment.newInstance(), "Most popular");
         mPagerAdapter.addFragment(StatusFragment.newInstance(), "Top rated");
+        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Week Popularity");
         pg_movielist.setAdapter(mPagerAdapter);
         tb_movielist.setupWithViewPager(pg_movielist);
     }

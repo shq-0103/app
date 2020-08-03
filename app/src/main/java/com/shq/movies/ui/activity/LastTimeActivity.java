@@ -1,10 +1,15 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
@@ -18,7 +23,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.AddCollectApi;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.OldMovieApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.response.MovieBean;
@@ -26,7 +33,9 @@ import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class LastTimeActivity extends MyActivity implements OnRefreshLoadMoreListener,
         BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
@@ -105,18 +114,72 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
         toast("onClickItem"+position);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
         switch (childView.getId()){
             case R.id.bt_favorite:
-                toast("点击了喜欢"+movieListAdapter.getItem(position).getName());
+                onClickFavorite((ImageButton) childView, position);
                 break;
             default:
                 toast(((TextView)childView).getText() );
                 break;
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void onClickFavorite(ImageButton bt_favor, int position) {
+        // 判断保存的 id 是否存在
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String favorId = sharedPreferences.getString(getString(R.string.favorite_movie_id), null);
+        boolean hasFavor = false;
+        if (favorId != null && !favorId.isEmpty()) {
+            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+            hasFavor = ids.contains(String.valueOf(movieListAdapter.getItem(position).getId()));
+        }
 
+        // 判断是否已登录
+        String token = sharedPreferences.getString(getString(R.string.user_token), null);
+
+        if (token == null || token.isEmpty()) {
+            toast("please login");
+            return;
+        }
+
+        if (!hasFavor) {
+            EasyHttp.post(this)
+                    .api(new AddCollectApi().setFavoriteId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            bt_favor.setImageResource(R.drawable.ic_collect_2);
+                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+
+                            ids.add(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                            editor.commit();
+                        }
+                    });
+        } else {
+            EasyHttp.post(this)
+                    .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            bt_favor.setImageResource(R.drawable.ic_collect_1);
+                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+
+                            ids.remove(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                            editor.commit();
+
+                        }
+                    });
+        }
+    }
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         movieListAdapter.clearData();

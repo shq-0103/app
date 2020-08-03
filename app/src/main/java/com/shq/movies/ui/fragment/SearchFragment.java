@@ -16,6 +16,7 @@ import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 
@@ -27,6 +28,7 @@ import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.QueryMovieActivity;
 import com.shq.movies.ui.adapter.FindAdapter;
 import com.shq.movies.ui.adapter.MovieAdapter;
+import com.shq.movies.ui.adapter.MovieListAdapter;
 
 import java.util.List;
 
@@ -36,15 +38,24 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
 
     private EditText et_search;
     private ImageView iv_search;
+
     private WrapRecyclerView rv_score;
     private WrapRecyclerView rv_popular;
     private WrapRecyclerView rv_week;
+
     private FindAdapter SfindAdapter;
     private FindAdapter PfindAdapter;
     private FindAdapter WfindAdapter;
+
     private LinearLayout upcoming;
     private LinearLayout month;
     private SettingBar sb_popular;
+    private SettingBar sb_score;
+    private SettingBar sb_week;
+
+    private WrapRecyclerView rv_select_list;
+    private MovieListAdapter movieListAdapter;
+    private SmartRefreshLayout mRefreshLayout;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -62,7 +73,9 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
         upcoming = findViewById(R.id.upcoming);
         month = findViewById(R.id.month);
         sb_popular = findViewById(R.id.sb_popular);
-        setOnClickListener(iv_search, upcoming);
+        sb_score = findViewById(R.id.sb_score);
+        sb_week =findViewById(R.id.sb_week);
+        setOnClickListener(iv_search, upcoming,sb_popular,sb_score,sb_week);
 
 
         rv_score = findViewById(R.id.rv_score);
@@ -80,6 +93,12 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
         WfindAdapter = new FindAdapter(getAttachActivity());
         WfindAdapter.setOnItemClickListener(this);
         rv_week.setAdapter(WfindAdapter);
+
+        rv_select_list = findViewById(R.id.rv_select_list);
+        mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
+        movieListAdapter = new  MovieListAdapter(getAttachActivity());
+        movieListAdapter.setOnItemClickListener(this);
+        rv_select_list.setAdapter(movieListAdapter);
     }
 
     @Override
@@ -111,6 +130,14 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
             }
         });
 
+
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MovieBean>> result) {
+                super.onSucceed(result);
+                movieListAdapter.setData(result.getData());
+            }
+        });
     }
 
     @Override
@@ -138,8 +165,11 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
             startActivity(MovieListActivity.class);
         }else if(v.getId() ==R.id.sb_popular){
             startActivity(MovieListActivity.class);
-        }
-    }
+        }else if(v.getId() ==R.id.sb_score){
+            startActivity(MovieListActivity.class);
+        }else if(v.getId() ==R.id.sb_week){
+            startActivity(MovieListActivity.class);
+    }}
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
