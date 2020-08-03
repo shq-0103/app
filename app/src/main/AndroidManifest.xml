@@ -157,6 +157,18 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 那年今日的电影列表 -->
         <activity
+            android:name=".ui.activity.UpcomingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!-- 即将上映的电影列表 -->
+        <activity
+            android:name=".ui.activity.MonthActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!-- 当月电影的电影列表 -->
+        <activity
+            android:name=".ui.activity.HistoryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!--历史记录的电影列表 -->
+        <activity
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 浏览器 -->

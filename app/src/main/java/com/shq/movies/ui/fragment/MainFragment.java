@@ -172,7 +172,6 @@ public final class MainFragment extends MyFragment<HomeActivity>
         }else if(recyclerView.getId()==R.id.rv_lasttime){
             this.routerToDetail(String.valueOf(lastAdapter.getItem(position).getId()));
         }
-
     }
 
     public void  routerToDetail(String movieId){

@@ -32,29 +32,30 @@ import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
+import com.shq.movies.ui.adapter.UpcomingAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class LastTimeActivity extends MyActivity implements OnRefreshLoadMoreListener,
+public final class MonthActivity extends MyActivity implements OnRefreshLoadMoreListener,
         BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
 
     private SmartRefreshLayout mRefreshLayout;
-    private WrapRecyclerView mRecyclerView;
+    private WrapRecyclerView rv_upcoming;
     private MovieListAdapter movieListAdapter;
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_lastlist;
+        return R.layout.activity_monthmovie;
     }
 
     @Override
     protected void initView() {
         mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
-        mRecyclerView = findViewById(R.id.rv_favorite_movie_list);
+        rv_upcoming = findViewById(R.id.rv_upcoming);
 
         movieListAdapter = new MovieListAdapter(getActivity());
         movieListAdapter.setOnItemClickListener(this);
@@ -64,13 +65,13 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
 
 
 
-        mRecyclerView.setAdapter(movieListAdapter);
+        rv_upcoming.setAdapter(movieListAdapter);
 
-        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
+        TextView headerView = rv_upcoming.addHeaderView(R.layout.picker_item);
         headerView.setText("");
         headerView.setOnClickListener(v -> toast(""));
 
-        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
+        TextView footerView = rv_upcoming.addFooterView(R.layout.picker_item);
         footerView.setText("");
         footerView.setOnClickListener(v -> toast(""));
 
@@ -112,7 +113,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        if (recyclerView.getId() == R.id.rv_favorite_movie_list) {
+        if (recyclerView.getId() == R.id.rv_upcoming) {
             this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
         }
     }
@@ -124,7 +125,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
             case R.id.bt_favorite:
                 onClickFavorite((ImageButton) childView, position);
                 break;
-            case R.id.rv_favorite_movie_list:
+            case R.id.rv_upcoming:
                 this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
                 break;
             default:

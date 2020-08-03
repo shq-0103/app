@@ -9,6 +9,7 @@ import com.hjq.base.BaseFragmentAdapter;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
+import com.shq.movies.ui.fragment.MovieListFragment;
 import com.shq.movies.ui.fragment.StatusFragment;
 
 
@@ -30,9 +31,9 @@ public final class MovieListActivity extends MyActivity {
 
         mPagerAdapter = new BaseFragmentAdapter<>(this);
 
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Most popular");
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Top rated");
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Week Popularity");
+        mPagerAdapter.addFragment(MovieListFragment.newInstance(), "Most popular");
+        mPagerAdapter.addFragment(MovieListFragment.newInstance(), "Top rated");
+        mPagerAdapter.addFragment(MovieListFragment.newInstance(), "Week Popularity");
         pg_movielist.setAdapter(mPagerAdapter);
         tb_movielist.setupWithViewPager(pg_movielist);
     }

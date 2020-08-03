@@ -1,6 +1,7 @@
 package com.shq.movies.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
@@ -69,91 +70,102 @@ public final class RecomListActivity extends MyActivity
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        toast("onClickItem" + position);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-        switch (childView.getId()) {
-            case R.id.bt_favorite:
-                onClickFavorite((ImageButton) childView, position);
-                break;
-            default:
-                toast(((TextView) childView).getText());
-                break;
+        if (recyclerView.getId() == R.id.rv_recom) {
+            this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void onClickFavorite(ImageButton bt_favor, int position) {
-        // 判断保存的 id 是否存在
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        String favorId = sharedPreferences.getString(getString(R.string.favorite_movie_id), null);
-        boolean hasFavor = false;
-        if (favorId != null && !favorId.isEmpty()) {
-            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
-            hasFavor = ids.contains(String.valueOf(movieListAdapter.getItem(position).getId()));
+        public void routerToDetail (String movieId){
+            Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+            intent.putExtra("movieId", movieId);
+            startActivity(intent);
         }
 
-        // 判断是否已登录
-        String token = sharedPreferences.getString(getString(R.string.user_token), null);
-
-        if (token == null || token.isEmpty()) {
-            toast("please login");
-            return;
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void onChildClick (RecyclerView recyclerView, View childView,int position){
+            switch (childView.getId()) {
+                case R.id.bt_favorite:
+                    onClickFavorite((ImageButton) childView, position);
+                    break;
+                case R.id.rv_recom:
+                    this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
+                    break;
+                default:
+                    toast(((TextView) childView).getText());
+                    break;
+            }
         }
 
-        if (!hasFavor) {
-            EasyHttp.post(this)
-                    .api(new AddCollectApi().setFavoriteId(movieListAdapter.getItem(position).getId()).setType(1))
-                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        private void onClickFavorite (ImageButton bt_favor,int position){
+            // 判断保存的 id 是否存在
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            String favorId = sharedPreferences.getString(getString(R.string.favorite_movie_id), null);
+            boolean hasFavor = false;
+            if (favorId != null && !favorId.isEmpty()) {
+                List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+                hasFavor = ids.contains(String.valueOf(movieListAdapter.getItem(position).getId()));
+            }
 
-                        @Override
-                        public void onSucceed(HttpData<Boolean> data) {
-                            bt_favor.setImageResource(R.drawable.ic_collect_2);
-                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+            // 判断是否已登录
+            String token = sharedPreferences.getString(getString(R.string.user_token), null);
 
-                            ids.add(String.valueOf(movieListAdapter.getItem(position).getId()));
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
-                            editor.commit();
-                        }
-                    });
-        } else {
-            EasyHttp.post(this)
-                    .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
-                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+            if (token == null || token.isEmpty()) {
+                toast("please login");
+                return;
+            }
 
-                        @Override
-                        public void onSucceed(HttpData<Boolean> data) {
-                            bt_favor.setImageResource(R.drawable.ic_collect_1);
-                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+            if (!hasFavor) {
+                EasyHttp.post(this)
+                        .api(new AddCollectApi().setFavoriteId(movieListAdapter.getItem(position).getId()).setType(1))
+                        .request(new HttpCallback<HttpData<Boolean>>(this) {
 
-                            ids.remove(String.valueOf(movieListAdapter.getItem(position).getId()));
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
-                            editor.commit();
+                            @Override
+                            public void onSucceed(HttpData<Boolean> data) {
+                                bt_favor.setImageResource(R.drawable.ic_collect_2);
+                                List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
-                        }
-                    });
+                                ids.add(String.valueOf(movieListAdapter.getItem(position).getId()));
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                                editor.commit();
+                            }
+                        });
+            } else {
+                EasyHttp.post(this)
+                        .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
+                        .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                            @Override
+                            public void onSucceed(HttpData<Boolean> data) {
+                                bt_favor.setImageResource(R.drawable.ic_collect_1);
+                                List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+
+                                ids.remove(String.valueOf(movieListAdapter.getItem(position).getId()));
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                                editor.commit();
+
+                            }
+                        });
+            }
         }
+
+        @Override
+        public void onPageScrolled ( int position, float positionOffset, int positionOffsetPixels){
+
+        }
+
+        @Override
+        public void onPageSelected ( int position){
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged ( int state){
+
+        }
+
+
     }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-
-}

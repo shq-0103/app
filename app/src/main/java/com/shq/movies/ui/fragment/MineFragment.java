@@ -1,6 +1,7 @@
 package com.shq.movies.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.MenuItem;
@@ -38,6 +39,7 @@ import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.activity.EditActivity;
 import com.shq.movies.ui.activity.FavoriteActivity;
 import com.shq.movies.ui.activity.FavoriteReviewActivity;
+import com.shq.movies.ui.activity.HistoryActivity;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MessageActivity;
 import com.shq.movies.ui.activity.MovieDetailActivity;
@@ -61,6 +63,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private SettingBar sb_sign_out;
     private SettingBar sb_modify_userinfo;
     private SettingBar sb_my_movielist;
+    private SettingBar sb_recent_history;
 
     private SettingBar sb_about;
 
@@ -93,12 +96,13 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         bv_user_info = findViewById(R.id.bv_user_info_navigation);
         sb_my_movielist = findViewById(R.id.sb_my_movielist);
         bt_addmovie = findViewById(R.id.bt_addmovie);
+        sb_recent_history = findViewById(R.id.sb_recent_history);
 
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,sb_recent_history);
 
         rv_watch_list = findViewById(R.id.rv_watch_list);
         watch_listAdapter = new ListAdapter(getAttachActivity());
@@ -248,6 +252,9 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             case R.id.sb_my_movielist:
                 startActivity(MyMovieListActivity.class);
                 break;
+            case R.id.sb_recent_history:
+                startActivity(HistoryActivity.class);
+                break;
             case R.id.bt_addmovie:
                 startActivity(MovieListActivity.class);
                 break;
@@ -282,11 +289,25 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
+        if(recyclerView.getId()==R.id.rv_watch_list){
+            this.routerToDetail(String.valueOf(watch_listAdapter.getItem(position).getId()));
+        }else if(recyclerView.getId()==R.id.rv_history_list){
+            this.routerToDetail(String.valueOf(history_listAdapter.getItem(position).getId()));
+        }
+    }
 
+    public void  routerToDetail(String movieId){
+        Intent intent = new Intent(getAttachActivity().getContext(), MovieDetailActivity.class);
+        intent.putExtra("movieId", movieId);
+        startActivity(intent);
     }
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-
+        if(recyclerView.getId()==R.id.rv_watch_list){
+            this.routerToDetail(String.valueOf(watch_listAdapter.getItem(position).getId()));
+        }else if(recyclerView.getId()==R.id.rv_history_list){
+            this.routerToDetail(String.valueOf(history_listAdapter.getItem(position).getId()));
+        }
     }
 }

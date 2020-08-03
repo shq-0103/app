@@ -1,9 +1,11 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +24,9 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.AddCollectApi;
 import com.shq.movies.http.request.CommentApi;
+import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.MovieDetailApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.request.ReviewApi;
@@ -37,7 +41,10 @@ import com.shq.movies.ui.dialog.MessageDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class MovieDetailActivity extends MyActivity
         implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener{
@@ -135,6 +142,7 @@ public final class MovieDetailActivity extends MyActivity
                 break;
         }
     }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -159,4 +167,5 @@ public final class MovieDetailActivity extends MyActivity
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
 
     }
+
 }

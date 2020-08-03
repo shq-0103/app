@@ -106,7 +106,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:layout_marginBottom="2dp">
 
                 <com.hjq.widget.layout.WrapRecyclerView
                     android:id="@+id/rv_watch_list"
@@ -158,7 +159,7 @@
             </LinearLayout>
 
                 <com.hjq.widget.layout.SettingBar
-                    android:id="@+id/recent_history"
+                    android:id="@+id/sb_recent_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:bar_leftText="Recent history"
@@ -168,6 +169,7 @@
                 android:id="@+id/rv_history_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 tools:listCount="3"
                 tools:listitem="@layout/item_list" />
 
@@ -175,6 +177,7 @@
                 android:id="@+id/sb_setting_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:bar_leftText="About us"
                 app:bar_rightIcon="@drawable/arrows_right_ic" />
 
@@ -196,7 +199,7 @@
                 android:id="@+id/sb_setting_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+
                 android:background="#ffc824"
                 app:bar_leftColor="@color/white"
                 app:bar_leftText="Sign Out" />

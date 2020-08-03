@@ -1,7 +1,10 @@
 package com.shq.movies.ui.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -9,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,11 +33,16 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.AddCollectApi;
+import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.activity.HomeActivity;
+import com.shq.movies.ui.activity.MonthActivity;
+import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.QueryMovieActivity;
+import com.shq.movies.ui.activity.UpcomingActivity;
 import com.shq.movies.ui.adapter.ConstellationAdapter;
 import com.shq.movies.ui.adapter.FindAdapter;
 import com.shq.movies.ui.adapter.GirdDropDownAdapter;
@@ -44,7 +54,7 @@ import com.yyydjk.library.DropDownMenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 public final class SearchFragment extends MyFragment<HomeActivity> implements
@@ -80,13 +90,14 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
     private ConstellationAdapter genresAdapter;
 
     private String order[] = {"Unlimited", "Recently favorited", "Highest rated", "Most popular"};
-    private String decade[] = {"Unlimited", "older","1990s", "2000s", "2010s"};
-    private String genres[] = {"Unlimited","Action", "Adventure", "Animation", "Children's", "Comedy"
+    private String decade[] = {"Unlimited", "older", "1990s", "2000s", "2010s"};
+    private String genres[] = {"Unlimited", "Action", "Adventure", "Animation", "Children's", "Comedy"
             , "Crime", "Documentary", "Drama", "Fantasy"
             , "Film-Noir", "Horror", "Music", "Mystery"
             , "Romance", "Sci-Fi", "Thriller", "War", "Western"};
 
     private int constellationPosition = 0;
+
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -104,8 +115,9 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
         month = findViewById(R.id.month);
         sb_popular = findViewById(R.id.sb_popular);
         sb_score = findViewById(R.id.sb_score);
-        sb_week =findViewById(R.id.sb_week);
-        setOnClickListener(iv_search, upcoming,sb_popular,sb_score,sb_week);
+        sb_week = findViewById(R.id.sb_week);
+
+        setOnClickListener(iv_search, upcoming, sb_popular, sb_score, sb_week,month);
 
 
         rv_score = findViewById(R.id.rv_score);
@@ -126,11 +138,12 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
 
         rv_select_list = findViewById(R.id.rv_select_list);
         mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
-        movieListAdapter = new  MovieListAdapter(getAttachActivity());
+        movieListAdapter = new MovieListAdapter(getAttachActivity());
         movieListAdapter.setOnItemClickListener(this);
+        movieListAdapter.setOnChildClickListener(R.id.bt_favorite,this);
         rv_select_list.setAdapter(movieListAdapter);
 
-        mDropDownMenu=findViewById(R.id.dropDownMenu);
+        mDropDownMenu = findViewById(R.id.dropDownMenu);
         //init city menu
         final ListView orderView = new ListView(getAttachActivity());
         orderAdapter = new GirdDropDownAdapter(getAttachActivity(), Arrays.asList(order));
@@ -145,7 +158,7 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
 
         //init constellation
         final View genresView = getLayoutInflater().inflate(R.layout.custom_layout, null);
-        GridView constellation =genresView.findViewById(R.id.constellation);
+        GridView constellation = genresView.findViewById(R.id.constellation);
         genresAdapter = new ConstellationAdapter(getAttachActivity(), Arrays.asList(genres));
         constellation.setAdapter(genresAdapter);
         TextView ok = genresView.findViewById(R.id.ok);
@@ -181,7 +194,7 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
                 mDropDownMenu.closeMenu();
             }
         });
-        
+
 
         constellation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -261,16 +274,17 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
                 startActivity(intent);
             }
         } else if (v.getId() == R.id.upcoming) {
+            startActivity(UpcomingActivity.class);
+        } else if (v.getId() == R.id.month) {
+            startActivity(MonthActivity.class);
+        } else if (v.getId() == R.id.sb_popular) {
             startActivity(MovieListActivity.class);
-        }else if(v.getId() == R.id.month){
+        } else if (v.getId() == R.id.sb_score) {
             startActivity(MovieListActivity.class);
-        }else if(v.getId() ==R.id.sb_popular){
+        } else if (v.getId() == R.id.sb_week) {
             startActivity(MovieListActivity.class);
-        }else if(v.getId() ==R.id.sb_score){
-            startActivity(MovieListActivity.class);
-        }else if(v.getId() ==R.id.sb_week){
-            startActivity(MovieListActivity.class);
-    }}
+        }
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -289,11 +303,100 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-
+        if (recyclerView.getId() == R.id.rv_select_list) {
+            this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
+        }else if (recyclerView.getId() == R.id.rv_popular){
+            this.routerToDetail(String.valueOf(PfindAdapter.getItem(position).getId()));
+        }else if (recyclerView.getId()==R.id.rv_score){
+            this.routerToDetail(String.valueOf(SfindAdapter.getItem(position).getId()));
+        }else if (recyclerView.getId()==R.id.rv_week){
+            this.routerToDetail(String.valueOf(WfindAdapter.getItem(position).getId()));
+        }
     }
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
+        switch (childView.getId()) {
+            case R.id.bt_favorite:
+                onClickFavorite((ImageButton) childView, position);
+                break;
+            case R.id.rv_select_list:
+                this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
+                break;
+            case R.id.rv_popular:
+                this.routerToDetail(String.valueOf(PfindAdapter.getItem(position).getId()));
+                break;
+            case R.id.rv_score:
+                this.routerToDetail(String.valueOf(SfindAdapter.getItem(position).getId()));
+                break;
+            case R.id.rv_week:
+                this.routerToDetail(String.valueOf(WfindAdapter.getItem(position).getId()));
+                break;
+            default:
+                toast(((TextView) childView).getText());
+                break;
+        }
+    }
 
+    public void routerToDetail(String movieId) {
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra("movieId", movieId);
+        startActivity(intent);
+    }
+
+
+    private void onClickFavorite(ImageButton bt_favor, int position) {
+        // 判断保存的 id 是否存在
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String favorId = sharedPreferences.getString(getString(R.string.favorite_movie_id), null);
+        boolean hasFavor = false;
+        if (favorId != null && !favorId.isEmpty()) {
+            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+            hasFavor = ids.contains(String.valueOf(movieListAdapter.getItem(position).getId()));
+        }
+
+        // 判断是否已登录
+        String token = sharedPreferences.getString(getString(R.string.user_token), null);
+
+        if (token == null || token.isEmpty()) {
+            toast("please login");
+            return;
+        }
+
+        if (!hasFavor) {
+            EasyHttp.post(this)
+                    .api(new AddCollectApi().setFavoriteId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            bt_favor.setImageResource(R.drawable.ic_collect_2);
+                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+
+                            ids.add(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                            editor.commit();
+                        }
+                    });
+        } else {
+            EasyHttp.post(this)
+                    .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
+
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            bt_favor.setImageResource(R.drawable.ic_collect_1);
+                            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+
+                            ids.remove(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+                            editor.commit();
+
+                        }
+                    });
+        }
     }
 }

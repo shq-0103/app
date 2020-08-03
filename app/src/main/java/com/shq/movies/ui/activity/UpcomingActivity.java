@@ -32,45 +32,46 @@ import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
+import com.shq.movies.ui.adapter.UpcomingAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class LastTimeActivity extends MyActivity implements OnRefreshLoadMoreListener,
+public final class UpcomingActivity extends MyActivity implements OnRefreshLoadMoreListener,
         BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
 
     private SmartRefreshLayout mRefreshLayout;
-    private WrapRecyclerView mRecyclerView;
-    private MovieListAdapter movieListAdapter;
+    private WrapRecyclerView rv_upcoming;
+    private UpcomingAdapter upcomingAdapter;
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_lastlist;
+        return R.layout.activity_upcomingmovies;
     }
 
     @Override
     protected void initView() {
         mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
-        mRecyclerView = findViewById(R.id.rv_favorite_movie_list);
+        rv_upcoming = findViewById(R.id.rv_upcoming);
 
-        movieListAdapter = new MovieListAdapter(getActivity());
-        movieListAdapter.setOnItemClickListener(this);
-        movieListAdapter.setOnChildClickListener(R.id.tv_movie_name,this);
-        movieListAdapter.setOnChildClickListener(R.id.tv_movie_date,this);
-        movieListAdapter.setOnChildClickListener(R.id.bt_favorite,this);
+        upcomingAdapter = new UpcomingAdapter(getActivity());
+        upcomingAdapter.setOnItemClickListener(this);
+        upcomingAdapter.setOnChildClickListener(R.id.tv_movie_name,this);
+        upcomingAdapter.setOnChildClickListener(R.id.tv_movie_date,this);
+        upcomingAdapter.setOnChildClickListener(R.id.bt_favorite,this);
 
 
 
-        mRecyclerView.setAdapter(movieListAdapter);
+        rv_upcoming.setAdapter(upcomingAdapter);
 
-        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
+        TextView headerView = rv_upcoming.addHeaderView(R.layout.picker_item);
         headerView.setText("");
         headerView.setOnClickListener(v -> toast(""));
 
-        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
+        TextView footerView = rv_upcoming.addFooterView(R.layout.picker_item);
         footerView.setText("");
         footerView.setOnClickListener(v -> toast(""));
 
@@ -84,18 +85,18 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
 
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new OldMovieApi().setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new OldMovieApi().setPage(upcomingAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
                 if(isLoadMore){
-                    movieListAdapter.addData(result.getData());
+                    upcomingAdapter.addData(result.getData());
                     mRefreshLayout.finishLoadMore();
                 }else {
-                    movieListAdapter.setData(result.getData());
+                    upcomingAdapter.setData(result.getData());
                     mRefreshLayout.finishRefresh();
                 }
-                movieListAdapter.setPageNumber(movieListAdapter.getPageNumber()+1);
+                upcomingAdapter.setPageNumber(upcomingAdapter.getPageNumber()+1);
             }
 
             @Override
@@ -112,8 +113,8 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        if (recyclerView.getId() == R.id.rv_favorite_movie_list) {
-            this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
+        if (recyclerView.getId() == R.id.rv_upcoming) {
+            this.routerToDetail(String.valueOf(upcomingAdapter.getItem(position).getId()));
         }
     }
 
@@ -124,8 +125,8 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
             case R.id.bt_favorite:
                 onClickFavorite((ImageButton) childView, position);
                 break;
-            case R.id.rv_favorite_movie_list:
-                this.routerToDetail(String.valueOf(movieListAdapter.getItem(position).getId()));
+            case R.id.rv_upcoming:
+                this.routerToDetail(String.valueOf(upcomingAdapter.getItem(position).getId()));
                 break;
             default:
                 toast(((TextView)childView).getText() );
@@ -145,7 +146,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
         boolean hasFavor = false;
         if (favorId != null && !favorId.isEmpty()) {
             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
-            hasFavor = ids.contains(String.valueOf(movieListAdapter.getItem(position).getId()));
+            hasFavor = ids.contains(String.valueOf(upcomingAdapter.getItem(position).getId()));
         }
 
         // 判断是否已登录
@@ -158,7 +159,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
 
         if (!hasFavor) {
             EasyHttp.post(this)
-                    .api(new AddCollectApi().setFavoriteId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .api(new AddCollectApi().setFavoriteId(upcomingAdapter.getItem(position).getId()).setType(1))
                     .request(new HttpCallback<HttpData<Boolean>>(this) {
 
                         @Override
@@ -166,7 +167,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
                             bt_favor.setImageResource(R.drawable.ic_collect_2);
                             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
-                            ids.add(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            ids.add(String.valueOf(upcomingAdapter.getItem(position).getId()));
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
                             editor.commit();
@@ -174,7 +175,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
                     });
         } else {
             EasyHttp.post(this)
-                    .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
+                    .api(new DeleteCollectApi().setId(upcomingAdapter.getItem(position).getId()).setType(1))
                     .request(new HttpCallback<HttpData<Boolean>>(this) {
 
                         @Override
@@ -182,7 +183,7 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
                             bt_favor.setImageResource(R.drawable.ic_collect_1);
                             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
-                            ids.remove(String.valueOf(movieListAdapter.getItem(position).getId()));
+                            ids.remove(String.valueOf(upcomingAdapter.getItem(position).getId()));
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString(getString(R.string.favorite_movie_id), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
                             editor.commit();
@@ -193,8 +194,8 @@ public final class LastTimeActivity extends MyActivity implements OnRefreshLoadM
     }
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        movieListAdapter.clearData();
-        movieListAdapter.setPageNumber(1);
+        upcomingAdapter.clearData();
+        upcomingAdapter.setPageNumber(1);
         this.getData(false);
     }
 
