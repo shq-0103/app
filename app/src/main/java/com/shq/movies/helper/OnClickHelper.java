@@ -1,4 +1,4 @@
-package com.shq.movies.other;
+package com.shq.movies.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -77,6 +77,17 @@ public final class OnClickHelper {
                         }
                     });
         }
+    }
+    public static boolean hasFavorite(Long movieId, AppCompatActivity context) {
+        // 判断保存的 id 是否存在
+        SharedPreferences sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        String favorId = sharedPreferences.getString(context.getString(R.string.favorite_movie_id), null);
+        boolean hasFavor = false;
+        if (favorId != null && !favorId.isEmpty()) {
+            List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
+            hasFavor = ids.contains(String.valueOf(movieId));
+        }
+        return hasFavor;
     }
 
 }

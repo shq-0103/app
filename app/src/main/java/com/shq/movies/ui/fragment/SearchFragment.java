@@ -2,10 +2,17 @@ package com.shq.movies.ui.fragment;
 
 
 import android.content.Intent;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -26,11 +33,18 @@ import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.activity.MovieListActivity;
 import com.shq.movies.ui.activity.QueryMovieActivity;
+import com.shq.movies.ui.adapter.ConstellationAdapter;
 import com.shq.movies.ui.adapter.FindAdapter;
+import com.shq.movies.ui.adapter.GirdDropDownAdapter;
+import com.shq.movies.ui.adapter.ListDropDownAdapter;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
+import com.yyydjk.library.DropDownMenu;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 
 public final class SearchFragment extends MyFragment<HomeActivity> implements
@@ -57,6 +71,22 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
     private MovieListAdapter movieListAdapter;
     private SmartRefreshLayout mRefreshLayout;
 
+    private DropDownMenu mDropDownMenu;
+    private String headers[] = {"Order", "Decade", "Genres"};
+    private List<View> popupViews = new ArrayList<>();
+
+    private GirdDropDownAdapter orderAdapter;
+    private ListDropDownAdapter decadeAdapter;
+    private ConstellationAdapter genresAdapter;
+
+    private String order[] = {"Unlimited", "Recently favorited", "Highest rated", "Most popular"};
+    private String decade[] = {"Unlimited", "older","1990s", "2000s", "2010s"};
+    private String genres[] = {"Unlimited","Action", "Adventure", "Animation", "Children's", "Comedy"
+            , "Crime", "Documentary", "Drama", "Fantasy"
+            , "Film-Noir", "Horror", "Music", "Mystery"
+            , "Romance", "Sci-Fi", "Thriller", "War", "Western"};
+
+    private int constellationPosition = 0;
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -99,6 +129,77 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
         movieListAdapter = new  MovieListAdapter(getAttachActivity());
         movieListAdapter.setOnItemClickListener(this);
         rv_select_list.setAdapter(movieListAdapter);
+
+        mDropDownMenu=findViewById(R.id.dropDownMenu);
+        //init city menu
+        final ListView orderView = new ListView(getAttachActivity());
+        orderAdapter = new GirdDropDownAdapter(getAttachActivity(), Arrays.asList(order));
+        orderView.setDividerHeight(0);
+        orderView.setAdapter(orderAdapter);
+
+        //init age menu
+        final ListView decadeView = new ListView(getAttachActivity());
+        decadeView.setDividerHeight(0);
+        decadeAdapter = new ListDropDownAdapter(getAttachActivity(), Arrays.asList(decade));
+        decadeView.setAdapter(decadeAdapter);
+
+        //init constellation
+        final View genresView = getLayoutInflater().inflate(R.layout.custom_layout, null);
+        GridView constellation =genresView.findViewById(R.id.constellation);
+        genresAdapter = new ConstellationAdapter(getAttachActivity(), Arrays.asList(genres));
+        constellation.setAdapter(genresAdapter);
+        TextView ok = genresView.findViewById(R.id.ok);
+        setOnClickListener(ok);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDropDownMenu.setTabText(constellationPosition == 0 ? headers[2] : genres[constellationPosition]);
+                mDropDownMenu.closeMenu();
+            }
+        });
+
+        //init popupViews
+        popupViews.add(orderView);
+        popupViews.add(decadeView);
+        popupViews.add(genresView);
+
+        //add item click event
+        orderView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                orderAdapter.setCheckItem(position);
+                mDropDownMenu.setTabText(position == 0 ? headers[0] : order[position]);
+                mDropDownMenu.closeMenu();
+            }
+        });
+
+        decadeView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                decadeAdapter.setCheckItem(position);
+                mDropDownMenu.setTabText(position == 0 ? headers[1] : decade[position]);
+                mDropDownMenu.closeMenu();
+            }
+        });
+        
+
+        constellation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                genresAdapter.setCheckItem(position);
+                constellationPosition = position;
+            }
+        });
+
+        //init context view
+        TextView contentView = new TextView(getAttachActivity());
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        contentView.setGravity(Gravity.CENTER);
+        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
+        contentView.setVisibility(View.INVISIBLE);
+
+        //init dropdownview
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
     }
 
     @Override

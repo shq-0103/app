@@ -178,6 +178,7 @@
                             tools:listCount="2"
                             tools:listitem="@layout/item_list" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
@@ -201,13 +202,23 @@
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
-            <com.hjq.widget.layout.SettingBar
-                android:layout_marginTop="5dp"
-                android:id="@+id/sb_review"
+
+            <com.yyydjk.library.DropDownMenu
+                android:id="@+id/dropDownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                app:bar_leftText="Select" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                app:dddividerColor="@color/gray"
+                app:ddmaskColor="@color/mask_color"
+                app:ddmenuBackgroundColor="@color/white"
+                app:ddmenuMenuHeightPercent="0.3"
+                app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
+                app:ddmenuTextSize="13sp"
+                app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon"
+                app:ddtextSelectedColor="@color/colorSelect"
+                app:ddtextUnselectedColor="@color/drop_down_unselected"
+                app:ddunderlineColor="@color/gray"
+                />
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:id="@+id/rl_favorite_movie_refresh"

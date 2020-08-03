@@ -21,7 +21,7 @@ import com.shq.movies.event.QueryEvent;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.response.MovieBean;
-import com.shq.movies.other.OnClickHelper;
+import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.adapter.MovieAdapter;
 

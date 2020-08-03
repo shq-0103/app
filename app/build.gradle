@@ -144,6 +144,7 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:3.1.9'
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
 
+
     // 动画解析库：https://github.com/airbnb/lottie-android
     // 动画资源：https://lottiefiles.com、https://icons8.com/animated-icons
     implementation 'com.airbnb.android:lottie:3.4.1'
@@ -162,6 +163,9 @@ dependencies {
     // 轮播
     implementation 'androidx.legacy:legacy-support-v4:latestVersion'
     implementation 'cn.bingoogolapple:bga-banner:2.2.7'
+
+    // 筛选
+    implementation 'com.github.dongjunkun:DropDownMenu:1.0.4'
 
     // 日志调试：https://github.com/getActivity/Logcat
     debugImplementation 'com.hjq:logcat:8.2'
