@@ -1,19 +1,25 @@
 package com.shq.movies.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.hjq.bar.TitleBar;
 import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
@@ -38,6 +44,7 @@ import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.dialog.MessageDialog;
+import com.shq.movies.widget.XCollapsingToolbarLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,7 +54,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class MovieDetailActivity extends MyActivity
-        implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener{
+        implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener,
+        BaseAdapter.OnChildClickListener, XCollapsingToolbarLayout.OnScrimsListener {
     private ImageView iv_movie_cover;
     private TextView tv_movie_title;
     private TextView tv_movie_type;
@@ -68,6 +76,11 @@ public final class MovieDetailActivity extends MyActivity
     private CommentAdapter commentAdapter;
     private Button bt_seen;
 
+    private XCollapsingToolbarLayout mCollapsingToolbarLayout;
+    private TitleBar tb_moviedetail;
+    private MovieBean movieDetail = new MovieBean();
+    private LinearLayout ll_fav_container;
+
     @Override
     protected int getLayoutId() {
         return R.layout.acticity_moviedetail;
@@ -76,9 +89,9 @@ public final class MovieDetailActivity extends MyActivity
     @Override
     protected void initView() {
         Intent intent = getIntent();
-        movieId =Long.parseLong( intent.getStringExtra("movieId"));
+        movieId = Long.parseLong(intent.getStringExtra("movieId"));
 
-        iv_movie_cover =findViewById(R.id.iv_movie_cover);
+        iv_movie_cover = findViewById(R.id.iv_movie_cover);
         tv_movie_title = findViewById(R.id.tv_movie_title);
         tv_movie_type = findViewById(R.id.tv_movie_type);
         tv_movie_time = findViewById(R.id.tv_movie_time);
@@ -92,12 +105,18 @@ public final class MovieDetailActivity extends MyActivity
         tab2 = findViewById(R.id.tab2);
         tab3 = findViewById(R.id.tab3);
         bt_seen = findViewById(R.id.bt_seen);
-        setOnClickListener(bt_favorite,bt_seen);
+        setOnClickListener(bt_favorite, bt_seen);
 
         rv_comment = findViewById(R.id.rv_comment);
         commentAdapter = new CommentAdapter(getActivity());
         commentAdapter.setOnItemClickListener(this);
         rv_comment.setAdapter(commentAdapter);
+
+
+        tb_moviedetail = findViewById(R.id.tb_moviedetail);
+        mCollapsingToolbarLayout = findViewById(R.id.ctl_home_bar);
+        mCollapsingToolbarLayout.setOnScrimsListener(this);
+        ll_fav_container=findViewById(R.id.ll_fav_container);
     }
 
     @Override
@@ -105,7 +124,7 @@ public final class MovieDetailActivity extends MyActivity
         EasyHttp.get(this).api(new MovieDetailApi().setId(movieId)).request(new HttpCallback<HttpData<MovieBean>>(this) {
             @Override
             public void onSucceed(HttpData<MovieBean> result) {
-
+                movieDetail = result.getData();
                 super.onSucceed(result);
                 tv_movie_title.setText(result.getData().getName());
                 tv_movie_type.setText(result.getData().getGenres());
@@ -123,6 +142,7 @@ public final class MovieDetailActivity extends MyActivity
         });
         this.getData();
     }
+
     private void getData() {
 
         EasyHttp.get(this).api((IRequestApi) new CommentApi().setPage(commentAdapter.getPageNumber()).setPageSize(5)).request(new HttpCallback<HttpData<List<CommentBean>>>(this) {
@@ -133,6 +153,7 @@ public final class MovieDetailActivity extends MyActivity
             }
         });
     }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_seen:
@@ -166,6 +187,29 @@ public final class MovieDetailActivity extends MyActivity
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
 
+    }
+
+
+    /**
+     * CollapsingToolbarLayout 渐变回调
+     * <p>
+     * {@link XCollapsingToolbarLayout.OnScrimsListener}
+     */
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onScrimsStateChange(XCollapsingToolbarLayout layout, boolean shown) {
+        System.out.println(shown);
+        if (shown) {
+            tb_moviedetail.setTitle(movieDetail.getName());
+            tb_moviedetail.setBackground(getDrawable(R.drawable.images));
+            ll_fav_container.setVisibility(View.INVISIBLE);
+            getStatusBarConfig().statusBarDarkFont(true).init();
+        } else {
+            tb_moviedetail.setTitle(null);
+            ll_fav_container.setVisibility(View.VISIBLE);
+            tb_moviedetail.setBackground(null);
+            getStatusBarConfig().statusBarDarkFont(false).init();
+        }
     }
 
 }

@@ -17,7 +17,7 @@
         <com.shq.movies.widget.XCollapsingToolbarLayout
             android:id="@+id/ctl_home_bar"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="300dp"
             app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:scrimVisibleHeightTrigger="100dp">
@@ -37,6 +37,7 @@
                 app:layout_collapseMode="pin" />
 
             <com.hjq.bar.TitleBar
+                android:id="@+id/tb_moviedetail"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 app:barStyle="transparent"
@@ -49,114 +50,126 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="70dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_movie_cover"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="2" />
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="4"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_movie_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Title"
-                        android:textColor="@color/white"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:id="@+id/tv_movie_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Type"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_movie_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Time"
-                        android:textColor="@color/white" />
+                    <ImageView
+                        android:id="@+id/iv_movie_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="2" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/bt_favorite"
-                            style="@style/movieDetailButton"
+                        <TextView
+                            android:id="@+id/tv_movie_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Favorite"
-                            android:textSize="15dp" />
+                            android:text="Title"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/bt_seen"
-                            style="@style/movieDetailButton"
+                        <TextView
+                            android:id="@+id/tv_movie_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Seen"
-                            android:textSize="15dp" />
+                            android:text="Type"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_movie_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Time"
+                            android:textColor="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/bt_favorite"
+                                style="@style/movieDetailButton"
+                                android:layout_weight="1"
+                                android:text="Favorite"
+                                android:textSize="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/bt_seen"
+                                style="@style/movieDetailButton"
+                                android:layout_weight="1"
+                                android:text="Seen"
+                                android:textSize="15dp" />
+                        </LinearLayout>
                     </LinearLayout>
+
+
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_fav_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:padding="10dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@color/black10"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/movieDetail_rate_img"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="15dp"
+                            app:srcCompat="@drawable/ic_rate" />
+
+                        <TextView
+                            android:id="@+id/tv_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="4" />
+                    </LinearLayout>
+
+                    <com.hjq.widget.layout.SettingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@color/black10"
+                        android:clickable="false"
+                        android:focusable="true"
+                        app:bar_leftText="1 people want to watch" />
+                </LinearLayout>
             </LinearLayout>
+
         </com.shq.movies.widget.XCollapsingToolbarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/black10"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/movieDetail_rate_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    app:srcCompat="@drawable/ic_rate" />
-
-                <TextView
-                    android:id="@+id/tv_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="4" />
-            </LinearLayout>
-
-            <com.hjq.widget.layout.SettingBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/black10"
-                android:clickable="false"
-                android:focusable="true"
-                app:bar_leftText="1 people want to watch" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -177,11 +190,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Movie Detail" />
+
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Comment" />
+
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab3"
                     android:layout_width="wrap_content"
@@ -191,86 +206,98 @@
 
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:drawableLeft="@drawable/ic_intro"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="Director  information" />
+
             <TextView
                 android:id="@+id/tv_derector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="20dp"
-                android:textColor="@color/black65"
-                android:text="Director" />
+                android:paddingBottom="10dp"
+                android:text="Director"
+                android:textColor="@color/black65" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:drawableLeft="@drawable/ic_intro"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="Actor information" />
+
             <TextView
                 android:id="@+id/tv_actor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:textColor="@color/black65"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="20dp"
-                android:text="actor" />
+                android:paddingBottom="10dp"
+                android:text="actor"
+                android:textColor="@color/black65" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:drawableLeft="@drawable/ic_intro"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="Movie introdution"
                 tools:ignore="DuplicateIds" />
+
             <TextView
                 android:id="@+id/tv_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="20dp"
-                android:textColor="@color/black65"
-                android:text="intro" />
+                android:paddingBottom="10dp"
+                android:text="intro"
+                android:textColor="@color/black65" />
+
             <com.hjq.widget.layout.SettingBar
                 android:id="@+id/tv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:bar_leftText="Comment"
-                android:layout_marginTop="2dp"
                 app:bar_rightText="All" />
 
             <com.hjq.widget.layout.WrapRecyclerView
@@ -287,6 +314,7 @@
                 android:clickable="false"
                 android:focusable="true"
                 app:bar_leftText="Movie Like This" />
+
             <com.hjq.widget.layout.WrapRecyclerView
                 android:id="@+id/rv_sametype"
                 android:layout_width="match_parent"
@@ -296,8 +324,7 @@
 
         </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
