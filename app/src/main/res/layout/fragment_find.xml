@@ -57,6 +57,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/ly_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -219,7 +220,7 @@
                 app:dddividerColor="@color/gray"
                 app:ddmaskColor="@color/mask_color"
                 app:ddmenuBackgroundColor="@color/white"
-                app:ddmenuMenuHeightPercent="0.3"
+                app:ddmenuMenuHeightPercent="0.4"
                 app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
                 app:ddmenuTextSize="13sp"
                 app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon"

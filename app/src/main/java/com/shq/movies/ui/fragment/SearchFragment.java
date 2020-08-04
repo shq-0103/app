@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -29,6 +30,8 @@ import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 
@@ -57,8 +60,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public final class SearchFragment extends MyFragment<HomeActivity> implements
+public final class SearchFragment extends MyFragment<HomeActivity> implements OnRefreshLoadMoreListener,
         ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
+
+    private SmartRefreshLayout smartRefreshLayout;
 
     private EditText et_search;
     private ImageView iv_search;
@@ -204,15 +209,17 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
             }
         });
 
+        smartRefreshLayout=findViewById(R.id.rl_favorite_movie_refresh);
+
         //init context view
-        TextView contentView = new TextView(getAttachActivity());
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        contentView.setGravity(Gravity.CENTER);
-        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
-        contentView.setVisibility(View.INVISIBLE);
+//        TextView contentView = new TextView(getAttachActivity());
+//        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        contentView.setGravity(Gravity.CENTER);
+//        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
+//        contentView.setVisibility(View.INVISIBLE);
 
         //init dropdownview
-        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, smartRefreshLayout);
     }
 
     @Override
@@ -398,5 +405,15 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements
                         }
                     });
         }
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
     }
 }
