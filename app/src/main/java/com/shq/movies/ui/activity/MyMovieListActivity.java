@@ -126,7 +126,7 @@ public final class MyMovieListActivity extends MyActivity {
                         order="score";
                     }
                     if(list.get(0).equals("Most popular")){
-                        order="score";
+                        order="viewCount";
                     }
                 }
                 EventBus.getDefault().post(new QueryEvent("queryChange", order,list.get(1),list.get(2)));

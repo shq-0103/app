@@ -84,7 +84,6 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
 
     private WrapRecyclerView rv_select_list;
     private MovieListAdapter movieListAdapter;
-    private SmartRefreshLayout mRefreshLayout;
 
     private DropDownMenu mDropDownMenu;
     private String headers[] = {"Order", "Decade", "Genres"};
@@ -94,7 +93,7 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
     private ListDropDownAdapter decadeAdapter;
     private ConstellationAdapter genresAdapter;
 
-    private String order[] = {"Unlimited", "Recently favorited", "Highest rated", "Most popular"};
+    private String order[] = {"Unlimited", "Highest rated", "Most popular"};
     private String decade[] = {"Unlimited", "older", "1990s", "2000s", "2010s"};
     private String genres[] = {"Unlimited", "Action", "Adventure", "Animation", "Children's", "Comedy"
             , "Crime", "Documentary", "Drama", "Fantasy"
@@ -102,6 +101,8 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
             , "Romance", "Sci-Fi", "Thriller", "War", "Western"};
 
     private int constellationPosition = 0;
+
+    private QueryMovieApi queryMovieApi=new QueryMovieApi();
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -142,7 +143,7 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
         rv_week.setAdapter(WfindAdapter);
 
         rv_select_list = findViewById(R.id.rv_select_list);
-        mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
+
         movieListAdapter = new MovieListAdapter(getAttachActivity());
         movieListAdapter.setOnItemClickListener(this);
         movieListAdapter.setOnChildClickListener(R.id.bt_favorite,this);
@@ -172,6 +173,12 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
             @Override
             public void onClick(View v) {
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[2] : genres[constellationPosition]);
+                if(constellationPosition==0){
+                    queryMovieApi.setGenres(null);
+                }else {
+                    queryMovieApi.setGenres(genres[constellationPosition]);
+                }
+                onRefresh(smartRefreshLayout);
                 mDropDownMenu.closeMenu();
             }
         });
@@ -187,6 +194,17 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 orderAdapter.setCheckItem(position);
                 mDropDownMenu.setTabText(position == 0 ? headers[0] : order[position]);
+                if(position==0){
+                    queryMovieApi.setOrder(null);
+                }else {
+                    if(order[position].equals("Highest rated")){
+                        queryMovieApi.setOrder("score");
+                    }
+                    if(order[position].equals("Most popular")){
+                        queryMovieApi.setOrder("viewCount");
+                    }
+                }
+                onRefresh(smartRefreshLayout);
                 mDropDownMenu.closeMenu();
             }
         });
@@ -196,6 +214,12 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 decadeAdapter.setCheckItem(position);
                 mDropDownMenu.setTabText(position == 0 ? headers[1] : decade[position]);
+                if(position==0){
+                    queryMovieApi.setDecade(null);
+                }else {
+                    queryMovieApi.setDecade(decade[position]);
+                }
+                onRefresh(smartRefreshLayout);
                 mDropDownMenu.closeMenu();
             }
         });
@@ -210,13 +234,9 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
         });
 
         smartRefreshLayout=findViewById(R.id.rl_favorite_movie_refresh);
-
-        //init context view
-//        TextView contentView = new TextView(getAttachActivity());
-//        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        contentView.setGravity(Gravity.CENTER);
-//        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
-//        contentView.setVisibility(View.INVISIBLE);
+        smartRefreshLayout.setOnLoadMoreListener(this);
+        LinearLayout ly_container=findViewById(R.id.ly_container);
+        ly_container.removeView(smartRefreshLayout);
 
         //init dropdownview
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, smartRefreshLayout);
@@ -250,13 +270,28 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
                 WfindAdapter.setData(result.getData());
             }
         });
+        this.queryMovie(false);
+    }
 
-
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+    private void queryMovie(boolean isLoadMore){
+        EasyHttp.get(this).api(queryMovieApi.setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
-                movieListAdapter.setData(result.getData());
+                if(result.getData().isEmpty()){
+                    toast(getString(R.string.hint_no_more_data));
+                    smartRefreshLayout.setNoMoreData(true);
+                    movieListAdapter.setLastPage(true);
+                    return;
+                }
+                if(!isLoadMore){
+                    movieListAdapter.setData(result.getData());
+                    smartRefreshLayout.finishRefresh();
+                }else {
+                    movieListAdapter.addData(result.getData());
+                    smartRefreshLayout.finishLoadMore();
+
+                }
             }
         });
     }
@@ -392,6 +427,7 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
                     .api(new DeleteCollectApi().setId(movieListAdapter.getItem(position).getId()).setType(1))
                     .request(new HttpCallback<HttpData<Boolean>>(this) {
 
+                        @RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onSucceed(HttpData<Boolean> data) {
                             bt_favor.setImageResource(R.drawable.ic_collect_1);
@@ -409,11 +445,14 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+        movieListAdapter.setPageNumber(1);
+        movieListAdapter.clearData();
+        this.queryMovie(false);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+        movieListAdapter.setPageNumber(movieListAdapter.getPageNumber()+1);
+        this.queryMovie(true);
     }
 }

@@ -14,7 +14,15 @@ public final class MovieBean {
   private String releaseDate;
   private double score;
   private String intro;
+  private long viewCount;
 
+  public long getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(long viewCount) {
+    this.viewCount = viewCount;
+  }
 
   public long getId() {
     return id;
