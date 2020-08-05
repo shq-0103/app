@@ -33,6 +33,7 @@ import com.shq.movies.http.request.CollectMovieIdListApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.request.UserApi;
+import com.shq.movies.http.response.IdListBean;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.http.response.UserInfoBean;
@@ -142,22 +143,27 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             }
         });
 
-        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<List<Integer>>>(this) {
+        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<IdListBean>>(this) {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onSucceed(HttpData<List<Integer>> result) {
+            public void onSucceed(HttpData<IdListBean> result) {
                 super.onSucceed(result);
 
                 //步骤1：创建一个SharedPreferences对象
                 SharedPreferences sharedPreferences =getAttachActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
                 //步骤2： 实例化SharedPreferences.Editor对象
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String idS=result.getData().stream()
+                String idS=result.getData().getCollect().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                String idSeen=result.getData().getSeen().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
                 //步骤3：将获取过来的值放入文件
-                editor.putString(getString(R.string.favorite_movie_id), idS);
+                editor.putString(getString(R.string.seen_movie_id), idSeen);
+                editor.putString(getString(R.string.favorite_movie_id), idSeen);
                 //步骤4：提交
+
                 editor.commit();
             }
         });

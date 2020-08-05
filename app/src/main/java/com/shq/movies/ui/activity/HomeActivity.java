@@ -25,6 +25,7 @@ import com.shq.movies.helper.DoubleClickHelper;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieIdListApi;
 import com.shq.movies.http.request.UserApi;
+import com.shq.movies.http.response.IdListBean;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.other.KeyboardWatcher;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
@@ -98,21 +99,26 @@ public final class HomeActivity extends MyActivity
         mPagerAdapter.setLazyMode(true);
         mViewPager.setAdapter(mPagerAdapter);
 
-        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<List<Integer>>>(this) {
+        EasyHttp.get(this).api(new CollectMovieIdListApi()).request(new HttpCallback<HttpData<IdListBean>>(this) {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onSucceed(HttpData<List<Integer>> result) {
+            public void onSucceed(HttpData<IdListBean> result) {
                 super.onSucceed(result);
 
                 //步骤1：创建一个SharedPreferences对象
                 SharedPreferences sharedPreferences =getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
                 //步骤2： 实例化SharedPreferences.Editor对象
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String idS=result.getData().stream()
+                String idS=result.getData().getCollect().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                String idSeen=result.getData().getSeen().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
                 //步骤3：将获取过来的值放入文件
+                editor.putString(getString(R.string.seen_movie_id), idSeen);
                 editor.putString(getString(R.string.favorite_movie_id), idS);
+
                 //步骤4：提交
                 editor.commit();
             }

@@ -4,6 +4,8 @@
     <!-- 通用的 -->
     <string name="user_token">user_token</string>
     <string name="favorite_movie_id">favorite_movie_id</string>
+    <string name="seen_movie_id">seen_movie_id</string>
+
 
     <string name="event_login_success">event_login_success</string>
     <string name="event_login_fail">event_login_fail</string>
