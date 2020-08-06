@@ -94,13 +94,13 @@ public final class MyApplication extends Application implements LifecycleOwner {
         });
 
         // 本地异常捕捉
-        CrashHandler.register(application);
+//        CrashHandler.register(application);
 
         // 友盟统计、登录、分享 SDK
-        UmengClient.init(application);
+//        UmengClient.init(application);
 
         // Bugly 异常捕捉
-        CrashReport.initCrashReport(application, AppConfig.getBuglyId(), AppConfig.isDebug());
+//        CrashReport.initCrashReport(application, AppConfig.getBuglyId(), AppConfig.isDebug());
         // 国际化
 
         ClassicsHeader.REFRESH_HEADER_PULLING = "Pull down to refresh";
