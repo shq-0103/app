@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyConfig;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
@@ -121,18 +122,19 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
     @Override
     protected void initData() {
-        GlideApp.with(getActivity())
-                .load(R.drawable.avatar_placeholder_ic)
-                .placeholder(R.drawable.avatar_placeholder_ic)
-                .error(R.drawable.avatar_placeholder_ic)
-                .circleCrop()
-                .into(iv_avatar);
+
         EasyHttp.get(this).api(new UserApi()).request(new HttpCallback<HttpData<UserInfoBean>>(this) {
             @Override
             public void onSucceed(HttpData<UserInfoBean> result) {
                 super.onSucceed(result);
                 tv_nickname.setText(result.getData().getNickname());
                 tv_intro.setText(result.getData().getIntroduction());
+                GlideApp.with(getActivity())
+                        .load(EasyConfig.getInstance().getServer().getHost()+ result.getData().getAvatar())
+                        .placeholder(R.drawable.avatar_placeholder_ic)
+                        .error(R.drawable.avatar_placeholder_ic)
+                        .circleCrop()
+                        .into(iv_avatar);
             }
 
             @Override

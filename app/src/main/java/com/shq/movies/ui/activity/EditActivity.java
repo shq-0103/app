@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyConfig;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
@@ -72,12 +73,7 @@ public final class EditActivity extends MyActivity {
 
     @Override
     protected void initData() {
-        GlideApp.with(getActivity())
-                .load(R.drawable.avatar_placeholder_ic)
-                .placeholder(R.drawable.avatar_placeholder_ic)
-                .error(R.drawable.avatar_placeholder_ic)
-                .circleCrop()
-                .into(mAvatarView);
+
         EasyHttp.get(this).api(new UserApi()).request(new HttpCallback<HttpData<UserInfoBean>>(this) {
             @Override
             public void onSucceed(HttpData<UserInfoBean> result) {
@@ -87,7 +83,12 @@ public final class EditActivity extends MyActivity {
                 sb_username.setRightText(userInfo.getUsername());
                 sb_email.setRightText(userInfo.getEmail());
                 sb_intro.setRightText(userInfo.getIntroduction());
-
+                GlideApp.with(getActivity())
+                        .load(EasyConfig.getInstance().getServer().getHost()+userInfo.getAvatar())
+                        .placeholder(R.drawable.avatar_placeholder_ic)
+                        .error(R.drawable.avatar_placeholder_ic)
+                        .circleCrop()
+                        .into(mAvatarView);
             }
 
             @Override
@@ -148,13 +149,13 @@ public final class EditActivity extends MyActivity {
                 break;
             case R.id.fl_person_data_avatar:
                 ImageSelectActivity.start(this, data -> {
-                    if (true) {
-                        mAvatarUrl = data.get(0);
-                        GlideApp.with(getActivity())
-                                .load(mAvatarUrl)
-                                .into(mAvatarView);
-                        return;
-                    }
+//                    if (true) {
+//                        mAvatarUrl = data.get(0);
+//                        GlideApp.with(getActivity())
+//                                .load(mAvatarUrl)
+//                                .into(mAvatarView);
+//                        return;
+//                    }
                     // 上传头像
                     EasyHttp.post(this)
                             .api(new UpdateImageApi()
@@ -163,7 +164,7 @@ public final class EditActivity extends MyActivity {
 
                                 @Override
                                 public void onSucceed(HttpData<String> data) {
-                                    mAvatarUrl = data.getData();
+                                    mAvatarUrl = EasyConfig.getInstance().getServer().getHost()+data.getData();
                                     GlideApp.with(getActivity())
                                             .load(mAvatarUrl)
                                             .into(mAvatarView);

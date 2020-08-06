@@ -168,11 +168,11 @@ dependencies {
     implementation 'com.github.dongjunkun:DropDownMenu:1.0.4'
 
     // 日志调试：https://github.com/getActivity/Logcat
-    debugImplementation 'com.hjq:logcat:8.2'
+//    debugImplementation 'com.hjq:logcat:8.2'
 
 
     // 内存泄漏：https://github.com/square/leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
 
     // 国际化：https://github.com/getActivity/MultiLanguages
