@@ -49,4 +49,5 @@ public class CommentBean {
     public void setreplyId(long replyId) {
         this.replyId = replyId;
     }
+
 }

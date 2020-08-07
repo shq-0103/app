@@ -1,11 +1,16 @@
 package com.shq.movies.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
@@ -19,16 +24,22 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.event.QueryEvent;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.AddCollectApi;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.helper.OnClickHelper;
+import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.adapter.MovieAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class FavoriteFragment extends MyFragment<MyMovieListActivity> implements OnRefreshLoadMoreListener,
         BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener {
@@ -125,9 +136,14 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        toast("onClickItem" + position);
+        if(recyclerView.getId()==R.id.rv_favorite_movie_list){
+        this.routerToDetail(String.valueOf(movieAdapter.getItem(position).getId()));}
     }
-
+    public void  routerToDetail(String movieId){
+        Intent intent = new Intent(getAttachActivity().getContext(), MovieDetailActivity.class);
+        intent.putExtra("movieId", movieId);
+        startActivity(intent);
+    }
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
         switch (childView.getId()) {
@@ -136,11 +152,13 @@ public final class FavoriteFragment extends MyFragment<MyMovieListActivity> impl
                 OnClickHelper.onClickFavorite((ImageButton) childView,movieAdapter.getItem(position).getId(),getAttachActivity());
                 onRefresh(mRefreshLayout);
                 break;
+            case R.id.rv_favorite_movie_list:
+                this.routerToDetail(String.valueOf(movieAdapter.getItem(position).getId()));
+                break;
             default:
                 break;
         }
     }
-
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {

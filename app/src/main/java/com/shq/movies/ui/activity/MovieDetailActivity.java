@@ -37,10 +37,12 @@ import com.shq.movies.http.request.CommentApi;
 import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.MovieDetailApi;
 import com.shq.movies.http.request.QueryMovieApi;
+import com.shq.movies.http.request.RateApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.CommentBean;
 import com.shq.movies.http.response.MovieBean;
+import com.shq.movies.http.response.RateBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
@@ -159,9 +161,9 @@ public final class MovieDetailActivity extends MyActivity
 
     private void getData() {
 
-        EasyHttp.get(this).api((IRequestApi) new CommentApi().setPage(commentAdapter.getPageNumber()).setPageSize(5)).request(new HttpCallback<HttpData<List<CommentBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new CommentApi().setMovieId(movieId).setPage(commentAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<RateBean>>>(this) {
             @Override
-            public void onSucceed(HttpData<List<CommentBean>> result) {
+            public void onSucceed(HttpData<List<RateBean>> result) {
                 super.onSucceed(result);
                 commentAdapter.setData(result.getData());
             }

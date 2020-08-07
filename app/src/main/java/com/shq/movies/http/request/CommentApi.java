@@ -6,10 +6,12 @@ public final class CommentApi implements IRequestApi {
 
     private int page;
     private int pageSize;
+    private Long movieId;
+
 
     @Override
     public String getApi() {
-        return "comment";
+        return "movies/rate";
     }
 
     public int getPage() {
@@ -29,5 +31,12 @@ public final class CommentApi implements IRequestApi {
         this.pageSize = pageSize;
         return this;
     }
+    public Long getMovieId() {
+        return movieId;
+    }
 
+    public CommentApi setMovieId(Long movieId) {
+        this.movieId = movieId;
+        return this;
+    }
     }
