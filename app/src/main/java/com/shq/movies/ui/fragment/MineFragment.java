@@ -164,7 +164,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                         .collect(Collectors.joining("|"));
                 //步骤3：将获取过来的值放入文件
                 editor.putString(getString(R.string.seen_movie_id), idSeen);
-                editor.putString(getString(R.string.favorite_movie_id), idSeen);
+                editor.putString(getString(R.string.favorite_movie_id), idS);
                 //步骤4：提交
 
                 editor.commit();

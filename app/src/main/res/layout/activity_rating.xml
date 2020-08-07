@@ -11,44 +11,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Rating" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please rate this movie"
-        android:padding="20dp"
-        android:gravity="center"/>
-    <RatingBar
-        android:id="@+id/rb_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:theme="@style/RatingBar"
-        android:numStars="5"
-        android:rating="4"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="Please rate this movie" />
+
+        <RatingBar
+            android:id="@+id/rb_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:rating="4"
+            android:theme="@style/RatingBar" />
+
         <EditText
-            style="@style/EditTextStyle"
             android:id="@+id/et_input"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginHorizontal="40dp"
-            android:background="@drawable/home_search_bar_transparent_bg"
             android:layout_marginTop="20dp"
-            android:maxLines="10"
-            android:text="Please enter your comment..." />
+            android:background="@drawable/home_search_bar_transparent_bg"
+            android:hint="Please enter your comment..."
+            android:maxLines="10" />
     </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_submit"
         style="@style/RectButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textColor="@color/black"
         android:background="#ffc824"
-        android:text="Submit" />
+        android:text="Submit"
+        android:textColor="@color/black" />
 </LinearLayout>

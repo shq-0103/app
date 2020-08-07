@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,7 @@ import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
+import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.AddCollectApi;
@@ -133,6 +135,12 @@ public final class MovieDetailActivity extends MyActivity
                 tv_derector.setText(result.getData().getDirector());
                 tv_actor.setText(result.getData().getActor());
                 tv_intro.setText(result.getData().getIntro());
+                if(OnClickHelper.hasFavorite(movieId,(AppCompatActivity) getActivity())){
+                    bt_favorite.setBackgroundColor(getResources().getColor(R.color.colorSelect) );
+                }
+                if(OnClickHelper.hasRate(movieId,(AppCompatActivity) getActivity())){
+                    bt_seen.setBackgroundColor(getResources().getColor(R.color.colorSelect) );
+                }
                 GlideApp.with(getActivity())
                         .load(result.getData().getCover())
                         .placeholder(R.drawable.ic_movie_placeholder)
@@ -141,6 +149,12 @@ public final class MovieDetailActivity extends MyActivity
             }
         });
         this.getData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void getData() {
@@ -157,7 +171,15 @@ public final class MovieDetailActivity extends MyActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_seen:
-                startActivity(RateActivity.class);
+                if(!OnClickHelper.hasRate(movieId,(AppCompatActivity)getActivity())){
+                    Intent intent = new Intent(getContext(), RateActivity.class);
+                    intent.putExtra("movieId", movieId);
+                    startActivity(intent);
+                }
+
+                break;
+            case R.id.bt_favorite:
+                OnClickHelper.onClickFavorite(bt_favorite,movieId,(AppCompatActivity)getActivity());
                 break;
             default:
                 break;

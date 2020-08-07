@@ -1,19 +1,33 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.config.IRequestApi;
+import com.hjq.http.listener.HttpCallback;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
+import com.shq.movies.helper.OnClickHelper;
+import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.CommentApi;
+import com.shq.movies.http.request.RateApi;
+import com.shq.movies.http.response.CommentBean;
 import com.shq.movies.ui.dialog.MessageDialog;
+
+import java.util.List;
 
 public final class RateActivity extends MyActivity {
     private RatingBar rb_rating;
     private EditText et_input;
     private Button bt_submit;
+    private Long movieId;
 
     @Override
     protected int getLayoutId() {
@@ -22,6 +36,9 @@ public final class RateActivity extends MyActivity {
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        movieId = intent.getLongExtra("movieId",0);
+
         rb_rating = findViewById(R.id.rb_rating);
         et_input = findViewById(R.id.et_input);
         bt_submit = findViewById(R.id.bt_submit);
@@ -50,8 +67,7 @@ public final class RateActivity extends MyActivity {
 
                             @Override
                             public void onConfirm(BaseDialog dialog) {
-                                toast("Corfirm");
-                                onBackPressed();
+                                rate();
                             }
 
                             @Override
@@ -64,8 +80,17 @@ public final class RateActivity extends MyActivity {
         }
     }
 
-    private void rate(){
-
+    private void rate() {
+        EasyHttp.post(this).api(new RateApi().setContents(et_input.getText().toString())
+                .setRate(rb_rating.getNumStars() * 2)
+                .setMovieId(movieId)).request(new HttpCallback<HttpData<String>>(this) {
+            @Override
+            public void onSucceed(HttpData<String> result) {
+                super.onSucceed(result);
+                OnClickHelper.onRate(movieId,(AppCompatActivity) getActivity());
+                onBackPressed();
+            }
+        });
     }
 
     @Override

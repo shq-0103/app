@@ -183,9 +183,9 @@ public final class MainFragment extends MyFragment<HomeActivity>
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-        toast("child");
-        if(childView.getId()==R.id.iv_cover){
+        if(recyclerView.getId()==R.id.rv_recom_movie_list){
             this.routerToDetail(String.valueOf(listAdapter.getItem(position).getId()));
+        }else if(recyclerView.getId()==R.id.rv_lasttime){
             this.routerToDetail(String.valueOf(lastAdapter.getItem(position).getId()));
         }
     }

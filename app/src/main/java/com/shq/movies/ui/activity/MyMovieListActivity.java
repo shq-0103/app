@@ -14,6 +14,7 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.event.QueryEvent;
 import com.shq.movies.ui.fragment.FavoriteFragment;
+import com.shq.movies.ui.fragment.SeenFragment;
 import com.shq.movies.ui.fragment.StatusFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +51,7 @@ public final class MyMovieListActivity extends MyActivity {
 
         mPagerAdapter = new BaseFragmentAdapter<>(this);
         mPagerAdapter.addFragment(FavoriteFragment.newInstance(), "Favorites");
-        mPagerAdapter.addFragment(StatusFragment.newInstance(), "Seen");
+        mPagerAdapter.addFragment(SeenFragment.newInstance(), "Seen");
 
         pg_movielist.setAdapter(mPagerAdapter);
         tb_movielist.setupWithViewPager(pg_movielist);
