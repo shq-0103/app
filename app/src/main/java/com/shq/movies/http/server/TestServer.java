@@ -10,7 +10,7 @@ public class TestServer extends ReleaseServer {
 
     @Override
     public String getHost() {
-        return "http://192.168.31.115:7001/";
+        return "http://192.168.137.1:7001/";
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.request.CollectMovieIdListApi;
+import com.shq.movies.http.request.HistoryApi;
 import com.shq.movies.http.request.QueryMovieApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.request.UserApi;
@@ -173,7 +174,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     }
     private void getData() {
 
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(history_listAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new HistoryApi().setPage(history_listAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);

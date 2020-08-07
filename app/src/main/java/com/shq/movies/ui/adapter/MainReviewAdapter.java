@@ -45,6 +45,11 @@ public final class MainReviewAdapter extends MyAdapter<ReviewBean> {
         public void onBindView(int position) {
             tv_title.setText(getItem(position).getTitle());
             tv_comment.setText(getItem(position).getContents());
+            GlideApp.with(getContext())
+                    .load(getItem(position).getImages())
+                    .placeholder(R.drawable.ic_movie_placeholder)
+                    .error(R.drawable.ic_movie_placeholder)
+                    .into(iv_review);
         }
         }
     }

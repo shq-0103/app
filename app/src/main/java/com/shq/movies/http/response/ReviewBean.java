@@ -5,6 +5,7 @@ public final class ReviewBean {
     private String title;
     private String contents;
     private long useId;
+    private String images;
 
 
     public long getId() {
@@ -39,5 +40,11 @@ public final class ReviewBean {
         this.useId = useId;
     }
 
+    public String getImages() {
+        return images;
+    }
 
+    public void setImages(String images) {
+        this.images = images;
+    }
 }
