@@ -164,7 +164,7 @@
                         android:background="@color/black10"
                         android:clickable="false"
                         android:focusable="true"
-                        app:bar_leftText="1 people want to watch" />
+                        app:bar_leftText="10 people rated" />
                 </LinearLayout>
             </LinearLayout>
 

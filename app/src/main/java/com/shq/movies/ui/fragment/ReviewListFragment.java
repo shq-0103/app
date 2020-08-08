@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
@@ -23,6 +24,9 @@ import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.ui.activity.MyMovieListActivity;
+import com.shq.movies.ui.activity.PasswordForgetActivity;
+import com.shq.movies.ui.activity.ReviewDetailActivity;
+import com.shq.movies.ui.activity.WriteReviewActivity;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieReviewAdapter;
 
@@ -38,29 +42,23 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
     private SmartRefreshLayout mRefreshLayout;
     private WrapRecyclerView mRecyclerView;
     private MovieReviewAdapter reviewAdapter;
+    private FloatingActionButton fab;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_favorite;
+        return R.layout.fragment_reviewlist;
     }
 
     @Override
     protected void initView() {
         mRefreshLayout = findViewById(R.id.rl_favorite_movie_refresh);
         mRecyclerView = findViewById(R.id.rv_favorite_movie_list);
+        fab = findViewById(R.id.fab);
+        setOnClickListener(fab);
 
         reviewAdapter = new MovieReviewAdapter(getActivity());
         reviewAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(reviewAdapter);
-
-        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
-        headerView.setText("我是头部");
-        headerView.setOnClickListener(v -> toast("点击了头部"));
-
-        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
-        footerView.setText("我是尾部");
-        footerView.setOnClickListener(v -> toast("点击了尾部"));
-
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
     }
 
@@ -96,10 +94,15 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
             }
         });
     }
+    public void onClick(View v) {
+        if (v == fab) {
+            startActivity(WriteReviewActivity.class);
+        }
+    }
 
-    @Override
+        @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        toast("onClickItem"+position);
+                startActivity(ReviewDetailActivity.class);
     }
 
     @Override

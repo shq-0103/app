@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:context="com.shq.movies.ui.adapter.FavoriteReviewAdapter">
+    tools:context="com.shq.movies.ui.adapter.RatingAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,14 +39,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="TextView" />
+                    android:text="Title" />
 
                 <TextView
                     android:id="@+id/tv_author"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="author:" />
+                    android:text="director:" />
             </LinearLayout>
 
             <LinearLayout

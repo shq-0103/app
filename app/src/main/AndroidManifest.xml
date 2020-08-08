@@ -169,6 +169,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!--历史记录的电影列表 -->
         <activity
+            android:name=".ui.activity.ReviewDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!--影评详情列表 -->
+        <activity
+            android:name=".ui.activity.WriteReviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!--添加影评 -->
+        <activity
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 浏览器 -->

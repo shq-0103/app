@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
+import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.response.RateBean;
 
 public final class RatingAdapter extends MyAdapter<RateBean> {

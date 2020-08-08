@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.shq.movies.ui.fragment.MovieReviewFragment">
+
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,23 +14,28 @@
         app:title="Movie Review" />
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tb_review"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabRippleColor="@color/transparent"
-            app:tabIndicatorColor="#ffc824"
-            app:tabIndicatorFullWidth="false"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="#ffc824"
-            app:tabTextColor="@color/black25" />
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vg_movielist"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tb_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:tabIndicatorColor="#ffc824"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/transparent"
+        app:tabSelectedTextColor="#ffc824"
+        app:tabTextColor="@color/black25" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vg_movielist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        >
+    </androidx.viewpager.widget.ViewPager>
+
+
 
 
 </LinearLayout>

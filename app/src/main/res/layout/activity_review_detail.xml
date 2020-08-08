@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.activity.CopyActivity">
+    tools:context="com.shq.movies.ui.activity.ReviewDetailActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Review Detail"
-        app:rightIcon="@drawable/share_ic">
-    </com.hjq.bar.TitleBar>
+        app:rightIcon="@drawable/share_ic"
+        app:title="Review Detail"></com.hjq.bar.TitleBar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="614dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -47,9 +46,10 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:id="@+id/imageView"
+                                android:id="@+id/iv_authorimg"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_weight="1"
                                 app:srcCompat="@mipmap/launcher_ic" />
                         </LinearLayout>
@@ -62,14 +62,14 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView"
+                                android:id="@+id/tv_author"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="author：" />
 
                             <TextView
-                                android:id="@+id/textView2"
+                                android:id="@+id/tv_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -82,15 +82,16 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/user_review_title"
+                        android:id="@+id/tv_usertitle"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="Title"
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/user_review_content"
+                        android:id="@+id/tv_usercontent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="content" />
@@ -103,84 +104,24 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="15dp">
 
                     <TextView
-                        android:id="@+id/user_review_comment"
+                        android:id="@+id/tv_totalcomment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Comment (2) " />
-
-                    <LinearLayout
+                    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                        android:id="@+id/rl_status_refresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srlEnablePreviewInEditMode="false">
+                    <com.hjq.widget.layout.WrapRecyclerView
+                        android:id="@+id/rv_comment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:showDividers="end">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/comment-imageView"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-
-                                    app:srcCompat="@mipmap/launcher_ic" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/comment_author"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="author：" />
-
-                                <TextView
-                                    android:id="@+id/comment_date"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="date:" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2">
-
-                                <ImageView
-                                    android:id="@+id/comment_good"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_weight="1"
-                                    app:srcCompat="@drawable/ic_good" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/user_review_comment_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView" />
-                    </LinearLayout>
-
+                        tools:listitem="@layout/item_reviewcomment" />
+                    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -196,57 +137,54 @@
         android:paddingRight="10dp"
         android:paddingBottom="5dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
             <ImageView
-                android:id="@+id/user_comment-imageView"
+                android:id="@+id/iv_userimg"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 app:srcCompat="@mipmap/launcher_ic" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-           android:layout_weight="5"
-            >
-
-            <EditText
-                android:id="@+id/search_edit"
-                android:layout_width="match_parent"
+        <EditText
+                android:id="@+id/et_input"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/shape_life_search"
                 android:hint="Please enter a comment"
-                android:layout_marginLeft="10dp"
-                android:textColorHint="#b7b7b7"
-                android:textStyle="bold"
                 android:paddingLeft="10dp"
-                android:textSize="13dp"/>
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-               >
+                android:textColorHint="#b7b7b7"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+                android:textSize="13dp"
+                android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/user_comment_good"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_good" />
-                <TextView
-                    android:id="@+id/user_comment_good_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="10" />
-            </LinearLayout>
-        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/ButtonStyle"
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffc824"
+            android:text="Submit" />
+
+        <!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal">-->
+
+<!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/user_comment_good"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="20dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="20dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_gravity="center_vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:srcCompat="@drawable/ic_good" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/user_comment_good_total"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="10" />&ndash;&gt;-->
+<!--        </LinearLayout>-->
     </LinearLayout>
+</LinearLayout>
