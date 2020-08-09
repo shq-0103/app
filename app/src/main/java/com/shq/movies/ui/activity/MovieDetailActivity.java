@@ -90,6 +90,7 @@ public final class MovieDetailActivity extends MyActivity
         tab3 = findViewById(R.id.tab3);
         bt_seen = findViewById(R.id.bt_seen);
         sb_number = findViewById(R.id.sb_number);
+        sb_comment = findViewById(R.id.sb_comment);
         setOnClickListener(bt_favorite, bt_seen,sb_comment);
 
         rv_comment = findViewById(R.id.rv_comment);
@@ -166,7 +167,7 @@ public final class MovieDetailActivity extends MyActivity
                 OnClickHelper.onClickFavorite(bt_favorite,movieId,(AppCompatActivity)getActivity());
                 break;
             case R.id.sb_comment:
-//                startActivity(CommentListActivity.class);
+                startActivity(CommentListActivity.class);
             default:
                 break;
         }

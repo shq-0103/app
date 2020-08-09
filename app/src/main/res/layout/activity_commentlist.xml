@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         app:title="All comments" />
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/rl_favorite_movie_refresh"
+        android:id="@+id/rl_commentlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnablePreviewInEditMode="false">

@@ -176,7 +176,10 @@
             android:name=".ui.activity.WriteReviewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!--添加影评 -->
-
+        <activity
+            android:name=".ui.activity.CommentListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop" /> <!--评论列表 -->
         <activity
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
