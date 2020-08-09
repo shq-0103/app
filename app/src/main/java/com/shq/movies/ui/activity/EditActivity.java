@@ -149,14 +149,6 @@ public final class EditActivity extends MyActivity {
                 break;
             case R.id.fl_person_data_avatar:
                 ImageSelectActivity.start(this, data -> {
-//                    if (true) {
-//                        mAvatarUrl = data.get(0);
-//                        GlideApp.with(getActivity())
-//                                .load(mAvatarUrl)
-//                                .into(mAvatarView);
-//                        return;
-//                    }
-                    // 上传头像
                     EasyHttp.post(this)
                             .api(new UpdateImageApi()
                                     .setImage(new File(data.get(0))))

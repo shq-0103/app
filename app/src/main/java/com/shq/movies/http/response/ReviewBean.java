@@ -6,6 +6,9 @@ public final class ReviewBean {
     private String contents;
     private long useId;
     private String images;
+    private String username;
+    private long date;
+    private String avatar;
 
 
     public long getId() {
@@ -46,5 +49,37 @@ public final class ReviewBean {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public long getUseId() {
+        return useId;
+    }
+
+    public void setUseId(long useId) {
+        this.useId = useId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

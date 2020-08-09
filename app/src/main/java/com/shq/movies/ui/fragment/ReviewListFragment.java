@@ -106,6 +106,12 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh(mRefreshLayout);
+    }
+
+    @Override
 //    public void onChildClick(RecyclerView recyclerView, View childView, int position) {
 //        switch (childView.getId()){
 //            case R.id.bt_favorite:
@@ -116,6 +122,7 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
 //                break;
 //        }
 //    }
+
 
 
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {

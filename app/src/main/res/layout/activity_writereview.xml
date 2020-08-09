@@ -7,7 +7,7 @@
     android:background="@color/white"
 
     android:orientation="vertical"
-    tools:context="com.shq.movies.ui.activity.CopyActivity">
+    tools:context="com.shq.movies.ui.activity.WriteReviewActivity">
 
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         android:hint="Please enter the content (no more than 500 words)..."
         android:inputType="textMultiLine" />
     <com.hjq.widget.layout.SettingBar
-        android:id="@+id/fl_person_data_avatar"
+        android:id="@+id/sb_review_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bar_leftText="Add picture">
