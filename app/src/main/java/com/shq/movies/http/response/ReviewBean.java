@@ -6,7 +6,7 @@ public final class ReviewBean {
     private String contents;
     private long useId;
     private String images;
-    private String username;
+    private String nickname;
     private long date;
     private String avatar;
 
@@ -59,12 +59,12 @@ public final class ReviewBean {
         this.useId = useId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public long getDate() {

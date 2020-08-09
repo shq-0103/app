@@ -1,5 +1,6 @@
 package com.shq.movies.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
         return new ReviewListFragment();
     }
 
+
     private SmartRefreshLayout mRefreshLayout;
     private WrapRecyclerView mRecyclerView;
     private MovieReviewAdapter reviewAdapter;
@@ -67,42 +69,45 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
         this.getData(false);
     }
 
-    private void getData(boolean isLoadMore){
+    private void getData(boolean isLoadMore) {
 
         EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<ReviewBean>> result) {
                 super.onSucceed(result);
-                if(isLoadMore){
+                if (isLoadMore) {
                     reviewAdapter.addData(result.getData());
                     mRefreshLayout.finishLoadMore();
-                }else {
+                } else {
                     reviewAdapter.setData(result.getData());
                     mRefreshLayout.finishRefresh();
                 }
-                reviewAdapter.setPageNumber(reviewAdapter.getPageNumber()+1);
+                reviewAdapter.setPageNumber(reviewAdapter.getPageNumber() + 1);
             }
 
             @Override
             public void onFail(Exception e) {
                 super.onFail(e);
-                if(isLoadMore){
+                if (isLoadMore) {
                     mRefreshLayout.finishLoadMore();
-                }else {
+                } else {
                     mRefreshLayout.finishRefresh();
                 }
             }
         });
     }
+
     public void onClick(View v) {
         if (v == fab) {
             startActivity(WriteReviewActivity.class);
         }
     }
 
-        @Override
+    @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-                startActivity(ReviewDetailActivity.class);
+        Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
+        intent.putExtra("reviewId", reviewAdapter.getItem(position).getId());
+        startActivity(intent);
     }
 
     @Override
@@ -110,20 +115,6 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
         super.onResume();
         onRefresh(mRefreshLayout);
     }
-
-    @Override
-//    public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-//        switch (childView.getId()){
-//            case R.id.bt_favorite:
-//                toast("点击了喜欢"+reviewAdapter.getItem(position).getName());
-//                break;
-//            default:
-//                toast(((TextView)childView).getText() );
-//                break;
-//        }
-//    }
-
-
 
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         reviewAdapter.clearData();

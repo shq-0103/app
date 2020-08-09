@@ -78,13 +78,13 @@ public final class MovieReviewAdapter extends MyAdapter<ReviewBean> {
             }else {
                 GlideApp.with(getContext())
                         .load(EasyConfig.getInstance().getServer().getHost() + reviewBean.getImages())
-                        .error(R.drawable.avatar_placeholder_ic)
+                        .error(R.drawable.ic_movie_placeholder)
                         .into(iv_img);
             }
             // Date转String
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             tv_date.setText(sdf.format(new Date(reviewBean.getDate() * 1000)));
-            tv_author.setText(reviewBean.getUsername());
+            tv_author.setText(reviewBean.getNickname());
             tv_content.setText(reviewBean.getContents());
 
         }
