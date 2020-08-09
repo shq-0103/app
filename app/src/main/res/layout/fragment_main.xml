@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:bar_leftText="Recommendation movies"
-                    app:bar_rightText="more" />
+                    app:bar_rightText="All" />
 
 
 
@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:bar_leftText="This time last year"
-                    app:bar_rightText="more" />
+                    app:bar_rightText="All" />
 
                 <com.hjq.widget.layout.WrapRecyclerView
                     android:id="@+id/rv_lasttime"
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:bar_leftText="Recommendation movie reviews"
-                    app:bar_rightText="more" />
+                   />
 
 
                 <com.hjq.widget.layout.WrapRecyclerView

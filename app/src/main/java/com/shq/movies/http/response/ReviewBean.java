@@ -9,6 +9,7 @@ public final class ReviewBean {
     private String nickname;
     private long date;
     private String avatar;
+    private long viewCount;
 
 
     public long getId() {
@@ -81,5 +82,13 @@ public final class ReviewBean {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
     }
 }

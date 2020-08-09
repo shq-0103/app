@@ -157,14 +157,15 @@
                             android:text="4" />
                     </LinearLayout>
 
-                    <com.hjq.widget.layout.SettingBar
+                    <TextView
+                        android:id="@+id/sb_number"
                         android:layout_width="match_parent"
+                        android:gravity="center_vertical"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textSize="15dp"
                         android:background="@color/black10"
-                        android:clickable="false"
-                        android:focusable="true"
-                        app:bar_leftText="10 people rated" />
+                        android:text="Total of 10 people rated" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -291,7 +292,7 @@
                 android:textColor="@color/black65" />
 
             <com.hjq.widget.layout.SettingBar
-                android:id="@+id/tv2"
+                android:id="@+id/sb_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"

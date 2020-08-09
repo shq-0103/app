@@ -15,7 +15,6 @@ import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
-import com.rd.PageIndicatorView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.model.HttpData;
@@ -29,6 +28,7 @@ import com.shq.movies.ui.activity.LastTimeActivity;
 import com.shq.movies.ui.activity.MovieDetailActivity;
 import com.shq.movies.ui.activity.QueryMovieActivity;
 import com.shq.movies.ui.activity.RecomListActivity;
+import com.shq.movies.ui.activity.ReviewDetailActivity;
 import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.adapter.MainTopImgAdapter;
@@ -171,6 +171,10 @@ public final class MainFragment extends MyFragment<HomeActivity>
             this.routerToDetail(String.valueOf(listAdapter.getItem(position).getId()));
         }else if(recyclerView.getId()==R.id.rv_lasttime){
             this.routerToDetail(String.valueOf(lastAdapter.getItem(position).getId()));
+        }else if(recyclerView.getId()==R.id.rv_recom_review_list){
+            Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
+            intent.putExtra("reviewId", reviewAdapter.getItem(position).getId());
+            startActivity(intent);
         }
 
     }

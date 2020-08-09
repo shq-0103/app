@@ -248,14 +248,14 @@ public final class SearchFragment extends MyFragment<HomeActivity> implements On
     }
 
     private void getData() {
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(SfindAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(SfindAdapter.getPageNumber()).setPageSize(3).setOrder("score")).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
                 SfindAdapter.setData(result.getData());
             }
         });
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(PfindAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(PfindAdapter.getPageNumber()).setPageSize(3).setOrder("viewCount")).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);

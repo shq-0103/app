@@ -19,6 +19,7 @@ import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
+import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
@@ -51,6 +52,8 @@ public final class MovieDetailActivity extends MyActivity
     private TabItem tab1;
     private TabItem tab2;
     private TabItem tab3;
+    private TextView sb_number;
+    private SettingBar sb_comment;
     private int tabIndex = 0;//tablayout所处的下标
     private boolean scrollviewFlag = false;//标记是否是scrollview在滑动
     private WrapRecyclerView rv_comment;
@@ -86,7 +89,8 @@ public final class MovieDetailActivity extends MyActivity
         tab2 = findViewById(R.id.tab2);
         tab3 = findViewById(R.id.tab3);
         bt_seen = findViewById(R.id.bt_seen);
-        setOnClickListener(bt_favorite, bt_seen);
+        sb_number = findViewById(R.id.sb_number);
+        setOnClickListener(bt_favorite, bt_seen,sb_comment);
 
         rv_comment = findViewById(R.id.rv_comment);
         commentAdapter = new CommentAdapter(getActivity());
@@ -114,6 +118,7 @@ public final class MovieDetailActivity extends MyActivity
                 tv_derector.setText(result.getData().getDirector());
                 tv_actor.setText(result.getData().getActor());
                 tv_intro.setText(result.getData().getIntro());
+                sb_number.setText("Total of "+String.valueOf(result.getData().getViewCount())+" people rated");
                 if(OnClickHelper.hasFavorite(movieId,(AppCompatActivity) getActivity())){
                     bt_favorite.setBackgroundColor(getResources().getColor(R.color.colorSelect) );
                 }
@@ -160,6 +165,8 @@ public final class MovieDetailActivity extends MyActivity
             case R.id.bt_favorite:
                 OnClickHelper.onClickFavorite(bt_favorite,movieId,(AppCompatActivity)getActivity());
                 break;
+            case R.id.sb_comment:
+//                startActivity(CommentListActivity.class);
             default:
                 break;
         }
