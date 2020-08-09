@@ -1,20 +1,14 @@
 package com.shq.movies.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,7 +16,6 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.bar.TitleBar;
 import com.hjq.base.BaseAdapter;
-import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
@@ -32,30 +25,14 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.AddCollectApi;
-import com.shq.movies.http.request.CommentApi;
-import com.shq.movies.http.request.DeleteCollectApi;
+import com.shq.movies.http.request.MovieRateApi;
 import com.shq.movies.http.request.MovieDetailApi;
-import com.shq.movies.http.request.QueryMovieApi;
-import com.shq.movies.http.request.RateApi;
-import com.shq.movies.http.request.ReviewApi;
-import com.shq.movies.http.request.UserApi;
-import com.shq.movies.http.response.CommentBean;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.RateBean;
-import com.shq.movies.http.response.ReviewBean;
-import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
-import com.shq.movies.ui.adapter.MainReviewAdapter;
-import com.shq.movies.ui.dialog.MessageDialog;
 import com.shq.movies.widget.XCollapsingToolbarLayout;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class MovieDetailActivity extends MyActivity
         implements ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener,
@@ -161,7 +138,7 @@ public final class MovieDetailActivity extends MyActivity
 
     private void getData() {
 
-        EasyHttp.get(this).api((IRequestApi) new CommentApi().setMovieId(movieId).setPage(commentAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<RateBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new MovieRateApi().setMovieId(movieId).setPage(commentAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<RateBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<RateBean>> result) {
                 super.onSucceed(result);

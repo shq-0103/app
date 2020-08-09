@@ -1,24 +1,31 @@
 package com.shq.movies.http.request;
 
 import com.hjq.http.config.IRequestApi;
+public final class ReviewCommentApi implements IRequestApi {
 
-public final class CommentApi implements IRequestApi {
-
+    private long id;
     private int page;
     private int pageSize;
-    private Long movieId;
-
 
     @Override
     public String getApi() {
-        return "movies/rate";
+        return "comment/"+id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public ReviewCommentApi setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public int getPage() {
         return page;
     }
 
-    public CommentApi setPage(int page) {
+    public ReviewCommentApi setPage(int page) {
         this.page = page;
         return this;
     }
@@ -27,16 +34,8 @@ public final class CommentApi implements IRequestApi {
         return pageSize;
     }
 
-    public CommentApi setPageSize(int pageSize) {
+    public ReviewCommentApi setPageSize(int pageSize) {
         this.pageSize = pageSize;
         return this;
     }
-    public Long getMovieId() {
-        return movieId;
-    }
-
-    public CommentApi setMovieId(Long movieId) {
-        this.movieId = movieId;
-        return this;
-    }
-    }
+}

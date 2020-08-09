@@ -126,7 +126,7 @@
                     <com.hjq.widget.layout.WrapRecyclerView
                         android:id="@+id/rv_comment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         tools:listitem="@layout/item_reviewcomment" />
                     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
                 </LinearLayout>
@@ -151,7 +151,7 @@
                 app:srcCompat="@mipmap/launcher_ic" />
 
         <EditText
-                android:id="@+id/et_input"
+                android:id="@+id/et_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -166,32 +166,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/ButtonStyle"
-            android:id="@+id/button2"
+            android:id="@+id/bt_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffc824"
             android:text="Submit" />
-
-        <!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:orientation="horizontal">-->
-
-<!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/user_comment_good"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="20dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="20dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_gravity="center_vertical"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:srcCompat="@drawable/ic_good" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/user_comment_good_total"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:text="10" />&ndash;&gt;-->
-<!--        </LinearLayout>-->
     </LinearLayout>
 </LinearLayout>

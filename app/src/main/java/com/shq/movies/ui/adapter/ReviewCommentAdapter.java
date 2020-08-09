@@ -7,11 +7,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.hjq.http.EasyConfig;
 import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
+import com.shq.movies.http.glide.GlideApp;
+import com.shq.movies.http.response.CommentBean;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-public final class ReviewCommentAdapter extends MyAdapter<String> {
+public final class ReviewCommentAdapter extends MyAdapter<CommentBean> {
 
     public ReviewCommentAdapter(Context context) {
         super(context);
@@ -41,7 +47,16 @@ public final class ReviewCommentAdapter extends MyAdapter<String> {
 
         @Override
         public void onBindView(int position) {
-
+            CommentBean item=getItem(position);
+            tv_comment_author.setText(item.getNickname());
+            tv_comment_content.setText(item.getContents());
+            GlideApp.with(getContext())
+                    .load(EasyConfig.getInstance().getServer().getHost() + item.getAvatar())
+                    .error(R.drawable.avatar_placeholder_ic)
+                    .circleCrop()
+                    .into(ig_commentimg);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            tv_comment_date.setText(sdf.format(new Date(item.getTime() * 1000)));
         }
     }
 }

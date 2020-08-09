@@ -1,8 +1,11 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
 import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyConfig;
 import com.hjq.http.EasyHttp;
@@ -22,19 +27,27 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
+import com.shq.movies.helper.InputTextHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.AddCommentApi;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.ReviewCommentApi;
 import com.shq.movies.http.request.ReviewDetailApi;
+import com.shq.movies.http.request.ReviewImageApi;
+import com.shq.movies.http.response.CommentBean;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.adapter.ReviewCommentAdapter;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -49,7 +62,7 @@ public final class ReviewDetailActivity extends MyActivity
     private TextView tv_usertitle;
     private TextView tv_usercontent;
     private TextView tv_totalcomment;
-    private EditText et_input;
+    private EditText et_comment;
 
     private SmartRefreshLayout mRefreshLayout;
     private ReviewCommentAdapter reviewCommentAdapter;
@@ -57,6 +70,7 @@ public final class ReviewDetailActivity extends MyActivity
 
     private long reviewId;
     private ReviewBean reviewBean;
+    private Button bt_submit;
 
     @Override
     protected int getLayoutId() {
@@ -75,7 +89,8 @@ public final class ReviewDetailActivity extends MyActivity
         tv_usertitle = findViewById(R.id.tv_usertitle);
         tv_usercontent = findViewById(R.id.tv_usercontent);
         tv_totalcomment = findViewById(R.id.tv_totalcomment);
-        et_input = findViewById(R.id.et_input);
+        et_comment = findViewById(R.id.et_comment);
+        bt_submit=findViewById(R.id.bt_submit);
 
         rv_comment = findViewById(R.id.rv_comment);
         mRefreshLayout = findViewById(R.id.rl_status_refresh);
@@ -83,10 +98,33 @@ public final class ReviewDetailActivity extends MyActivity
         reviewCommentAdapter.setOnItemClickListener(this);
         rv_comment.setAdapter(reviewCommentAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
+        InputTextHelper.with(this.getActivity())
+                .addView(et_comment)
+                .setMain(bt_submit)
+                .build();
+        setOnClickListener(bt_submit);
+
     }
 
     @Override
     protected void initData() {
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        String token=sharedPreferences.getString(getString(R.string.user_token),null);
+
+        GlideUrl glideUrl = new GlideUrl(EasyConfig.getInstance().getServer().getHost() + "avatar", new Headers() {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> header = new HashMap<>();
+                //不一定都要添加，具体看原站的请求信息
+                header.put("Authorization", "Bearer "+token);
+                return header;
+            }
+        });
+        GlideApp.with(getContext())
+                .load(glideUrl)
+                .error(R.drawable.avatar_placeholder_ic)
+                .circleCrop()
+                .into(iv_userimg);
         EasyHttp.get(this).api(new ReviewDetailApi().setReviewId(reviewId)).request(new HttpCallback<HttpData<ReviewBean>>(this) {
             @Override
             public void onSucceed(HttpData<ReviewBean> result) {
@@ -116,8 +154,61 @@ public final class ReviewDetailActivity extends MyActivity
             }
         });
 
+        this.getReviewComment(false);
     }
 
+    private void getReviewComment(boolean isLoadMore){
+        EasyHttp.get(this).api(new ReviewCommentApi().setId(reviewId).setPage(reviewCommentAdapter.getPageNumber()).setPageSize(10))
+                .request(new HttpCallback<HttpData<List<CommentBean>>>(this) {
+                    @Override
+                    public void onSucceed(HttpData<List<CommentBean>> result) {
+                        super.onSucceed(result);
+                        if (result.getData() == null || result.getData().isEmpty()) {
+                            toast(R.string.hint_no_more_data);
+                            reviewCommentAdapter.setPageNumber(reviewCommentAdapter.getPageNumber() - 1);
+                            reviewCommentAdapter.setLastPage(true);
+                            mRefreshLayout.setNoMoreData(true);
+                            return;
+                        }
+                        if(isLoadMore){
+                            reviewCommentAdapter.addData(result.getData());
+                            mRefreshLayout.finishLoadMore();
+                        }else {
+                            reviewCommentAdapter.setData(result.getData());
+                            mRefreshLayout.finishRefresh();
+                        }
+                        reviewCommentAdapter.setPageNumber(reviewCommentAdapter.getPageNumber()+1);
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                        if(isLoadMore){
+                            mRefreshLayout.finishLoadMore();
+                        }else {
+                            mRefreshLayout.finishRefresh();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.bt_submit){
+            EasyHttp.post(this)
+                    .api(new AddCommentApi().setContents(et_comment.getText().toString())
+                    .setType(1).setToId(reviewId))
+                    .request(new HttpCallback<HttpData<String>>(this) {
+
+                        @Override
+                        public void onSucceed(HttpData<String> data) {
+                            et_comment.clearFocus();
+                            et_comment.setText(null);
+                            onRefresh(mRefreshLayout);
+                        }
+                    });
+        }
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -145,12 +236,14 @@ public final class ReviewDetailActivity extends MyActivity
     }
 
     @Override
-    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        reviewCommentAdapter.clearData();
+        reviewCommentAdapter.setPageNumber(1);
+        this.getReviewComment(false);
     }
 
     @Override
-    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        this.getReviewComment(true);
     }
 }

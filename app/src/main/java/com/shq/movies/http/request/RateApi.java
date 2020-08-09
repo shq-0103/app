@@ -3,7 +3,7 @@ package com.shq.movies.http.request;
 import com.hjq.http.config.IRequestApi;
 
 public final class RateApi implements IRequestApi {
-    private int rate;
+    private Float rate;
     private Long movieId;
     private String contents;
 
@@ -12,11 +12,11 @@ public final class RateApi implements IRequestApi {
         return "rate";
     }
 
-    public int getRate() {
+    public Float getRate() {
         return rate;
     }
 
-    public RateApi setRate(int rate) {
+    public RateApi setRate(Float rate) {
         this.rate = rate;
         return this;
     }

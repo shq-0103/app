@@ -10,18 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
-import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.CommentApi;
 import com.shq.movies.http.request.RateApi;
-import com.shq.movies.http.response.CommentBean;
 import com.shq.movies.ui.dialog.MessageDialog;
-
-import java.util.List;
 
 public final class RateActivity extends MyActivity {
     private RatingBar rb_rating;
@@ -82,7 +77,7 @@ public final class RateActivity extends MyActivity {
 
     private void rate() {
         EasyHttp.post(this).api(new RateApi().setContents(et_input.getText().toString())
-                .setRate(rb_rating.getNumStars() * 2)
+                .setRate(rb_rating.getRating() * 2)
                 .setMovieId(movieId)).request(new HttpCallback<HttpData<String>>(this) {
             @Override
             public void onSucceed(HttpData<String> result) {
