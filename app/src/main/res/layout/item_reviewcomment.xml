@@ -63,7 +63,7 @@
                 android:layout_weight="2">
 
                 <ImageView
-                    android:id="@+id/comment_good"
+                    android:id="@+id/iv_good"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"

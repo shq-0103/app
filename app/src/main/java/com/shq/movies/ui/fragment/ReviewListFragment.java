@@ -2,9 +2,11 @@ package com.shq.movies.ui.fragment;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,8 +21,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
+import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.OnLikeApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
@@ -60,6 +64,7 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
 
         reviewAdapter = new MovieReviewAdapter(getActivity());
         reviewAdapter.setOnItemClickListener(this);
+        reviewAdapter.setOnChildClickListener(R.id.iv_good,this);
         mRecyclerView.setAdapter(reviewAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
     }
@@ -129,6 +134,32 @@ public final class ReviewListFragment extends MyFragment<MyActivity> implements 
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
+        if(childView.getId()==R.id.iv_good){
+            EasyHttp.post(this)
+                    .api(new OnLikeApi().setToId(reviewAdapter.getItem(position).getId()).setType(1))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
 
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            if(data.getData()){
+                                OnClickHelper.delOrAdd(reviewAdapter.getItem(position).getId(),R.string.like_review_id,false,getContext());
+                                ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good_on));
+                                ((TextView)recyclerView.findViewHolderForAdapterPosition(position)
+                                        .itemView
+                                        .findViewById(R.id.tv_good))
+                                        .setText(String.valueOf(reviewAdapter.getItem(position).getLikeNum()+1));
+                                reviewAdapter.getItem(position).setLikeNum(reviewAdapter.getItem(position).getLikeNum()+1);
+                            }else {
+                                OnClickHelper.delOrAdd(reviewAdapter.getItem(position).getId(),R.string.like_review_id,true,getContext());
+                                ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good));
+                                ((TextView)recyclerView.findViewHolderForAdapterPosition(position)
+                                        .itemView
+                                        .findViewById(R.id.tv_good))
+                                        .setText(String.valueOf(reviewAdapter.getItem(position).getLikeNum()-1));
+                                reviewAdapter.getItem(position).setLikeNum(reviewAdapter.getItem(position).getLikeNum()-1);
+                            }
+                        }
+                    });
+        }
     }
 }

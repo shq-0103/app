@@ -28,10 +28,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.helper.InputTextHelper;
+import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.AddCommentApi;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.OnLikeApi;
 import com.shq.movies.http.request.ReviewCommentApi;
 import com.shq.movies.http.request.ReviewDetailApi;
 import com.shq.movies.http.request.ReviewImageApi;
@@ -96,6 +98,7 @@ public final class ReviewDetailActivity extends MyActivity
         mRefreshLayout = findViewById(R.id.rl_status_refresh);
         reviewCommentAdapter = new ReviewCommentAdapter(getActivity());
         reviewCommentAdapter.setOnItemClickListener(this);
+        reviewCommentAdapter.setOnChildClickListener(R.id.iv_good,this);
         rv_comment.setAdapter(reviewCommentAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
         InputTextHelper.with(this.getActivity())
@@ -132,7 +135,7 @@ public final class ReviewDetailActivity extends MyActivity
                 reviewBean = result.getData();
 
                 tv_author.setText(reviewBean.getNickname());
-
+                tv_totalcomment.setText("Comment ("+reviewBean.getCommentNum()+") ");
                 // Date转String
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 tv_date.setText(sdf.format(new Date(reviewBean.getDate() * 1000)));
@@ -202,6 +205,8 @@ public final class ReviewDetailActivity extends MyActivity
 
                         @Override
                         public void onSucceed(HttpData<String> data) {
+                            reviewBean.setCommentNum(reviewBean.getCommentNum()+1);
+                            tv_totalcomment.setText("Comment ("+reviewBean.getCommentNum()+") ");
                             et_comment.clearFocus();
                             et_comment.setText(null);
                             onRefresh(mRefreshLayout);
@@ -232,7 +237,23 @@ public final class ReviewDetailActivity extends MyActivity
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
+        if(childView.getId()==R.id.iv_good){
+            EasyHttp.post(this)
+                    .api(new OnLikeApi().setToId(reviewCommentAdapter.getItem(position).getId()).setType(2))
+                    .request(new HttpCallback<HttpData<Boolean>>(this) {
 
+                        @Override
+                        public void onSucceed(HttpData<Boolean> data) {
+                            if(data.getData()){
+                                OnClickHelper.delOrAdd(reviewCommentAdapter.getItem(position).getId(),R.string.like_comment_id,false,getContext());
+                                ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good_on));
+                            }else {
+                                OnClickHelper.delOrAdd(reviewCommentAdapter.getItem(position).getId(),R.string.like_comment_id,true,getContext());
+                                ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good));
+                            }
+                        }
+                    });
+        }
     }
 
     @Override

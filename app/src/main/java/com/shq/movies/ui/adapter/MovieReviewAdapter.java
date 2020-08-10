@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hjq.http.EasyConfig;
 import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
+import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
@@ -35,6 +37,7 @@ public final class MovieReviewAdapter extends MyAdapter<ReviewBean> {
     private final class ViewHolder extends MyAdapter.ViewHolder {
         private ImageView iv_userimg;
         private ImageView iv_img;
+        private ImageView iv_good;
 
         private TextView tv_author;
         private TextView tv_date;
@@ -48,7 +51,7 @@ public final class MovieReviewAdapter extends MyAdapter<ReviewBean> {
             super(R.layout.item_review);
             iv_userimg = (ImageView) findViewById(R.id.iv_userimg);
             iv_img = (ImageView) findViewById(R.id.iv_img);
-
+            iv_good=(ImageView)findViewById(R.id.iv_good);
             tv_author = (TextView) findViewById(R.id.tv_author);
             tv_date = (TextView) findViewById(R.id.tv_date);
             tv_title = (TextView) findViewById(R.id.tv_title);
@@ -80,6 +83,11 @@ public final class MovieReviewAdapter extends MyAdapter<ReviewBean> {
                         .load(EasyConfig.getInstance().getServer().getHost() + reviewBean.getImages())
                         .error(R.drawable.ic_movie_placeholder)
                         .into(iv_img);
+            }
+            if(OnClickHelper.hasLike(getItem(position).getId(),(AppCompatActivity) getContext(),1)){
+                iv_good.setImageDrawable(getDrawable( R.drawable.ic_good_on));
+            }else {
+                iv_good.setImageDrawable(getDrawable( R.drawable.ic_good));
             }
             // Date转String
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
