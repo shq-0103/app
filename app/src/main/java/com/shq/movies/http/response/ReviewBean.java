@@ -10,7 +10,24 @@ public final class ReviewBean {
     private long date;
     private String avatar;
     private long viewCount;
+    private long likeNum;
+    private long commentNum;
 
+    public long getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(long likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public long getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(long commentNum) {
+        this.commentNum = commentNum;
+    }
 
     public long getId() {
         return id;

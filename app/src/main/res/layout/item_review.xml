@@ -91,7 +91,7 @@
                     app:srcCompat="@drawable/home_message_off_ic" />
 
                 <TextView
-                    android:id="@+id/tv_good"
+                    android:id="@+id/tv_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -119,7 +119,7 @@
                     app:srcCompat="@drawable/ic_good" />
 
                 <TextView
-                    android:id="@+id/tv_comment"
+                    android:id="@+id/tv_good"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

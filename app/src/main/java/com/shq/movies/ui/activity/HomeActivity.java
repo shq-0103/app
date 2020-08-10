@@ -115,9 +115,22 @@ public final class HomeActivity extends MyActivity
                 String idSeen=result.getData().getSeen().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
+                String idLikeReview=result.getData().getLikeReview().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                String likeComment=result.getData().getLikeComment().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
+                String likeRate=result.getData().getLikeRate().stream()
+                        .map(i -> i.toString())
+                        .collect(Collectors.joining("|"));
                 //步骤3：将获取过来的值放入文件
                 editor.putString(getString(R.string.seen_movie_id), idSeen);
                 editor.putString(getString(R.string.favorite_movie_id), idS);
+                editor.putString(getString(R.string.like_comment_id),likeComment);
+                editor.putString(getString(R.string.like_review_id),idLikeReview);
+                editor.putString(getString(R.string.like_rate_id),likeRate);
+
 
                 //步骤4：提交
                 editor.commit();

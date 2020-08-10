@@ -5,6 +5,10 @@
     <string name="user_token">user_token</string>
     <string name="favorite_movie_id">favorite_movie_id</string>
     <string name="seen_movie_id">seen_movie_id</string>
+    <string name="like_review_id">like_review_id</string>
+    <string name="like_comment_id">like_comment_id</string>
+    <string name="like_rate_id">like_rate_id</string>
+
 
 
     <string name="event_login_success">event_login_success</string>

@@ -1,5 +1,6 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Intent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class CommentListActivity extends MyActivity implements OnRefreshLoadMore
     private SmartRefreshLayout rl_commentlist;
     private WrapRecyclerView rv_commentlist;
     private CommentAdapter commentAdapter;
+    private long movieId;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_commentlist;
@@ -35,6 +37,8 @@ public class CommentListActivity extends MyActivity implements OnRefreshLoadMore
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        movieId = intent.getLongExtra("movieId",0);
         rl_commentlist = findViewById(R.id.rl_commentlist);
         rv_commentlist = findViewById(R.id.rv_commentlist);
 
@@ -51,7 +55,7 @@ public class CommentListActivity extends MyActivity implements OnRefreshLoadMore
     }
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new MovieRateApi().setPage(commentAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<RateBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new MovieRateApi().setPage(commentAdapter.getPageNumber()).setPageSize(10).setMovieId(movieId)).request(new HttpCallback<HttpData<List<RateBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<RateBean>> result) {
                 super.onSucceed(result);
@@ -88,11 +92,13 @@ public class CommentListActivity extends MyActivity implements OnRefreshLoadMore
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+        this.getData(true);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+        commentAdapter.clearData();
+        commentAdapter.setPageNumber(1);
+        this.getData(false);
     }
 }

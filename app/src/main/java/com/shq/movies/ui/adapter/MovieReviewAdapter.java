@@ -86,7 +86,8 @@ public final class MovieReviewAdapter extends MyAdapter<ReviewBean> {
             tv_date.setText(sdf.format(new Date(reviewBean.getDate() * 1000)));
             tv_author.setText(reviewBean.getNickname());
             tv_content.setText(reviewBean.getContents());
-
+            tv_good.setText(String.valueOf(reviewBean.getLikeNum()));
+            tv_comment.setText(String.valueOf(reviewBean.getCommentNum()));
         }
     }
 }

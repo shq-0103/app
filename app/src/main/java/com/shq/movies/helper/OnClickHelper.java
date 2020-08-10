@@ -95,7 +95,7 @@ public final class OnClickHelper {
     public static void onRate(Long movieId, AppCompatActivity context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         String seenId = sharedPreferences.getString(context.getString(R.string.seen_movie_id), null);
-        seenId+="|"+String.valueOf(movieId);
+        seenId += "|" + String.valueOf(movieId);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getString(R.string.seen_movie_id), seenId);
         editor.commit();
@@ -156,7 +156,7 @@ public final class OnClickHelper {
                         @RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onSucceed(HttpData<Boolean> data) {
-                            bt_favor.setBackground(context.getDrawable( R.drawable.moviedetail_button_color));
+                            bt_favor.setBackground(context.getDrawable(R.drawable.moviedetail_button_color));
                             List<String> ids = new ArrayList<>(Arrays.asList(favorId.split("\\|")));
 
                             ids.remove(String.valueOf(movieId));
@@ -166,6 +166,51 @@ public final class OnClickHelper {
 
                         }
                     });
+        }
+    }
+
+    public static boolean hasLike(Long likeId, AppCompatActivity context, int type) {
+        String key = null;
+        switch (type) {
+            case 1:
+                key = context.getString(R.string.like_review_id);
+                break;
+            case 2:
+                key = context.getString(R.string.like_comment_id);
+                break;
+            case 3:
+                key = context.getString(R.string.like_rate_id);
+                break;
+        }
+        // 判断保存的 id 是否存在
+        SharedPreferences sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString(key, null);
+        boolean hasSeen = false;
+        if (id != null && !id.isEmpty()) {
+            List<String> ids = new ArrayList<>(Arrays.asList(id.split("\\|")));
+            hasSeen = ids.contains(String.valueOf(likeId));
+        }
+        return hasSeen;
+    }
+
+    public static void delOrAdd(Long id, int key, boolean isDel, Context context) {
+        // 判断保存的 id 是否存在
+        SharedPreferences sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        String idStr = sharedPreferences.getString(context.getString(key), null);
+
+
+        if (!isDel) {
+            List<String> ids = new ArrayList<>(Arrays.asList(idStr.split("\\|")));
+            ids.add(String.valueOf(id));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(context.getString(key), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+            editor.commit();
+        } else {
+            List<String> ids = new ArrayList<>(Arrays.asList(idStr.split("\\|")));
+            ids.remove(String.valueOf(id));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(context.getString(key), ids.stream().map(i -> i.toString()).collect(Collectors.joining("|")));
+            editor.commit();
         }
     }
 }

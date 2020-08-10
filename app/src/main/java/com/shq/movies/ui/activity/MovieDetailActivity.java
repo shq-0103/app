@@ -28,6 +28,7 @@ import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.MovieRateApi;
 import com.shq.movies.http.request.MovieDetailApi;
+import com.shq.movies.http.request.OnLikeApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.RateBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
@@ -96,6 +97,7 @@ public final class MovieDetailActivity extends MyActivity
         rv_comment = findViewById(R.id.rv_comment);
         commentAdapter = new CommentAdapter(getActivity());
         commentAdapter.setOnItemClickListener(this);
+        commentAdapter.setOnChildClickListener(R.id.iv_good,this);
         rv_comment.setAdapter(commentAdapter);
 
 
@@ -167,7 +169,9 @@ public final class MovieDetailActivity extends MyActivity
                 OnClickHelper.onClickFavorite(bt_favorite,movieId,(AppCompatActivity)getActivity());
                 break;
             case R.id.sb_comment:
-                startActivity(CommentListActivity.class);
+                Intent intent = new Intent(getContext(), CommentListActivity.class);
+                intent.putExtra("movieId", movieId);
+                startActivity(intent);
             default:
                 break;
         }
@@ -195,7 +199,23 @@ public final class MovieDetailActivity extends MyActivity
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
+       if(childView.getId()==R.id.iv_good){
+           EasyHttp.post(this)
+                   .api(new OnLikeApi().setToId(commentAdapter.getItem(position).getId()).setType(3))
+                   .request(new HttpCallback<HttpData<Boolean>>(this) {
 
+                       @Override
+                       public void onSucceed(HttpData<Boolean> data) {
+                           if(data.getData()){
+                               OnClickHelper.delOrAdd(commentAdapter.getItem(position).getId(),R.string.like_rate_id,false,getContext());
+                               ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good_on));
+                           }else {
+                               OnClickHelper.delOrAdd(commentAdapter.getItem(position).getId(),R.string.like_rate_id,true,getContext());
+                               ((ImageView)childView).setImageDrawable(getDrawable( R.drawable.ic_good));
+                           }
+                       }
+                   });
+       }
     }
 
 
