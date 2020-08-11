@@ -185,7 +185,7 @@
                 android:id="@+id/sb_setting_auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:bar_leftText="@string/setting_auto">
+                app:bar_leftText="Auto login">
 
                 <com.hjq.widget.view.SwitchButton
                     android:id="@+id/sb_setting_switch"

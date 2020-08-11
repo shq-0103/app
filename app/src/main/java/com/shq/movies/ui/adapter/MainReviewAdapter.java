@@ -74,7 +74,7 @@ public final class MainReviewAdapter extends MyAdapter<ReviewBean> {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             tv_date.setText(sdf.format(new Date(reviewBean.getDate() * 1000)));
             tv_author.setText(reviewBean.getNickname());
-//            tv_comment.setText(Math.toIntExact(reviewBean.getViewCount()));
+            tv_comment.setText(String.valueOf(reviewBean.getCommentNum()));
         }
         }
     }

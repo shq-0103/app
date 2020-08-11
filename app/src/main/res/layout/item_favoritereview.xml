@@ -38,18 +38,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Title"
+                android:textSize="18dp"
                 android:layout_weight="1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="5dp"
+                    app:srcCompat="@drawable/ic_author" />
                 <TextView
                     android:id="@+id/tv_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="author:" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="5dp"
+                    app:srcCompat="@drawable/ic_time" />
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_width="match_parent"

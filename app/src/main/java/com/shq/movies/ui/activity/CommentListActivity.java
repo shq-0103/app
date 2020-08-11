@@ -101,4 +101,9 @@ public class CommentListActivity extends MyActivity implements OnRefreshLoadMore
         commentAdapter.setPageNumber(1);
         this.getData(false);
     }
+
+    public boolean isStatusBarEnabled() {
+        // 使用沉浸式状态栏
+        return !super.isStatusBarEnabled();
+    }
 }

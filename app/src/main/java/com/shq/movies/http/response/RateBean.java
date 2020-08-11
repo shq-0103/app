@@ -9,6 +9,46 @@ public class RateBean {
     private String contents;
     private String nickname;
     private String avatar;
+    // 电影名
+    private String name;
+    // pingfen
+    private float score;
+    //封面
+    private  String cover;
+    // 评分人数
+    private  int viewCount;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
 
     public String getNickname() {
         return nickname;

@@ -7,13 +7,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.config.IRequestApi;
+import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
+import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.MessageApi;
+import com.shq.movies.http.request.MovieRateApi;
+import com.shq.movies.http.response.MessageBean;
+import com.shq.movies.http.response.RateBean;
 import com.shq.movies.ui.adapter.MessageAdapter;
+
+import java.util.List;
 
 
 public final class MessageActivity extends MyActivity implements OnRefreshLoadMoreListener,
@@ -50,9 +60,35 @@ public final class MessageActivity extends MyActivity implements OnRefreshLoadMo
 
     @Override
     protected void initData() {
-
+        this.getData(false);
     }
+    private void getData(boolean isLoadMore){
 
+        EasyHttp.get(this).api( new MessageApi().setPage(messageAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MessageBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MessageBean>> result) {
+                super.onSucceed(result);
+                if(isLoadMore){
+                    messageAdapter.addData(result.getData());
+                    mRefreshLayout.finishLoadMore();
+                }else {
+                    messageAdapter.setData(result.getData());
+                    mRefreshLayout.finishRefresh();
+                }
+                messageAdapter.setPageNumber(messageAdapter.getPageNumber()+1);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                super.onFail(e);
+                if(isLoadMore){
+                    mRefreshLayout.finishLoadMore();
+                }else {
+                    mRefreshLayout.finishRefresh();
+                }
+            }
+        });
+    }
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
 

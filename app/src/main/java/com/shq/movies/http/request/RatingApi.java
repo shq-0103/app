@@ -9,7 +9,7 @@ public final class RatingApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "/rate/my";
+        return "rate/my";
     }
 
     public int getRate() {

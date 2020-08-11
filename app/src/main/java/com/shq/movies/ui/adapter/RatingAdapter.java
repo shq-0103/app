@@ -18,10 +18,6 @@ public final class RatingAdapter extends MyAdapter<RateBean> {
         super(context);
     }
 
-    @Override
-    public int getItemCount() {
-        return 10;
-    }
 
     @NonNull
     @Override
@@ -49,7 +45,15 @@ public final class RatingAdapter extends MyAdapter<RateBean> {
 
         @Override
         public void onBindView(int position) {
-
+            GlideApp.with(getContext())
+                    .load(getItem(position).getCover())
+                    .placeholder(R.drawable.ic_movie_placeholder)
+                    .error(R.drawable.ic_movie_placeholder)
+                    .into(iv_cover);
+            tv_rate.setText(String.valueOf(getItem(position).getScore()));
+            tv_name.setText(getItem(position).getName());
+            tv_userRate.setText(String.valueOf(getItem(position).getRate()));
+            tv_all_rate.setText(String.valueOf(getItem(position).getViewCount())+"people");
         }
     }
 }

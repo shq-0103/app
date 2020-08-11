@@ -19,6 +19,7 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieApi;
+import com.shq.movies.http.request.MyReviewApi;
 import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
@@ -56,14 +57,6 @@ public final class FavoriteReviewFragment extends MyFragment<MyActivity> impleme
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
-        TextView headerView = mRecyclerView.addHeaderView(R.layout.picker_item);
-        headerView.setText("我是头部");
-        headerView.setOnClickListener(v -> toast("点击了头部"));
-
-        TextView footerView = mRecyclerView.addFooterView(R.layout.picker_item);
-        footerView.setText("我是尾部");
-        footerView.setOnClickListener(v -> toast("点击了尾部"));
-
         mRefreshLayout.setOnRefreshLoadMoreListener(this);
     }
 
@@ -74,7 +67,7 @@ public final class FavoriteReviewFragment extends MyFragment<MyActivity> impleme
 
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(mAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new MyReviewApi().setPage(mAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<ReviewBean>> result) {
                 super.onSucceed(result);

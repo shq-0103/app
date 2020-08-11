@@ -10,6 +10,9 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyAdapter;
 import com.shq.movies.http.response.MessageBean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public final class MessageAdapter extends MyAdapter<MessageBean> {
 
@@ -43,7 +46,9 @@ public final class MessageAdapter extends MyAdapter<MessageBean> {
 
         @Override
         public void onBindView(int position) {
-
+            tv_content.setText(getItem(position).getContent());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            tv_date.setText(sdf.format(new Date(getItem(position).getTime() * 1000)));
         }
     }
 }
