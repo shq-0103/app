@@ -249,7 +249,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
                             @Override
                             public void onConfirm(BaseDialog dialog) {
-                                toast("Confirm");
+
                                 //步骤1：创建一个SharedPreferences对象
                                 SharedPreferences sharedPreferences = getAttachActivity().getSharedPreferences("data", getContext().MODE_PRIVATE);
                                 //步骤2： 实例化SharedPreferences.Editor对象
@@ -257,6 +257,8 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                                 editor.clear();
                                 editor.commit();
                                 // 跳转到登录页
+                                EasyConfig.getInstance()
+                                        .addHeader("Authorization", "Bearer "+"null");
                                 EventBus.getDefault().post(getString(R.string.event_login_fail));
                             }
 

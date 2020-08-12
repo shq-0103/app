@@ -6,17 +6,23 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyConfig;
+import com.hjq.widget.view.SmartTextView;
 import com.shq.movies.R;
 import com.shq.movies.aop.SingleClick;
 import com.shq.movies.common.MyAdapter;
+import com.shq.movies.http.glide.GlideApp;
+import com.shq.movies.http.response.MovieBean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,15 +49,17 @@ public final class MenuDialog {
 
         private final MenuAdapter mAdapter;
 
+        private final SmartTextView tv_title;
+
         public Builder(Context context) {
             super(context);
             setContentView(R.layout.menu_dialog);
             setAnimStyle(BaseDialog.ANIM_BOTTOM);
-
+            tv_title=findViewById(R.id.tv_title);
             mRecyclerView = findViewById(R.id.rv_menu_list);
             mCancelView  = findViewById(R.id.tv_menu_cancel);
             setOnClickListener(mCancelView);
-
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             mAdapter = new MenuAdapter(getContext());
             mAdapter.setOnItemClickListener(this);
             mRecyclerView.setAdapter(mAdapter);
@@ -90,6 +98,11 @@ public final class MenuDialog {
         public Builder setList(List data) {
             mAdapter.setData(data);
             mRecyclerView.addOnLayoutChangeListener(this);
+            return this;
+        }
+
+        public Builder setTitle(String title){
+            tv_title.setText(title);
             return this;
         }
 
@@ -179,7 +192,7 @@ public final class MenuDialog {
         }
     }
 
-    private static final class MenuAdapter extends MyAdapter<Object> {
+    private static final class MenuAdapter extends MyAdapter<MovieBean> {
 
         private MenuAdapter(Context context) {
             super(context);
@@ -194,30 +207,23 @@ public final class MenuDialog {
         private final class ViewHolder extends MyAdapter.ViewHolder {
 
             private final TextView mTextView;
-            private final View mLineView;
+            private final ImageView iv_movie_cover;
+
 
             ViewHolder() {
                 super(R.layout.menu_item);
                 mTextView = (TextView) findViewById(R.id.tv_menu_text);
-                mLineView = findViewById(R.id.v_menu_line);
+                iv_movie_cover=(ImageView) findViewById(R.id.iv_movie_cover);
             }
 
             @Override
             public void onBindView(int position) {
-                mTextView.setText(getItem(position).toString());
-
-                if (position == 0) {
-                    // 当前是否只有一个条目
-                    if (getItemCount() == 1) {
-                        mLineView.setVisibility(View.GONE);
-                    } else {
-                        mLineView.setVisibility(View.VISIBLE);
-                    }
-                } else if (position == getItemCount() - 1) {
-                    mLineView.setVisibility(View.GONE);
-                } else {
-                    mLineView.setVisibility(View.VISIBLE);
-                }
+                mTextView.setText(getItem(position).getName());
+                GlideApp.with(getContext())
+                        .load(getItem(position).getCover())
+                        .placeholder(R.drawable.ic_movie_placeholder)
+                        .error(R.drawable.ic_movie_placeholder)
+                        .into(iv_movie_cover);
             }
         }
     }

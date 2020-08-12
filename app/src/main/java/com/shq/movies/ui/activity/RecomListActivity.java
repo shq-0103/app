@@ -23,6 +23,7 @@ import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.AddCollectApi;
 import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.QueryMovieApi;
+import com.shq.movies.http.request.RecommendByIdApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieListAdapter;
 
@@ -36,6 +37,7 @@ public final class RecomListActivity extends MyActivity
 
     private WrapRecyclerView rv_recom;
     private MovieListAdapter movieListAdapter;
+    private long movieId;
 
     @Override
     protected int getLayoutId() {
@@ -44,6 +46,8 @@ public final class RecomListActivity extends MyActivity
 
     @Override
     protected void initView() {
+        Intent intent=getIntent();
+        movieId=intent.getLongExtra("recMovieId",0);
         rv_recom = findViewById(R.id.rv_recom);
 
         movieListAdapter = new MovieListAdapter(getActivity());
@@ -59,7 +63,7 @@ public final class RecomListActivity extends MyActivity
 
     private void getData() {
 
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(movieListAdapter.getPageNumber()).setPageSize(8)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api(new RecommendByIdApi().setMovieId(movieId).setNum(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);

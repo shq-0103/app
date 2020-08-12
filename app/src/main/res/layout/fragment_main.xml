@@ -93,7 +93,24 @@
                     app:bar_leftText="Recommendation movies"
                     app:bar_rightText="All" />
 
+                <LinearLayout
+                    android:id="@+id/ll_btn_explore"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/title_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_explore"
+                        style="@style/ButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorSelect"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Explore" />
+
+                </LinearLayout>
 
                 <com.hjq.widget.layout.WrapRecyclerView
                     android:id="@+id/rv_recom_movie_list"
@@ -119,6 +136,8 @@
                     android:layout_height="wrap_content"
                     app:bar_leftText="This time last year"
                     app:bar_rightText="All" />
+
+
 
                 <com.hjq.widget.layout.WrapRecyclerView
                     android:id="@+id/rv_lasttime"

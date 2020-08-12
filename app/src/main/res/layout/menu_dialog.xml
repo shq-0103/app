@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="320dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|bottom"
     android:orientation="vertical"
@@ -15,10 +15,25 @@
         app:cardCornerRadius="@dimen/dialog_ui_round_size"
         app:cardElevation="0px">
 
+
+        <com.hjq.widget.view.SmartTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Pick a movie you like" />
+
+
+
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="14sp"
             android:id="@+id/rv_menu_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            tools:itemCount="3"
             tools:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/menu_item" />
 
