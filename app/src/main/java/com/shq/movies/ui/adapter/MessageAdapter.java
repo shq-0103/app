@@ -20,11 +20,6 @@ public final class MessageAdapter extends MyAdapter<MessageBean> {
         super(context);
     }
 
-    @Override
-    public int getItemCount() {
-        return 10;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

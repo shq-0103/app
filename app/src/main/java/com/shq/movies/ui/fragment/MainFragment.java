@@ -142,7 +142,7 @@ public final class MainFragment extends MyFragment<HomeActivity>
                     recMovieId = result.getData().getMovieId();
                     ll_btn_explore.setVisibility(View.GONE);
                 }
-                toast(result.getData().getMovieId());
+//                toast(result.getData().getMovieId());
             }
         });
 

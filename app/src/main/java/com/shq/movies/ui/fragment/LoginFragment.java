@@ -79,7 +79,7 @@ public class LoginFragment extends MyFragment<HomeActivity> {
 
                         @Override
                         public void onSucceed(HttpData<LoginBean> data) {
-                            ToastUtils.show("登录成功");
+                            ToastUtils.show("Login success");
                             //步骤1：创建一个SharedPreferences对象
                             SharedPreferences sharedPreferences =getAttachActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
                             //步骤2： 实例化SharedPreferences.Editor对象
@@ -88,6 +88,8 @@ public class LoginFragment extends MyFragment<HomeActivity> {
                             editor.putString(getString(R.string.user_token), data.getData().getToken());
                             //步骤4：提交
                             editor.commit();
+                            mUsernameView.setText(null);
+                            mPasswordView.setText(null);
 
 
                             // 更新 Token
