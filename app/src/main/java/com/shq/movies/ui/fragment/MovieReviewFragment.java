@@ -31,7 +31,7 @@ public final class MovieReviewFragment extends MyFragment<HomeActivity>  {
         tb_review = findViewById(R.id.tb_review);
         vg_movielist = findViewById(R.id.vg_movielist);
         mPagerAdapter = new BaseFragmentAdapter<>(this);
-        mPagerAdapter.addFragment(ReviewListFragment.newInstance(), "Popular");
+        mPagerAdapter.addFragment(PopularReviewFragment.newInstance(), "Popular");
         mPagerAdapter.addFragment(ReviewListFragment.newInstance(), "New");
         vg_movielist.setAdapter(mPagerAdapter);
         tb_review.setupWithViewPager(vg_movielist);

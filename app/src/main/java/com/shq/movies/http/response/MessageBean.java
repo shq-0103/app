@@ -1,6 +1,6 @@
 package com.shq.movies.http.response;
 
-public class MessageBean {
+public class MessageBean  {
     private long id;
     private long type;
     private long status;

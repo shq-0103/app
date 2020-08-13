@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="@string/register_title"
+            android:text="Register"
             android:textColor="@color/black60"
             android:textSize="23sp" />
 
@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/register_hint"
             android:textColor="@color/black20"
             android:textSize="14sp" />
 
@@ -41,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/common_username_input_hint"
+            android:hint="Please enter username"
             android:maxLength="12"
             android:singleLine="true"
             app:inputRegex="REGEX_ENGLISH" />
@@ -55,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/register_password_hint1"
+            android:hint="Please set a password(6-18 digit)"
             android:maxLength="20"
             android:maxLines="1" />
 
@@ -67,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/register_password_hint2"
+            android:hint="Please re-enter your password"
             android:maxLength="20"
             android:maxLines="1" />
 
@@ -79,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
-            android:text="@string/register_title" />
+            android:text="Register" />
 
     </LinearLayout>
 

@@ -6,7 +6,7 @@ public final class MovieReviewApi implements IRequestApi {
 
     private String title;
     private String contents;
-
+    private String order;
     private String images;
 
 
@@ -41,4 +41,5 @@ public final class MovieReviewApi implements IRequestApi {
         this.images = images;
         return this;
     }
+
 }

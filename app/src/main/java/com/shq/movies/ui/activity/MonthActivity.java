@@ -29,6 +29,7 @@ import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.request.DeleteCollectApi;
 import com.shq.movies.http.request.OldMovieApi;
 import com.shq.movies.http.request.QueryMovieApi;
+import com.shq.movies.http.request.monthOrUncomeMovieApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
@@ -85,7 +86,7 @@ public final class MonthActivity extends MyActivity implements OnRefreshLoadMore
 
     private void getData(boolean isLoadMore){
 
-        EasyHttp.get(this).api((IRequestApi) new OldMovieApi().setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new monthOrUncomeMovieApi().setPage(movieListAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);

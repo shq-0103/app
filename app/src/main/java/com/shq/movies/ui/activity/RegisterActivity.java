@@ -21,12 +21,7 @@ import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.view.CountdownView;
 
-/**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/10/18
- *    desc   : 注册界面
- */
+
 public final class RegisterActivity extends MyActivity {
 
     private EditText mUsernameView;
@@ -50,7 +45,7 @@ public final class RegisterActivity extends MyActivity {
         mCommitView = findViewById(R.id.btn_register_commit);
         setOnClickListener(mCommitView);
 
-        // 给这个 View 设置沉浸式，避免状态栏遮挡
+        // Set immersive style for this View to avoid blocking the status bar
         ImmersionBar.setTitleBar(this, findViewById(R.id.tv_register_title));
 
         InputTextHelper.with(this)
@@ -80,7 +75,7 @@ public final class RegisterActivity extends MyActivity {
             }
 
 
-            // 提交注册
+            // Submit registration
             EasyHttp.post(this)
                     .api(new RegisterApi()
                             .setPhone(mUsernameView.getText().toString())
@@ -89,7 +84,7 @@ public final class RegisterActivity extends MyActivity {
 
                         @Override
                         public void onSucceed(HttpData<Boolean> data) {
-                            toast(R.string.register_succeed);
+                            toast("Registration success!");
 //                            setResult(RESULT_OK, new Intent()
 //                                    .putExtra(IntentKey.PHONE, mUsernameView.getText().toString())
 //                                    .putExtra(IntentKey.PASSWORD, mPasswordView1.getText().toString()));
@@ -103,7 +98,7 @@ public final class RegisterActivity extends MyActivity {
     @Override
     protected ImmersionBar createStatusBarConfig() {
         return super.createStatusBarConfig()
-                // 不要把整个布局顶上去
+                // Don't put the entire layout on top
                 .keyboardEnable(true);
     }
 

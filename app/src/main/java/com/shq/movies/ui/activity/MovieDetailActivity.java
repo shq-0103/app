@@ -29,9 +29,11 @@ import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.MovieRateApi;
 import com.shq.movies.http.request.MovieDetailApi;
 import com.shq.movies.http.request.OnLikeApi;
+import com.shq.movies.http.request.SametypeApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.RateBean;
 import com.shq.movies.ui.adapter.CommentAdapter;
+import com.shq.movies.ui.adapter.SametypeAdapter;
 import com.shq.movies.widget.XCollapsingToolbarLayout;
 
 import java.util.List;
@@ -58,7 +60,9 @@ public final class MovieDetailActivity extends MyActivity
     private int tabIndex = 0;//tablayout所处的下标
     private boolean scrollviewFlag = false;//标记是否是scrollview在滑动
     private WrapRecyclerView rv_comment;
+    private WrapRecyclerView rv_sametype;
     private CommentAdapter commentAdapter;
+    private SametypeAdapter sametypeAdapter;
     private Button bt_seen;
 
     private XCollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -100,6 +104,10 @@ public final class MovieDetailActivity extends MyActivity
         commentAdapter.setOnChildClickListener(R.id.iv_good,this);
         rv_comment.setAdapter(commentAdapter);
 
+        rv_sametype = findViewById(R.id.rv_sametype);
+        sametypeAdapter = new SametypeAdapter(getActivity());
+        sametypeAdapter.setOnItemClickListener(this);
+        rv_sametype.setAdapter(sametypeAdapter);
 
         tb_moviedetail = findViewById(R.id.tb_moviedetail);
         mCollapsingToolbarLayout = findViewById(R.id.ctl_home_bar);
@@ -135,6 +143,7 @@ public final class MovieDetailActivity extends MyActivity
                         .into(iv_movie_cover);
             }
         });
+
         this.getData();
     }
 
@@ -151,6 +160,13 @@ public final class MovieDetailActivity extends MyActivity
             public void onSucceed(HttpData<List<RateBean>> result) {
                 super.onSucceed(result);
                 commentAdapter.setData(result.getData());
+            }
+        });
+        EasyHttp.get(this).api((IRequestApi) new SametypeApi().setPage(sametypeAdapter.getPageNumber()).setPageSize(6)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+            @Override
+            public void onSucceed(HttpData<List<MovieBean>> result) {
+                super.onSucceed(result);
+                sametypeAdapter.setData(result.getData());
             }
         });
     }

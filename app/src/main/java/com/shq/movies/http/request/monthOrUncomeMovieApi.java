@@ -2,31 +2,29 @@ package com.shq.movies.http.request;
 
 import com.hjq.http.config.IRequestApi;
 
-public final class ReviewApi implements IRequestApi {
+public final class monthOrUncomeMovieApi implements IRequestApi {
+    private int page;
+    private int pageSize;
+    private String order;
 
     @Override
     public String getApi() {
-        return "movieReview";
+        return "movies/this/month";
     }
-
-    private String order;
-    private int page;
-    private int pageSize;
-
     public int getPage() {
         return page;
+    }
+
+    public monthOrUncomeMovieApi setPage(int page) {
+        this.page = page;
+        return this;
     }
 
     public int getPageSize() {
         return pageSize;
     }
 
-    public ReviewApi setPage(int page) {
-        this.page = page;
-        return this;
-    }
-
-    public ReviewApi setPageSize(int pageSize) {
+    public monthOrUncomeMovieApi setPageSize(int pageSize) {
         this.pageSize = pageSize;
         return this;
     }
@@ -35,7 +33,7 @@ public final class ReviewApi implements IRequestApi {
         return order;
     }
 
-    public ReviewApi setOrder(String order) {
+    public monthOrUncomeMovieApi setOrder(String order) {
         this.order = order;
         return this;
     }
