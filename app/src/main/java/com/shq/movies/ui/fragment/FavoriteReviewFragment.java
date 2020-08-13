@@ -1,5 +1,6 @@
 package com.shq.movies.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.shq.movies.http.request.ReviewApi;
 import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
 import com.shq.movies.ui.activity.MyMovieListActivity;
+import com.shq.movies.ui.activity.ReviewDetailActivity;
 import com.shq.movies.ui.adapter.FavoriteReviewAdapter;
 import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieReviewAdapter;
@@ -95,7 +97,9 @@ public final class FavoriteReviewFragment extends MyFragment<MyActivity> impleme
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        toast("onClickItem"+position);
+        Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
+        intent.putExtra("reviewId", mAdapter.getItem(position).getId());
+        startActivity(intent);
     }
 
     @Override

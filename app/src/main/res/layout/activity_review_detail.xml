@@ -119,8 +119,7 @@
                     <TextView
                         android:id="@+id/tv_totalcomment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Comment (2) " />
+                        android:layout_height="wrap_content" />
                     <com.scwang.smartrefresh.layout.SmartRefreshLayout
                         android:id="@+id/rl_status_refresh"
                         android:layout_width="match_parent"

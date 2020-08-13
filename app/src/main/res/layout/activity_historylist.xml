@@ -11,6 +11,15 @@
         android:layout_height="wrap_content"
         app:rightColor="@color/white"
         app:title="History Movies List" />
+    <TextView
+        android:id="@+id/find_month_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:textColor="@color/gray"
+        android:gravity="center_horizontal"
+        android:text="Only display the 15 recently viewed records" />
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/rl_favorite_movie_refresh"
         android:layout_width="match_parent"

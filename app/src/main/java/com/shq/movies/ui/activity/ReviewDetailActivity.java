@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.Headers;
+import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.base.BaseAdapter;
 import com.hjq.http.EasyConfig;
 import com.hjq.http.EasyHttp;
@@ -262,7 +263,13 @@ public final class ReviewDetailActivity extends MyActivity
         reviewCommentAdapter.setPageNumber(1);
         this.getReviewComment(false);
     }
-
+    @NonNull
+    @Override
+    protected ImmersionBar createStatusBarConfig() {
+        return super.createStatusBarConfig()
+                // Don't put the entire layout on top
+                .keyboardEnable(true);
+    }
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         this.getReviewComment(true);

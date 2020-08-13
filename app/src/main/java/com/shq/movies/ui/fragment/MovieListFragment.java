@@ -85,7 +85,7 @@ public final class MovieListFragment extends MyFragment<MovieListActivity> imple
     }
 
     private void getData(boolean isLoadMore) {
-        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(movieAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new QueryMovieApi().setName(null).setPage(movieAdapter.getPageNumber()).setOrder("viewCount").setPageSize(10)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
