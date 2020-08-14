@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="5dp"
+    android:padding="10dp">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_movie_cover"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:layout_gravity="left"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_movie_placeholder" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <TextView
+            android:id="@+id/tv_movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="电影名称"/>
+        <TextView
+            android:id="@+id/tv_movie_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="12dp"
+            android:text="type"/>
+        <TextView
+            android:id="@+id/tv_movie_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:drawableLeft="@drawable/ic_score"
+            android:text="score"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -12,6 +12,8 @@ import com.shq.movies.common.MyAdapter;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.response.RateBean;
 
+import java.text.DecimalFormat;
+
 public final class RatingAdapter extends MyAdapter<RateBean> {
 
     public RatingAdapter(Context context) {
@@ -50,7 +52,8 @@ public final class RatingAdapter extends MyAdapter<RateBean> {
                     .placeholder(R.drawable.ic_movie_placeholder)
                     .error(R.drawable.ic_movie_placeholder)
                     .into(iv_cover);
-            tv_rate.setText(String.valueOf(getItem(position).getScore()));
+            DecimalFormat decimalFormat=new DecimalFormat(".00");
+            tv_rate.setText(decimalFormat.format(getItem(position).getScore()));
             tv_name.setText(getItem(position).getName());
             tv_userRate.setText(String.valueOf(getItem(position).getRate()));
             tv_all_rate.setText(String.valueOf(getItem(position).getViewCount())+"people");

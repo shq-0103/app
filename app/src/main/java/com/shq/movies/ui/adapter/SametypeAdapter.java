@@ -40,10 +40,9 @@ public final class SametypeAdapter extends MyAdapter<MovieBean> {
             public void onBindView(int position) {
                 tv_title.setText(getItem(position).getName());
                 GlideApp.with(getContext())
-                        .load(EasyConfig.getInstance().getServer().getHost() + getItem(position).getCover())
-                        .placeholder(R.drawable.avatar_placeholder_ic)
-                        .error(R.drawable.avatar_placeholder_ic)
-                        .circleCrop()
+                        .load(getItem(position).getCover())
+                        .placeholder(R.drawable.ic_movie_placeholder)
+                        .error(R.drawable.ic_movie_placeholder)
                         .into(iv_cover);
 
             }

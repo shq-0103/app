@@ -20,6 +20,7 @@ import com.hjq.http.listener.HttpCallback;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
+import com.shq.movies.event.PickMovieEvent;
 import com.shq.movies.helper.ActivityStackManager;
 import com.shq.movies.helper.DoubleClickHelper;
 import com.shq.movies.http.model.HttpData;
@@ -36,6 +37,7 @@ import com.shq.movies.ui.fragment.MainFragment;
 import com.shq.movies.ui.fragment.MeFragment;
 import com.shq.movies.ui.fragment.MessageFragment;
 import com.shq.movies.ui.fragment.MineFragment;
+import com.shq.movies.ui.fragment.MoviePickFragment;
 import com.shq.movies.ui.fragment.MovieReviewFragment;
 import com.shq.movies.ui.fragment.SearchFragment;
 import com.shq.movies.ui.fragment.UserInfoFragment;
@@ -95,6 +97,8 @@ public final class HomeActivity extends MyActivity
         mPagerAdapter.addFragment(MovieReviewFragment.newInstance());
         mPagerAdapter.addFragment(MineFragment.newInstance());
         mPagerAdapter.addFragment(LoginFragment.newInstance());
+        mPagerAdapter.addFragment(MoviePickFragment.newInstance());
+
         // 设置成懒加载模式
         mPagerAdapter.setLazyMode(true);
         mViewPager.setAdapter(mPagerAdapter);
@@ -150,6 +154,10 @@ public final class HomeActivity extends MyActivity
             mViewPager.setCurrentItem(3);
         }else if(eventName.equals(getString(R.string.event_login_fail))){
             mViewPager.setCurrentItem(4);
+        }else if(eventName.equals(getString(R.string.event_pick_movie))){
+            mViewPager.setCurrentItem(5);
+        }else if(eventName.equals("pick_success")){
+            mViewPager.setCurrentItem(0);
         }
     }
 

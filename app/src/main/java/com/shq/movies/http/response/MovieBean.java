@@ -1,6 +1,8 @@
 package com.shq.movies.http.response;
 
 
+import java.text.DecimalFormat;
+
 public final class MovieBean {
 
   private long id;
@@ -105,8 +107,9 @@ public final class MovieBean {
   }
 
 
-  public double getScore() {
-    return  score;
+  public String getScore() {
+    DecimalFormat decimalFormat=new DecimalFormat(".0");
+    return decimalFormat.format(score);
   }
 
   public void setScore(double score) {

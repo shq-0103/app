@@ -1,7 +1,9 @@
 package com.shq.movies.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,6 +29,7 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.glide.GlideApp;
 import com.shq.movies.http.model.HttpData;
+import com.shq.movies.http.request.MovieLikeThisApi;
 import com.shq.movies.http.request.MovieRateApi;
 import com.shq.movies.http.request.MovieDetailApi;
 import com.shq.movies.http.request.OnLikeApi;
@@ -105,6 +109,7 @@ public final class MovieDetailActivity extends MyActivity
         rv_comment.setAdapter(commentAdapter);
 
         rv_sametype = findViewById(R.id.rv_sametype);
+        rv_sametype.setLayoutManager(new LinearLayoutManager(getContext(), WrapRecyclerView.HORIZONTAL, false));
         sametypeAdapter = new SametypeAdapter(getActivity());
         sametypeAdapter.setOnItemClickListener(this);
         rv_sametype.setAdapter(sametypeAdapter);
@@ -162,7 +167,7 @@ public final class MovieDetailActivity extends MyActivity
                 commentAdapter.setData(result.getData());
             }
         });
-        EasyHttp.get(this).api((IRequestApi) new SametypeApi().setPage(sametypeAdapter.getPageNumber()).setPageSize(6)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new MovieLikeThisApi().setMovieId(movieId).setNum(6)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<MovieBean>> result) {
                 super.onSucceed(result);
@@ -175,6 +180,15 @@ public final class MovieDetailActivity extends MyActivity
         switch (v.getId()) {
             case R.id.bt_seen:
                 if(!OnClickHelper.hasRate(movieId,(AppCompatActivity)getActivity())){
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+                    // 判断是否已登录
+                    String token = sharedPreferences.getString(getString(R.string.user_token), null);
+
+                    if (token == null || token.isEmpty()) {
+                        toast("please login");
+                        return;
+                    }
+
                     Intent intent = new Intent(getContext(), RateActivity.class);
                     intent.putExtra("movieId", movieId);
                     startActivity(intent);

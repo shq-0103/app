@@ -13,6 +13,7 @@
 
     <string name="event_login_success">event_login_success</string>
     <string name="event_login_fail">event_login_fail</string>
+    <string name="event_pick_movie">event_pick_movie</string>
 
     <string name="common_username_input_hint">输入用户名</string>
     <string name="common_phone_input_hint">输入手机号码</string>

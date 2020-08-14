@@ -1,6 +1,7 @@
 package com.shq.movies.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -21,6 +23,7 @@ import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
+import com.shq.movies.event.PickMovieEvent;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.OldMovieApi;
 import com.shq.movies.http.request.QueryMovieApi;
@@ -41,6 +44,9 @@ import com.shq.movies.ui.adapter.ListAdapter;
 import com.shq.movies.ui.adapter.MainReviewAdapter;
 import com.shq.movies.ui.adapter.MainTopImgAdapter;
 import com.shq.movies.ui.dialog.MenuDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +81,11 @@ public final class MainFragment extends MyFragment<HomeActivity>
         return new MainFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -141,12 +152,16 @@ public final class MainFragment extends MyFragment<HomeActivity>
                     listAdapter.setData(result.getData().getList());
                     recMovieId = result.getData().getMovieId();
                     ll_btn_explore.setVisibility(View.GONE);
+                }else {
+                    listAdapter.clearData();
+                    ll_btn_explore.setVisibility(View.VISIBLE);
+
                 }
 //                toast(result.getData().getMovieId());
             }
         });
 
-        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setPageSize(10).setOrder("commentNum")).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<ReviewBean>> result) {
                 super.onSucceed(result);
@@ -162,7 +177,11 @@ public final class MainFragment extends MyFragment<HomeActivity>
             }
         });
     }
-
+    @Subscribe
+    public void pickMovieSuccess(PickMovieEvent event){
+        recMovieId=event.movieId;
+        recMovie();
+    }
     public boolean isStatusBarEnabled() {
         // 使用沉浸式状态栏
         return !super.isStatusBarEnabled();
@@ -232,6 +251,7 @@ public final class MainFragment extends MyFragment<HomeActivity>
     public void onClick(View v) {
         if (v.getId() == R.id.iv_home_search) {
             if (!et_search.getText().toString().trim().isEmpty()) {
+                et_search.setText(null);
                 // 跳转到搜索 Activity 并传参
                 Intent intent = new Intent(getAttachActivity().getContext(), QueryMovieActivity.class);
                 intent.putExtra("keyword", et_search.getText().toString().trim());
@@ -248,37 +268,7 @@ public final class MainFragment extends MyFragment<HomeActivity>
         } else if (v.getId() == R.id.sb_last) {
             startActivity(LastTimeActivity.class);
         } else if (v.getId() == R.id.btn_explore) {
-            EasyHttp.get(this).api(new RandomMovieApi().setNum(9)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
-                @Override
-                public void onSucceed(HttpData<List<MovieBean>> result) {
-                    super.onSucceed(result);
-                    // 居中选择框
-                    new MenuDialog.Builder(getContext())
-                            .setGravity(Gravity.CENTER)
-                            // 设置 null 表示不显示取消按钮
-                            //.setCancel(null)
-                            // 设置点击按钮后不关闭对话框
-                            //.setAutoDismiss(false)
-                            .setList(result.getData())
-                            .setTitle("Pick a movie you like")
-                            .setListener(new MenuDialog.OnListener<MovieBean>() {
-
-                                @Override
-                                public void onSelected(BaseDialog dialog, int position, MovieBean movieBean) {
-                                    recMovieId = movieBean.getId();
-                                    recMovie();
-                                }
-
-                                @Override
-                                public void onCancel(BaseDialog dialog) {
-
-                                }
-                            })
-                            .show();
-                }
-            });
-
-
+            EventBus.getDefault().post(getString(R.string.event_pick_movie));
         }
     }
 

@@ -1,6 +1,8 @@
 package com.shq.movies.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,7 +78,7 @@ public final class PopularReviewFragment extends MyFragment<MyActivity> implemen
 
     private void getData(boolean isLoadMore) {
 
-        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setOrder("popular").setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
+        EasyHttp.get(this).api((IRequestApi) new ReviewApi().setPage(reviewAdapter.getPageNumber()).setOrder("viewCount").setPageSize(10)).request(new HttpCallback<HttpData<List<ReviewBean>>>(this) {
             @Override
             public void onSucceed(HttpData<List<ReviewBean>> result) {
                 super.onSucceed(result);
@@ -104,6 +106,14 @@ public final class PopularReviewFragment extends MyFragment<MyActivity> implemen
 
     public void onClick(View v) {
         if (v == fab) {
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            // 判断是否已登录
+            String token = sharedPreferences.getString(getString(R.string.user_token), null);
+
+            if (token == null || token.isEmpty()) {
+                toast("please login");
+                return;
+            }
             startActivity(WriteReviewActivity.class);
         }
     }

@@ -199,6 +199,14 @@ public final class ReviewDetailActivity extends MyActivity
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.bt_submit){
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            // 判断是否已登录
+            String token = sharedPreferences.getString(getString(R.string.user_token), null);
+
+            if (token == null || token.isEmpty()) {
+                toast("please login");
+                return;
+            }
             EasyHttp.post(this)
                     .api(new AddCommentApi().setContents(et_comment.getText().toString())
                     .setType(1).setToId(reviewId))
