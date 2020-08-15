@@ -55,8 +55,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_weight="4"
+                    android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
@@ -108,15 +108,15 @@
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/bt_favorite"
                                 style="@style/movieDetailButton"
-                                android:layout_weight="1"
                                 android:layout_height="40dp"
+                                android:layout_weight="1"
                                 android:text="Favorite" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/bt_seen"
                                 style="@style/movieDetailButton"
-                                android:layout_weight="1"
                                 android:layout_height="40dp"
+                                android:layout_weight="1"
                                 android:text="Seen" />
                         </LinearLayout>
                     </LinearLayout>
@@ -128,8 +128,8 @@
                     android:id="@+id/ll_fav_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/white"
+                    android:orientation="horizontal"
                     android:padding="10dp">
 
                     <LinearLayout
@@ -160,53 +160,45 @@
                     <TextView
                         android:id="@+id/sb_number"
                         android:layout_width="match_parent"
-                        android:gravity="center_vertical"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:textSize="15dp"
                         android:background="@color/black10"
-                        android:text="Total of 10 people rated" />
+                        android:gravity="center_vertical"
+                        android:text="Total of 10 people rated"
+                        android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
 
         </com.shq.movies.widget.XCollapsingToolbarLayout>
 
-
-        <LinearLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#ffc824"
+            app:tabTextColor="@color/black">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="#ffc824"
-                app:tabTextColor="@color/black">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_one"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Movie Detail" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Movie Detail" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_two"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Comment" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Comment" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Like this" />
-            </com.google.android.material.tabs.TabLayout>
-
-        </LinearLayout>
-
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_three"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Like this" />
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -222,6 +214,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_movie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -308,7 +301,7 @@
                 tools:listitem="@layout/item_comment" />
 
             <com.hjq.widget.layout.SettingBar
-                android:id="@+id/tv3"
+                android:id="@+id/sb_movie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"

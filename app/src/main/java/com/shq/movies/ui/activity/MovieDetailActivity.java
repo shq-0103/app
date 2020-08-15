@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -55,14 +56,18 @@ public final class MovieDetailActivity extends MyActivity
     private TextView tv_actor;
     private TextView tv_intro;
     private Long movieId;
-    private TabLayout tabLayout;
-    private TabItem tab1;
-    private TabItem tab2;
-    private TabItem tab3;
     private TextView sb_number;
     private SettingBar sb_comment;
+    private SettingBar sb_movie;
+
+    private TabLayout tabLayout;
+
+    private TextView tv_movie;
+
     private int tabIndex = 0;//tablayout所处的下标
     private boolean scrollviewFlag = false;//标记是否是scrollview在滑动
+    private NestedScrollView scrollView;
+
     private WrapRecyclerView rv_comment;
     private WrapRecyclerView rv_sametype;
     private CommentAdapter commentAdapter;
@@ -94,12 +99,12 @@ public final class MovieDetailActivity extends MyActivity
         tv_actor = findViewById(R.id.tv_actor);
         tv_intro = findViewById(R.id.tv_intro);
         tabLayout = findViewById(R.id.tabLayout);
-        tab1 = findViewById(R.id.tab1);
-        tab2 = findViewById(R.id.tab2);
-        tab3 = findViewById(R.id.tab3);
+        tv_movie = findViewById(R.id.tv_movie);
+        scrollView=findViewById(R.id.scrollView);
         bt_seen = findViewById(R.id.bt_seen);
         sb_number = findViewById(R.id.sb_number);
         sb_comment = findViewById(R.id.sb_comment);
+        sb_movie=findViewById(R.id.sb_movie);
         setOnClickListener(bt_favorite, bt_seen,sb_comment);
 
         rv_comment = findViewById(R.id.rv_comment);
@@ -118,6 +123,62 @@ public final class MovieDetailActivity extends MyActivity
         mCollapsingToolbarLayout = findViewById(R.id.ctl_home_bar);
         mCollapsingToolbarLayout.setOnScrimsListener(this);
         ll_fav_container=findViewById(R.id.ll_fav_container);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (!scrollviewFlag) {
+                    switch (tab.getPosition()) {
+                        case 0://scrollview移动到tv1的顶部坐标处
+                            scrollView.scrollTo(0, tv_movie.getTop());
+
+                            break;
+                        case 1://scrollview移动到tv2的顶部坐标处
+                            scrollView.scrollTo(0, sb_comment.getTop());
+
+                            break;
+                        case 2://scrollview移动到tv3的顶部坐标处
+                            scrollView.scrollTo(0, sb_movie.getTop());
+
+                            break;
+                    }
+                }
+                tab.select();
+                //用户点击tablayout时，标记不是scrollview主动滑动
+                scrollviewFlag = false;
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                scrollviewFlag = true;
+                tabIndex = tabLayout.getSelectedTabPosition();
+                if (scrollY < sb_comment.getTop()) {
+                    if (tabIndex != 0) {//增加判断，如果滑动的区域是tableIndex=0对应的区域，则不改变tablayout的状态
+                        tabLayout.selectTab(tabLayout.getTabAt(0));
+                    }
+                } else if (scrollY >= sb_comment.getTop() && scrollY < sb_movie.getTop()) {
+                    if (tabIndex != 1) {
+                        tabLayout.selectTab(tabLayout.getTabAt(1));
+                    }
+                } else if (scrollY >= sb_movie.getTop()) {
+                    if (tabIndex != 2) {
+                        tabLayout.selectTab(tabLayout.getTabAt(2));
+                    }
+                }
+                scrollviewFlag = false;
+            }
+        });
     }
 
     @Override
