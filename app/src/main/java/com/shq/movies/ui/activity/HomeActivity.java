@@ -79,6 +79,19 @@ public final class HomeActivity extends MyActivity
         mBottomNavigationView.setItemIconTintList(null);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
 
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        if(sharedPreferences.getBoolean(getString(R.string.auto_login),false)){
+            String token=sharedPreferences.getString(getString(R.string.user_token),null);
+            EasyConfig.getInstance()
+                    .addHeader("Authorization", "Bearer "+token);
+        }else {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+        }
+
+
+
         KeyboardWatcher.with(this)
                 .setListener(this);
     }
@@ -86,10 +99,6 @@ public final class HomeActivity extends MyActivity
     @Override
     protected void initData() {
 
-        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
-        String token=sharedPreferences.getString(getString(R.string.user_token),null);
-        EasyConfig.getInstance()
-                .addHeader("Authorization", "Bearer "+token);
 
         mPagerAdapter = new BaseFragmentAdapter<>(this);
         mPagerAdapter.addFragment(MainFragment.newInstance());

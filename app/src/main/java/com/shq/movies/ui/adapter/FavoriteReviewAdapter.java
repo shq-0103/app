@@ -48,18 +48,8 @@ public final class FavoriteReviewAdapter extends MyAdapter<ReviewBean> {
 
         @Override
         public void onBindView(int position) {
-            int c=getItemCount();
             ReviewBean reviewBean= getItem(position);
-            if(c<=0){
-                return;
-            }
-            GlideApp.with(getContext())
-                    .load(EasyConfig.getInstance().getServer().getHost() + reviewBean.getAvatar())
-                    .error(R.drawable.avatar_placeholder_ic)
-                    .circleCrop()
-                    .into(iv_cover);
-
-
+            iv_cover.setVisibility(View.VISIBLE);
             if(TextUtils.isEmpty(reviewBean.getImages())){
                 iv_cover.setVisibility(View.GONE);
             }else {

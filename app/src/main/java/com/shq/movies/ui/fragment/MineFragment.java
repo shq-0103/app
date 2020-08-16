@@ -25,6 +25,7 @@ import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.SettingBar;
 import com.hjq.widget.layout.WrapRecyclerView;
+import com.hjq.widget.view.SwitchButton;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.glide.GlideApp;
@@ -58,7 +59,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class MineFragment extends MyFragment<HomeActivity> implements BottomNavigationView.OnNavigationItemSelectedListener,
-        ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener{
+        ViewPager.OnPageChangeListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnChildClickListener, SwitchButton.OnCheckedChangeListener {
 
     private TextView tv_nickname;
     private TextView tv_intro;
@@ -69,6 +70,8 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
     private SettingBar sb_recent_history;
 
     private SettingBar sb_about;
+
+    private SwitchButton sb_setting_switch;
 
     private ImageView iv_avatar;
     private BottomNavigationView bv_user_info;
@@ -101,11 +104,13 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         bt_addmovie = findViewById(R.id.bt_addmovie);
         sb_recent_history = findViewById(R.id.sb_recent_history);
 
+        sb_setting_switch = findViewById(R.id.sb_setting_switch);
+
         // 不使用图标默认变色
         bv_user_info.setItemIconTintList(null);
         bv_user_info.setOnNavigationItemSelectedListener(this);
 
-        setOnClickListener(sb_sign_out, sb_modify_userinfo,sb_about,sb_my_movielist,bt_addmovie,sb_recent_history);
+        setOnClickListener(sb_sign_out, sb_modify_userinfo, sb_about, sb_my_movielist, bt_addmovie, sb_recent_history, sb_setting_switch);
 
         rv_watch_list = findViewById(R.id.rv_watch_list);
         watch_listAdapter = new ListAdapter(getAttachActivity());
@@ -114,11 +119,15 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         rv_watch_list.setAdapter(watch_listAdapter);
 
 
-        rv_history_list  = findViewById(R.id.rv_history_list );
+        rv_history_list = findViewById(R.id.rv_history_list);
         history_listAdapter = new ListAdapter(getAttachActivity());
-        rv_history_list .setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
+        rv_history_list.setLayoutManager(new LinearLayoutManager(getAttachActivity(), WrapRecyclerView.HORIZONTAL, false));
         history_listAdapter.setOnItemClickListener(this);
-        rv_history_list .setAdapter(history_listAdapter);
+        rv_history_list.setAdapter(history_listAdapter);
+        sb_setting_switch.setOnCheckedChangeListener(this);
+        //步骤1：创建一个SharedPreferences对象
+        SharedPreferences sharedPreferences = getAttachActivity().getSharedPreferences("data", getContext().MODE_PRIVATE);
+        sb_setting_switch.setChecked(sharedPreferences.getBoolean(getString(R.string.auto_login),false));
     }
 
     @Override
@@ -131,7 +140,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                 tv_nickname.setText(result.getData().getNickname());
                 tv_intro.setText(result.getData().getIntroduction());
                 GlideApp.with(getActivity())
-                        .load(EasyConfig.getInstance().getServer().getHost()+ result.getData().getAvatar())
+                        .load(EasyConfig.getInstance().getServer().getHost() + result.getData().getAvatar())
                         .placeholder(R.drawable.avatar_placeholder_ic)
                         .error(R.drawable.avatar_placeholder_ic)
                         .circleCrop()
@@ -153,30 +162,30 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                 super.onSucceed(result);
 
                 //步骤1：创建一个SharedPreferences对象
-                SharedPreferences sharedPreferences =getAttachActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getAttachActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
                 //步骤2： 实例化SharedPreferences.Editor对象
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String idS=result.getData().getCollect().stream()
+                String idS = result.getData().getCollect().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
-                String idSeen=result.getData().getSeen().stream()
+                String idSeen = result.getData().getSeen().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
-                String idLikeReview=result.getData().getLikeReview().stream()
+                String idLikeReview = result.getData().getLikeReview().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
-                String likeComment=result.getData().getLikeComment().stream()
+                String likeComment = result.getData().getLikeComment().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
-                String likeRate=result.getData().getLikeRate().stream()
+                String likeRate = result.getData().getLikeRate().stream()
                         .map(i -> i.toString())
                         .collect(Collectors.joining("|"));
                 //步骤3：将获取过来的值放入文件
                 editor.putString(getString(R.string.seen_movie_id), idSeen);
                 editor.putString(getString(R.string.favorite_movie_id), idS);
-                editor.putString(getString(R.string.like_comment_id),likeComment);
-                editor.putString(getString(R.string.like_review_id),idLikeReview);
-                editor.putString(getString(R.string.like_rate_id),likeRate);
+                editor.putString(getString(R.string.like_comment_id), likeComment);
+                editor.putString(getString(R.string.like_review_id), idLikeReview);
+                editor.putString(getString(R.string.like_rate_id), likeRate);
 
                 //步骤4：提交
 
@@ -185,6 +194,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
         });
         this.getData();
     }
+
     private void getData() {
 
         EasyHttp.get(this).api((IRequestApi) new HistoryApi().setPage(history_listAdapter.getPageNumber()).setPageSize(3)).request(new HttpCallback<HttpData<List<MovieBean>>>(this) {
@@ -258,7 +268,7 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
                                 editor.commit();
                                 // 跳转到登录页
                                 EasyConfig.getInstance()
-                                        .addHeader("Authorization", "Bearer "+"null");
+                                        .addHeader("Authorization", "Bearer " + "null");
                                 EventBus.getDefault().post(getString(R.string.event_login_fail));
                             }
 
@@ -285,10 +295,19 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
             case R.id.sb_setting_about:
                 startActivity(FavoriteActivity.class);
                 break;
-
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onCheckedChanged(SwitchButton button, boolean isChecked) {
+        //步骤1：创建一个SharedPreferences对象
+        SharedPreferences sharedPreferences = getAttachActivity().getSharedPreferences("data", getContext().MODE_PRIVATE);
+        //步骤2： 实例化SharedPreferences.Editor对象
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getString(R.string.auto_login), isChecked);
+        editor.commit();
     }
 
     public boolean isStatusBarEnabled() {
@@ -313,14 +332,14 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-        if(recyclerView.getId()==R.id.rv_watch_list){
+        if (recyclerView.getId() == R.id.rv_watch_list) {
             this.routerToDetail(String.valueOf(watch_listAdapter.getItem(position).getId()));
-        }else if(recyclerView.getId()==R.id.rv_history_list){
+        } else if (recyclerView.getId() == R.id.rv_history_list) {
             this.routerToDetail(String.valueOf(history_listAdapter.getItem(position).getId()));
         }
     }
 
-    public void  routerToDetail(String movieId){
+    public void routerToDetail(String movieId) {
         Intent intent = new Intent(getAttachActivity().getContext(), MovieDetailActivity.class);
         intent.putExtra("movieId", movieId);
         startActivity(intent);
@@ -328,9 +347,9 @@ public final class MineFragment extends MyFragment<HomeActivity> implements Bott
 
     @Override
     public void onChildClick(RecyclerView recyclerView, View childView, int position) {
-        if(recyclerView.getId()==R.id.rv_watch_list){
+        if (recyclerView.getId() == R.id.rv_watch_list) {
             this.routerToDetail(String.valueOf(watch_listAdapter.getItem(position).getId()));
-        }else if(recyclerView.getId()==R.id.rv_history_list){
+        } else if (recyclerView.getId() == R.id.rv_history_list) {
             this.routerToDetail(String.valueOf(history_listAdapter.getItem(position).getId()));
         }
     }

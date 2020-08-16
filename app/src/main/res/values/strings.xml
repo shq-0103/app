@@ -8,6 +8,7 @@
     <string name="like_review_id">like_review_id</string>
     <string name="like_comment_id">like_comment_id</string>
     <string name="like_rate_id">like_rate_id</string>
+    <string name="auto_login">auto_login</string>
 
 
 

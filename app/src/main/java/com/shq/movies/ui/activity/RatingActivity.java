@@ -1,5 +1,6 @@
 package com.shq.movies.ui.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -81,7 +82,9 @@ public final class RatingActivity extends MyActivity implements OnRefreshLoadMor
     }
     @Override
     public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra("movieId",String.valueOf( ratingAapter.getItem(position).getMovieId()));
+        startActivity(intent);
     }
 
     @Override

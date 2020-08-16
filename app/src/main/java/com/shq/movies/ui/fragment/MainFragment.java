@@ -204,7 +204,9 @@ public final class MainFragment extends MyFragment<HomeActivity>
     @Override
     public void onResume() {
         super.onResume();
-        this.getData();
+        if(recMovieId<=0){
+            this.getData();
+        }
     }
 
     @Override
