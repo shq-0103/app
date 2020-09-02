@@ -20,32 +20,22 @@ import com.hjq.http.listener.HttpCallback;
 import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
-import com.shq.movies.event.PickMovieEvent;
 import com.shq.movies.helper.ActivityStackManager;
 import com.shq.movies.helper.DoubleClickHelper;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.CollectMovieIdListApi;
-import com.shq.movies.http.request.UserApi;
 import com.shq.movies.http.response.IdListBean;
-import com.shq.movies.http.response.UserInfoBean;
 import com.shq.movies.other.KeyboardWatcher;
-import com.shq.movies.ui.adapter.MainReviewAdapter;
-import com.shq.movies.ui.fragment.FindFragment;
-import com.shq.movies.ui.fragment.HomeFragment;
 import com.shq.movies.ui.fragment.LoginFragment;
 import com.shq.movies.ui.fragment.MainFragment;
-import com.shq.movies.ui.fragment.MeFragment;
-import com.shq.movies.ui.fragment.MessageFragment;
 import com.shq.movies.ui.fragment.MineFragment;
 import com.shq.movies.ui.fragment.MoviePickFragment;
 import com.shq.movies.ui.fragment.MovieReviewFragment;
 import com.shq.movies.ui.fragment.SearchFragment;
-import com.shq.movies.ui.fragment.UserInfoFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public final class HomeActivity extends MyActivity

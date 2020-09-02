@@ -23,7 +23,6 @@ import com.shq.movies.http.json.IntegerTypeAdapter;
 import com.shq.movies.http.json.ListTypeAdapter;
 import com.shq.movies.http.json.LongTypeAdapter;
 import com.shq.movies.http.json.StringTypeAdapter;
-import com.shq.movies.ui.activity.LoginActivity;
 import com.hjq.http.EasyLog;
 import com.hjq.http.config.IRequestHandler;
 import com.hjq.http.exception.CancelException;
@@ -35,6 +34,7 @@ import com.hjq.http.exception.ResultException;
 import com.hjq.http.exception.ServerException;
 import com.hjq.http.exception.TimeoutException;
 import com.hjq.http.exception.TokenException;
+import com.shq.movies.ui.activity.HomeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,11 +161,11 @@ public final class RequestHandler implements IRequestHandler {
             if (e instanceof TokenException) {
                 // 登录信息失效，跳转到登录页
                 Application application = ActivityStackManager.getInstance().getApplication();
-                Intent intent = new Intent(application, LoginActivity.class);
+                Intent intent = new Intent(application, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 application.startActivity(intent);
                 // 销毁除了登录页之外的界面
-                ActivityStackManager.getInstance().finishAllActivities(LoginActivity.class);
+                ActivityStackManager.getInstance().finishAllActivities(HomeActivity.class);
             }
         } else {
             if (e instanceof SocketTimeoutException) {

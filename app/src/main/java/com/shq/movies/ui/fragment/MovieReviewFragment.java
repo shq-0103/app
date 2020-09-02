@@ -6,10 +6,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hjq.base.BaseFragmentAdapter;
 import com.shq.movies.R;
 import com.shq.movies.common.MyFragment;
-import com.shq.movies.ui.activity.CopyActivity;
 import com.shq.movies.ui.activity.HomeActivity;
-import com.shq.movies.ui.adapter.MovieAdapter;
-import com.shq.movies.ui.adapter.MovieReviewAdapter;
 
 public final class MovieReviewFragment extends MyFragment<HomeActivity>  {
 

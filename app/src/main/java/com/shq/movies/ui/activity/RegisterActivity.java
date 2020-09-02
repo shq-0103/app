@@ -73,6 +73,10 @@ public final class RegisterActivity extends MyActivity {
                 toast(R.string.common_password_input_unlike);
                 return;
             }
+            if(mPasswordView1.getText().length()<6){
+                toast("Password length cannot be less than 6 digits");
+                return;
+            }
 
 
             // Submit registration

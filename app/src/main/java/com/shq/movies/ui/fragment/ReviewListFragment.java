@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,16 +24,11 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.helper.OnClickHelper;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.request.OnLikeApi;
 import com.shq.movies.http.request.ReviewApi;
-import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
-import com.shq.movies.ui.activity.MyMovieListActivity;
-import com.shq.movies.ui.activity.PasswordForgetActivity;
 import com.shq.movies.ui.activity.ReviewDetailActivity;
 import com.shq.movies.ui.activity.WriteReviewActivity;
-import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieReviewAdapter;
 
 import java.util.List;

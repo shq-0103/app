@@ -1,7 +1,5 @@
 package com.shq.movies.ui.activity;
 
-import android.view.View;
-
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -11,7 +9,6 @@ import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.ui.fragment.HighScoreFragment;
 import com.shq.movies.ui.fragment.MovieListFragment;
-import com.shq.movies.ui.fragment.StatusFragment;
 
 
 public final class MovieListActivity extends MyActivity {

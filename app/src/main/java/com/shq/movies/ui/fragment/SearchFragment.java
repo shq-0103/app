@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -50,7 +47,6 @@ import com.shq.movies.ui.adapter.ConstellationAdapter;
 import com.shq.movies.ui.adapter.FindAdapter;
 import com.shq.movies.ui.adapter.GirdDropDownAdapter;
 import com.shq.movies.ui.adapter.ListDropDownAdapter;
-import com.shq.movies.ui.adapter.MovieAdapter;
 import com.shq.movies.ui.adapter.MovieListAdapter;
 import com.yyydjk.library.DropDownMenu;
 

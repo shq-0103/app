@@ -2,7 +2,6 @@ package com.shq.movies.ui.fragment;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,18 +20,11 @@ import com.shq.movies.R;
 import com.shq.movies.common.MyActivity;
 import com.shq.movies.common.MyFragment;
 import com.shq.movies.http.model.HttpData;
-import com.shq.movies.http.request.CollectMovieApi;
 import com.shq.movies.http.request.DeleteReviewApi;
 import com.shq.movies.http.request.MyReviewApi;
-import com.shq.movies.http.request.ReviewApi;
-import com.shq.movies.http.response.MovieBean;
 import com.shq.movies.http.response.ReviewBean;
-import com.shq.movies.ui.activity.MyMovieListActivity;
 import com.shq.movies.ui.activity.ReviewDetailActivity;
 import com.shq.movies.ui.adapter.FavoriteReviewAdapter;
-import com.shq.movies.ui.adapter.MovieAdapter;
-import com.shq.movies.ui.adapter.MovieReviewAdapter;
-import com.shq.movies.ui.adapter.StatusAdapter;
 import com.shq.movies.ui.dialog.MessageDialog;
 
 import java.util.List;

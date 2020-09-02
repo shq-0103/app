@@ -15,7 +15,6 @@ import com.shq.movies.common.MyFragment;
 import com.shq.movies.event.QueryEvent;
 import com.shq.movies.ui.fragment.FavoriteFragment;
 import com.shq.movies.ui.fragment.SeenFragment;
-import com.shq.movies.ui.fragment.StatusFragment;
 
 import org.greenrobot.eventbus.EventBus;
 

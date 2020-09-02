@@ -1,13 +1,10 @@
 package com.shq.movies.ui.fragment;
 
-import android.view.Gravity;
 import android.view.View;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
-import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.layout.WrapRecyclerView;
@@ -17,16 +14,15 @@ import com.shq.movies.event.PickMovieEvent;
 import com.shq.movies.http.model.HttpData;
 import com.shq.movies.http.request.RandomMovieApi;
 import com.shq.movies.http.response.MovieBean;
-import com.shq.movies.ui.activity.CopyActivity;
+import com.shq.movies.ui.activity.HomeActivity;
 import com.shq.movies.ui.adapter.MoviePickAdapter;
-import com.shq.movies.ui.dialog.MenuDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 
-public final class MoviePickFragment extends MyFragment<CopyActivity> implements BaseAdapter.OnItemClickListener {
+public final class MoviePickFragment extends MyFragment<HomeActivity> implements BaseAdapter.OnItemClickListener {
 
     private WrapRecyclerView rv_pick_movie;
     private MoviePickAdapter moviePickAdapter;

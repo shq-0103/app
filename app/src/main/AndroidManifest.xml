@@ -51,44 +51,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 崩溃界面 -->
-        <activity
-            android:name=".ui.activity.CrashActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:process=":crash"
-            android:screenOrientation="landscape" /> <!-- 引导界面 -->
-        <activity
-            android:name=".ui.activity.GuideActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- App 首页 -->
+        <!-- 引导界面 -->
+        <!-- App 首页 -->
         <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- 登录界面 -->
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 注册界面 -->
+        <!-- 注册界面 -->
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" /> <!-- 设置界面 -->
-        <activity
-            android:name=".ui.activity.SettingActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/setting_title"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 忘记密码 -->
-        <activity
-            android:name=".ui.activity.PasswordForgetActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/password_forget_title"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 重置密码 -->
+        <!-- 忘记密码 -->
+        <!-- 重置密码 -->
         <activity
             android:name=".ui.activity.PasswordResetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -101,12 +78,7 @@
             android:label="@string/phone_reset_title"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" /> <!-- 关于我们 -->
-        <activity
-            android:name=".ui.activity.AboutActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/about_title"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 个人资料 -->
+        <!-- 个人资料 -->
         <activity
             android:name=".ui.activity.PersonalDataActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -184,12 +156,7 @@
             android:name=".ui.activity.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop" /> <!-- 浏览器 -->
-        <activity
-            android:name=".ui.activity.BrowserActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/web_title"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 拍照选择 -->
+        <!-- 拍照选择 -->
         <activity
             android:name=".ui.activity.CameraActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -217,16 +184,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" /> <!-- 对话框案例 -->
-        <activity
-            android:name=".ui.activity.DialogActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- 状态案例 -->
-        <activity
-            android:name=".ui.activity.StatusActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+        <!-- 状态案例 -->
     </application>
 
 </manifest>
